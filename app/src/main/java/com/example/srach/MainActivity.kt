@@ -7,17 +7,19 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.Typeface
-import android.graphics.drawable.Drawable
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.*
-import android.graphics.drawable.shapes.Shape
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.text.MeasuredText
+import android.os.Build
 import android.os.Bundle
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import java.lang.Math.min
+
 
 class CustomDrawableView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val body: ShapeDrawable
@@ -26,14 +28,14 @@ class CustomDrawableView(context: Context, attrs: AttributeSet) : View(context, 
 
 
     init {
-        val width = 300
+        val width = 118
         val height = 50
         contentDescription = "context.resources.getString(R.string.my_view_desc)"
 
         body = ShapeDrawable(RectShape())
 
         body.paint.color = 0xff74AC23.toInt()
-        body.setBounds(-100, 0, width, height)
+        body.setBounds(0, 0, width, height)
     }
 
     init {
@@ -67,18 +69,14 @@ class CustomDrawableView(context: Context, attrs: AttributeSet) : View(context, 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                // обработка нажатия пальца на экран
                 //Log.d("dddd", event.x.toString())
                 return true
             }
             MotionEvent.ACTION_MOVE -> {
-                // обработка перемещения пальца по экрану
-                Log.d("dddd", event.x.toString())
-
+                Log.d("dddd", "move")
                 return true
             }
             MotionEvent.ACTION_UP -> {
-                // обработка отпускания пальца от экрана
                 return true
             }
         }
@@ -87,8 +85,9 @@ class CustomDrawableView(context: Context, attrs: AttributeSet) : View(context, 
 
     private var p = Paint();
     private var p1 = Paint();
-    private var str = "hell"
+    private var str = "HELL"
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas) {
         body.draw(canvas)
@@ -98,7 +97,9 @@ class CustomDrawableView(context: Context, attrs: AttributeSet) : View(context, 
         p.color = Color.BLUE;
         p.typeface = Typeface.DEFAULT;
         p.textSize = 50F;
-        canvas.drawText(str, 10F, p.textSize, p);
+        Log.d("dddd", p.measureText(str).toString())
+        canvas.drawText(str, 0F, p.textSize, p);
+
     }
 }
 
