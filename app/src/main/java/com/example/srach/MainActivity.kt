@@ -72,6 +72,7 @@ class CustomDrawableView(context: Context, attrs: AttributeSet?) : View(context,
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
+
                 //Log.d("dddd", event.x.toString())
                 return true
             }
@@ -104,7 +105,10 @@ class CustomDrawableView(context: Context, attrs: AttributeSet?) : View(context,
         p.textSize = 50F;
         Log.d("dddd", p.measureText(str).toString())
         canvas.drawText(str, 0F, p.textSize, p);
+    }
 
+    override fun dispatchDraw(canvas: Canvas?) {
+        super.dispatchDraw(canvas)
     }
 }
 
@@ -112,23 +116,27 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        //setContentView(R.layout.activity_main)
 
-        val constraintLayout = findViewById<ConstraintLayout>(R.id.constraintLayout)
+//        val constraintLayout = findViewById<ConstraintLayout>(R.id.constraintLayout)
+//
+//        val params = ConstraintLayout.LayoutParams(
+//            ConstraintLayout.LayoutParams.WRAP_CONTENT,
+//            ConstraintLayout.LayoutParams.WRAP_CONTENT
+//        )
+//        params.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+//        params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
+//        params.marginStart = -50
+//        params.topMargin = 500
+//
+//        val myView = CustomDrawableView(this, null);
+//        myView.layoutParams = params
+//        constraintLayout.addView(myView);
 
-        val params = ConstraintLayout.LayoutParams(
-            ConstraintLayout.LayoutParams.WRAP_CONTENT,
-            ConstraintLayout.LayoutParams.WRAP_CONTENT
-        )
-        params.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
-        params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
-        params.marginStart = -50
-        params.topMargin = 500
-
-        val myView = CustomDrawableView(this, null);
-        myView.layoutParams = params
-        constraintLayout.addView(myView);
-
+        val canwasDraw = CanvasDraw(this, null)
+        setContentView(canwasDraw)
+        val catCanvas = CatCanvasView(this)
+        //setContentView(catCanvas)
     }
 
 
