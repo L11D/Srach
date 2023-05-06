@@ -103,7 +103,7 @@ class CustomDrawableView(context: Context, attrs: AttributeSet?) : View(context,
         p.color = Color.BLUE;
         p.typeface = Typeface.DEFAULT;
         p.textSize = 50F;
-        Log.d("dddd", p.measureText(str).toString())
+        //Log.d("dddd", p.measureText(str).toString())
         canvas.drawText(str, 0F, p.textSize, p);
     }
 
@@ -113,54 +113,29 @@ class CustomDrawableView(context: Context, attrs: AttributeSet?) : View(context,
 }
 
 class MainActivity : AppCompatActivity() {
-    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main)
 
-//        val constraintLayout = findViewById<ConstraintLayout>(R.id.constraintLayout)
-//
-//        val params = ConstraintLayout.LayoutParams(
-//            ConstraintLayout.LayoutParams.WRAP_CONTENT,
-//            ConstraintLayout.LayoutParams.WRAP_CONTENT
-//        )
-//        params.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
-//        params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
-//        params.marginStart = -50
-//        params.topMargin = 500
-//
+        val constraintLayout = findViewById<ConstraintLayout>(R.id.constraintLayout)
+
+        var params = ConstraintLayout.LayoutParams(
+            ConstraintLayout.LayoutParams.MATCH_PARENT,
+            ConstraintLayout.LayoutParams.MATCH_PARENT
+        )
+        params.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+        params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
+        params.bottomMargin = 100
+
+        val fieldView = FieldView(this, null).apply { layoutParams=params }
+        constraintLayout.addView(fieldView);
+
 //        val myView = CustomDrawableView(this, null);
 //        myView.layoutParams = params
 //        constraintLayout.addView(myView);
 
-        val canwasDraw = CanvasDraw(this, null)
-        setContentView(canwasDraw)
-        val catCanvas = CatCanvasView(this)
-        //setContentView(catCanvas)
+
+
     }
 
-
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-        Log.d("dddd", "dfdf")
-
-        if (event != null) {
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    Log.d("dddd", event.x.toString())
-                    return true
-                }
-
-                MotionEvent.ACTION_MOVE -> {
-                    //Log.e("gggg", "MainNNNNNmove")
-                    return true
-                }
-
-                MotionEvent.ACTION_UP -> {
-                    return true
-                }
-            }
-        }
-        return super.onTouchEvent(event)
-
-    }
 }
