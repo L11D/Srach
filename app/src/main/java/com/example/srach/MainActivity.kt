@@ -125,7 +125,6 @@ class MainActivity : AppCompatActivity() {
         )
         params.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
         params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
-        params.bottomMargin = 100
 
         val fieldView = FieldView(this, null).apply { layoutParams=params }
         constraintLayout.addView(fieldView);

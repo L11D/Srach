@@ -17,7 +17,7 @@ class NodeView(private val field:Field, private val position: Vector2f) : Drawab
     }
 
     override fun draw(canvas: Canvas) {
-        var displayPosition = solveDisplayPosition()
+        val displayPosition = solveDisplayPosition()
         val size = 50f
         canvas.drawRect(displayPosition.x, displayPosition.y, displayPosition.x+size, displayPosition.y +size, Paint().apply { color=Color.BLUE })
     }

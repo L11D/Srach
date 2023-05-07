@@ -2,8 +2,11 @@ package com.example.srach
 
 import android.graphics.Canvas
 import android.graphics.Color
+import android.util.Log
 
-class Field(private var viewSize:Vector2i, private var viewPosition:Vector2f) : Drawable{
+class Field() : Drawable{
+    private lateinit var viewSize:Vector2i
+    private lateinit var viewPosition:Vector2f
     private val nodeViewList = mutableListOf<NodeView>()
 
     init {
@@ -22,7 +25,7 @@ class Field(private var viewSize:Vector2i, private var viewPosition:Vector2f) : 
         this.viewPosition = viewPosition
     }
     fun addViewPosition(deltaPosition: Vector2f){
-        viewPosition + deltaPosition
+        viewPosition += deltaPosition
     }
     fun getViewPosition():Vector2f {
         return viewPosition

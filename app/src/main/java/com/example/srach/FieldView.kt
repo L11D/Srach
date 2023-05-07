@@ -6,12 +6,29 @@ import android.graphics.Color
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
+import android.view.ScaleGestureDetector
 import android.view.View
+import androidx.core.view.GestureDetectorCompat
+import kotlin.math.log
+
+private var mScaleFactor = 1f
+
+private val scaleListener = object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+
+    override fun onScale(detector: ScaleGestureDetector): Boolean {
+        mScaleFactor *= detector.scaleFactor
+
+        //Log.d("dddd", mScaleFactor.toString())
+        return true
+    }
+}
 
 class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
 
-    private lateinit var field: Field
-
+    private var field = Field().apply { setViewPosition(Vector2f(0f, 0f)) }
+    private var gListener = GListener(this)
+    private var gestureDetectorCompat = GestureDetectorCompat(this.context, gListener)
+    private val mScaleDetector = ScaleGestureDetector(this.context, scaleListener)
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
 
         val desiredWidth = 500 //govno
@@ -32,7 +49,6 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
             else -> desiredHeight
         }
 
-        field = Field(Vector2i(width, height), Vector2f(0f, 0f))
         setMeasuredDimension(width, height)
     }
 
@@ -47,24 +63,30 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 lastPos = touchPos
-                Log.d("dddd", "down")
-
+                //return true
             }
 
             MotionEvent.ACTION_MOVE -> {
-                //field.addViewPosition(lastPos- touchPos)
-                Log.d("dddd", "move")
-                field.addViewPosition(Vector2f(1f, 1f))
+                field.addViewPosition(touchPos - lastPos)
+                lastPos=touchPos
             }
 
             MotionEvent.ACTION_UP -> {
-                Log.d("dddd", "up")
-
             }
         }
         invalidate()
-        return super.onTouchEvent(event)
+        mScaleDetector.onTouchEvent(event);
+        gestureDetectorCompat.onTouchEvent(event)
+
+        return true
+        //return super.onTouchEvent(event)
     }
+
+//    override fun onTouchEvent(event: MotionEvent): Boolean {
+//        gestureDetectorCompat.onTouchEvent(event)
+//        invalidate()
+//        return super.onTouchEvent(event)
+//    }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
