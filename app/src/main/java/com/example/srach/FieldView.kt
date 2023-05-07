@@ -3,12 +3,15 @@ package com.example.srach
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.PointF
 import android.util.AttributeSet
 import android.util.Log
+import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.View
 import androidx.core.view.GestureDetectorCompat
+import androidx.core.view.ViewCompat
 import kotlin.math.log
 
 private var mScaleFactor = 1f
@@ -17,18 +20,85 @@ private val scaleListener = object : ScaleGestureDetector.SimpleOnScaleGestureLi
 
     override fun onScale(detector: ScaleGestureDetector): Boolean {
         mScaleFactor *= detector.scaleFactor
-
         //Log.d("dddd", mScaleFactor.toString())
         return true
     }
 }
 
+
+
 class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
 
     private var field = Field().apply { setViewPosition(Vector2f(0f, 0f)) }
+    fun getField():Field{ return field}
     private var gListener = GListener(this)
-    private var gestureDetectorCompat = GestureDetectorCompat(this.context, gListener)
-    private val mScaleDetector = ScaleGestureDetector(this.context, scaleListener)
+    private var gestureDetector = GestureDetector(this.context, gListener)
+
+    private val mScaleGestureListener = object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+
+        /**
+         * This is the active focal point in terms of the viewport. Could be a local
+         * variable but kept here to minimize per-frame allocations.
+         */
+        private val viewportFocus = PointF()
+        private var lastSpanX: Float = 0f
+        private var lastSpanY: Float = 0f
+
+        // Detects that new pointers are going down.
+        override fun onScaleBegin(scaleGestureDetector: ScaleGestureDetector): Boolean {
+            lastSpanX = scaleGestureDetector.currentSpanX
+            lastSpanY = scaleGestureDetector.currentSpanY
+            return true
+        }
+
+        override fun onScale(scaleGestureDetector: ScaleGestureDetector): Boolean {
+            val spanX: Float = scaleGestureDetector.currentSpanX
+            val spanY: Float = scaleGestureDetector.currentSpanY
+
+            Log.d("dddd", "span: " + spanX.toString() + ", " + spanY.toString())
+
+            val newWidth: Float = lastSpanX / spanX * field.getViewSize().x
+            val newHeight: Float = lastSpanY / spanY * field.getViewSize().y
+
+            Log.d("dddd", "size: " + newWidth.toString() + ", " + newHeight.toString())
+
+            val focusX: Float = scaleGestureDetector.focusX
+            val focusY: Float = scaleGestureDetector.focusY
+
+            Log.d("dddd", "focus: " + focusX.toString() + ", " + focusY.toString())
+
+
+            // Makes sure that the chart point is within the chart region.
+            // See the sample for the implementation of hitTest().
+            //hitTest(focusX, focusY, viewportFocus)
+
+
+
+//            mContentRect?.apply {
+//                mCurrentViewport.set(
+//                    viewportFocus.x - newWidth * (focusX - left) / width(),
+//                    viewportFocus.y - newHeight * (bottom - focusY) / height(),
+//                    0f,
+//                    0f
+//                )
+//            }
+
+            //Log.d("dddd", newWidth.toString() + "   " + newHeight.toString())
+
+            //field.addViewPosition(Vector2f(newWidth, newHeight))
+
+            // Invalidates the View to update the display.
+            //ViewCompat.postInvalidateOnAnimation(this@InteractiveLineGraphView)
+
+            lastSpanX = spanX
+            lastSpanY = spanY
+            return true
+        }
+    }
+
+    private val mScaleDetector = ScaleGestureDetector(this.context, mScaleGestureListener)
+
+
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
 
         val desiredWidth = 500 //govno
@@ -57,39 +127,17 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
         field.setViewSize(Vector2i(width, height))
     }
 
-    private var lastPos = Vector2f(0f, 0f)
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        val touchPos = Vector2f(event.x, event.y)
-        when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                lastPos = touchPos
-                //return true
-            }
-
-            MotionEvent.ACTION_MOVE -> {
-                field.addViewPosition(touchPos - lastPos)
-                lastPos=touchPos
-            }
-
-            MotionEvent.ACTION_UP -> {
-            }
-        }
-        invalidate()
         mScaleDetector.onTouchEvent(event);
-        gestureDetectorCompat.onTouchEvent(event)
+        gestureDetector.onTouchEvent(event)
+
+        invalidate()
 
         return true
-        //return super.onTouchEvent(event)
     }
-
-//    override fun onTouchEvent(event: MotionEvent): Boolean {
-//        gestureDetectorCompat.onTouchEvent(event)
-//        invalidate()
-//        return super.onTouchEvent(event)
-//    }
-
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         field.draw(canvas)
     }
+
 }

@@ -14,6 +14,8 @@ class Field() : Drawable{
         nodeViewList.add(NodeView(this, Vector2f(100f, 300f)))
     }
 
+
+
     fun setViewSize(viewSize: Vector2i){
         this.viewSize = viewSize
     }

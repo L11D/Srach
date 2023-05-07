@@ -10,6 +10,7 @@ class GListener(private val fieldView: FieldView) : GestureDetector.OnGestureLis
     }
 
     override fun onShowPress(e: MotionEvent) {
+
     }
 
     override fun onSingleTapUp(e: MotionEvent): Boolean {
@@ -22,10 +23,13 @@ class GListener(private val fieldView: FieldView) : GestureDetector.OnGestureLis
         distanceX: Float,
         distanceY: Float
     ): Boolean {
+        fieldView.getField().addViewPosition(Vector2f(-distanceX, -distanceY));
         return true
     }
 
     override fun onLongPress(e: MotionEvent) {
+        //Log.d("dddd", "onLongPress")
+
     }
 
     override fun onFling(
@@ -34,7 +38,6 @@ class GListener(private val fieldView: FieldView) : GestureDetector.OnGestureLis
         velocityX: Float,
         velocityY: Float
     ): Boolean {
-        Log.d("dddd", e1.x.toString() + "   " + e2.x.toString())
         return true
     }
 }
