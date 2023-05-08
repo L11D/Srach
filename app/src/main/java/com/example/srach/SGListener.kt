@@ -12,7 +12,7 @@ class SGListener(private val fieldView: FieldView) : ScaleGestureDetector.Simple
         val focusY = scaleGestureDetector.focusY
         val scale = scaleGestureDetector.scaleFactor
 
-        if (fieldView.field.scale * scale in 0.3f..2f) {
+        if (fieldView.field.scale * scale in 0.2f..2f) {
             fieldView.field.scale *= scale
             fieldView.field.viewPosition *= scale
         }

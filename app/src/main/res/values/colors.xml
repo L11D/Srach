@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="fieldBG">#323844</color>
     <color name="grid">#717e99</color>
+    <color name="gridBigger">#afc4ee</color>
 </resources>
