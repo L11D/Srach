@@ -19,4 +19,7 @@ class Vector2f() {
     operator fun minus(a:Vector2f) : Vector2f{
         return Vector2f(x - a.x, y - a.y)
     }
+    operator fun times (a:Float) : Vector2f{
+        return Vector2f(x * a, y * a)
+    }
 }

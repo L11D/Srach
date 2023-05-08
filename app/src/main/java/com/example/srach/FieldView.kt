@@ -16,7 +16,7 @@ import kotlin.math.log
 
 class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
 
-    var field = Field()
+    var field = Field(this.context)
         get() = field
         set(value) {field = value}
 
@@ -62,6 +62,7 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
         return true
     }
     override fun onDraw(canvas: Canvas) {
+
         super.onDraw(canvas)
         field.draw(canvas)
     }

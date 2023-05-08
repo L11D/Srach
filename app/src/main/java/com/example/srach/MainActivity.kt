@@ -117,17 +117,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val constraintLayout = findViewById<ConstraintLayout>(R.id.constraintLayout)
-
-        var params = ConstraintLayout.LayoutParams(
-            ConstraintLayout.LayoutParams.MATCH_PARENT,
-            ConstraintLayout.LayoutParams.MATCH_PARENT
-        )
-        params.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
-        params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
-
-        val fieldView = FieldView(this, null).apply { layoutParams=params }
-        constraintLayout.addView(fieldView);
+//        val constraintLayout = findViewById<ConstraintLayout>(R.id.constraintLayout)
+//
+//        var params = ConstraintLayout.LayoutParams(
+//            ConstraintLayout.LayoutParams.MATCH_PARENT,
+//            ConstraintLayout.LayoutParams.MATCH_PARENT
+//        )
+//        params.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+//        params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
+//
+//        val fieldView = FieldView(this, null).apply { layoutParams=params }
+//        constraintLayout.addView(fieldView);
 
 //        val myView = CustomDrawableView(this, null);
 //        myView.layoutParams = params

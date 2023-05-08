@@ -12,13 +12,12 @@ class SGListener(private val fieldView: FieldView) : ScaleGestureDetector.Simple
         val focusY = scaleGestureDetector.focusY
         val scale = scaleGestureDetector.scaleFactor
 
-        fieldView.field.scale *= scale
-        val viewPos = fieldView.field.viewPosition
-        fieldView.field.viewPosition = Vector2f(viewPos.x * scale, viewPos.y * scale)
+        if (fieldView.field.scale * scale in 0.3f..2f) {
+            fieldView.field.scale *= scale
+            fieldView.field.viewPosition *= scale
+        }
 
-
-
-        //Log.d("dddd", "focus: " + focusX.toString() + ", " + focusY.toString())
+       //Log.d("dddd", "SGListener: " + (fieldView.field.viewPosition * scale).x.toString() + ", " + (fieldView.field.viewPosition * scale).y.toString())
 
         return true
     }

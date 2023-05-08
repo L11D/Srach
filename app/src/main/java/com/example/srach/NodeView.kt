@@ -3,6 +3,7 @@ package com.example.srach
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.util.Log
 
 class NodeView(private val field:Field, private val position: Vector2f) : Drawable {
 
@@ -10,9 +11,9 @@ class NodeView(private val field:Field, private val position: Vector2f) : Drawab
         get() = field
         set(value) {field = value}
 
-    private var size = 50f
-    private var displayPosition = Vector2f(0f, 0f)
-    private var displaySize = 0f
+    private var size = Vector2f(50f, 50f)
+    private var displayPosition = Vector2f()
+    private var displaySize = Vector2f()
     private fun solveDisplayPosition(){
         val viewPos = field.viewPosition
         val viewSize = field.viewSize
@@ -25,6 +26,12 @@ class NodeView(private val field:Field, private val position: Vector2f) : Drawab
 
     override fun draw(canvas: Canvas) {
         solveDisplayPosition()
-        canvas.drawRect(displayPosition.x, displayPosition.y, displayPosition.x + displaySize, displayPosition.y + displaySize, Paint().apply { this.color = colorN })
+        val right = displayPosition.x + displaySize.x
+        val bottom = displayPosition.y + displaySize.y
+
+        if (displayPosition.x < field.viewSize.x && right >= 0 &&
+            displayPosition.y < field.viewSize.y && bottom >= 0){
+            canvas.drawRect(displayPosition.x, displayPosition.y, right, bottom, Paint().apply { this.color = colorN })
+        }
     }
 }
