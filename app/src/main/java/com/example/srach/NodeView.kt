@@ -6,19 +6,25 @@ import android.graphics.Paint
 
 class NodeView(private val field:Field, private val position: Vector2f) : Drawable {
 
+    var colorN = Color.BLUE
+        get() = field
+        set(value) {field = value}
 
-    private fun solveDisplayPosition():Vector2f{
-        val viewPos = field.getViewPosition()
-        val viewSize = field.getViewSize()
-        val pos = Vector2f(0f ,0f)
-        pos.x = position.x + viewPos.x + viewSize.x/2
-        pos.y = position.y + viewPos.y + viewSize.y/2
-        return pos
+    private var size = 50f
+    private var displayPosition = Vector2f(0f, 0f)
+    private var displaySize = 0f
+    private fun solveDisplayPosition(){
+        val viewPos = field.viewPosition
+        val viewSize = field.viewSize
+        val scale = field.scale
+
+        displayPosition.x = position.x * scale - viewPos.x + viewSize.x/2
+        displayPosition.y = position.y * scale - viewPos.y + viewSize.y/2
+        displaySize = size * scale
     }
 
     override fun draw(canvas: Canvas) {
-        val displayPosition = solveDisplayPosition()
-        val size = 50f
-        canvas.drawRect(displayPosition.x, displayPosition.y, displayPosition.x+size, displayPosition.y +size, Paint().apply { color=Color.BLUE })
+        solveDisplayPosition()
+        canvas.drawRect(displayPosition.x, displayPosition.y, displayPosition.x + displaySize, displayPosition.y + displaySize, Paint().apply { this.color = colorN })
     }
 }

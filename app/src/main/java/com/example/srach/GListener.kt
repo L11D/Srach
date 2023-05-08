@@ -23,7 +23,9 @@ class GListener(private val fieldView: FieldView) : GestureDetector.OnGestureLis
         distanceX: Float,
         distanceY: Float
     ): Boolean {
-        fieldView.getField().addViewPosition(Vector2f(-distanceX, -distanceY));
+        fieldView.field.viewPosition += Vector2f(distanceX, distanceY);
+        //Log.d("dddd", "onScroll")
+        //Log.d("dddd", fieldView.getField().getViewPosition().x.toString())
         return true
     }
 
