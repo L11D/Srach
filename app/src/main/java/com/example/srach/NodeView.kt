@@ -3,9 +3,11 @@ package com.example.srach
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.RectF
+import android.graphics.drawable.shapes.RoundRectShape
 import android.util.Log
 
-class NodeView(private val field:Field, var position: Vector2f) : Drawable {
+class NodeView(val node:Node, private val field:Field, var position: Vector2f) : Drawable {
     var colorN = Color.BLUE
         get() = field
         set(value) {field = value}
@@ -13,6 +15,8 @@ class NodeView(private val field:Field, var position: Vector2f) : Drawable {
     private var size = Vector2f(100f, 100f)
     private var displayPosition = Vector2f()
     private var displaySize = Vector2f()
+
+    private var body = RoundRectShape(null, null, null)
 
     fun collision(pos:Vector2f):Boolean{
         return pos.x in displayPosition.x..(displayPosition.x+displaySize.x)&&
@@ -37,5 +41,6 @@ class NodeView(private val field:Field, var position: Vector2f) : Drawable {
             displayPosition.y < field.viewSize.y && bottom >= 0){
             canvas.drawRect(displayPosition.x, displayPosition.y, right, bottom, Paint().apply { this.color = colorN })
         }
+
     }
 }

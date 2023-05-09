@@ -1,23 +1,36 @@
 package com.example.srach
 
+import android.content.Context
 import android.graphics.Color
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 
-class GListener(private val fieldView: FieldView) : GestureDetector.OnGestureListener {
-    private var movableNodeView:NodeView? = null
-    private val listenerLoop = ListenerLoop(this, fieldView)
-    var lastTouchPos = Vector2f()
+class GListener(private val context: Context, private val fieldView: FieldView) : GestureDetector.OnGestureListener {
+    var movableNodeView:NodeView? = null
         get() = field
-    var touched = false
+
+    private val listenerLoop = ListenerLoop(this, fieldView)
+    private val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+   private fun vibrate(){
+       vibrator.vibrate(
+           VibrationEffect.createOneShot(
+               20,
+               VibrationEffect.DEFAULT_AMPLITUDE
+           ))
+   }
+    init {
+        listenerLoop.start()
+    }
+    var lastTouchPos = Vector2f()
         get() = field
 
     fun baseActions(e: MotionEvent){
         when (e.action) {
             MotionEvent.ACTION_DOWN -> {
                 lastTouchPos = Vector2f(e.x, e.y)
-                touched = true
             }
 
             MotionEvent.ACTION_MOVE -> {
@@ -25,14 +38,10 @@ class GListener(private val fieldView: FieldView) : GestureDetector.OnGestureLis
                     movableNodeView!!.position += (Vector2f(e.x, e.y) - lastTouchPos) * (1/fieldView.field.scale)
                 }
                 lastTouchPos = Vector2f(e.x, e.y)
-                if(!listenerLoop.isAlive){
-                    listenerLoop.start()
-                }
             }
 
             MotionEvent.ACTION_UP -> {
                 movableNodeView = null
-                touched = false
             }
         }
     }
@@ -68,6 +77,7 @@ class GListener(private val fieldView: FieldView) : GestureDetector.OnGestureLis
         movableNodeView = fieldView.nodeViewsCollision(Vector2f(e.x, e.y))
         if (movableNodeView != null) {
             movableNodeView!!.colorN = Color.GREEN
+            vibrate()
         }
 
         fieldView.invalidate()

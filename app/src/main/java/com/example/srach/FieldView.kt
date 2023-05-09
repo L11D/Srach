@@ -7,6 +7,8 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PathMeasure
 import android.graphics.PointF
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.AttributeSet
 import android.util.Log
 import android.view.GestureDetector
@@ -24,7 +26,7 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
         get() = field
         set(value) {field = value}
 
-    private var gListener = GListener(this)
+    private var gListener = GListener(context,this)
     private var gestureDetector = GestureDetector(this.context, gListener)
     private val scaleGestureListener = SGListener(this)
     private val scaleDetector = ScaleGestureDetector(this.context, scaleGestureListener)
@@ -80,6 +82,8 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
         curvePath.moveTo(0f, 1000f)
         curvePath.cubicTo(250f, 1000f, 250f, 500f, 500f, 500f)
         pathMeasure.setPath(curvePath, false)
+
+
     }
     private fun distanceBetween(x1: Float, y1: Float, x2: Float, y2: Float): Float {
         val dx = x1 - x2
