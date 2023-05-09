@@ -20,6 +20,8 @@ class Field(private val context:Context) : Drawable{
     private val grid = Grid(context,this)
     val nodeViewList = mutableListOf<NodeView>()
         get() = field
+    val connectionsList = mutableListOf<Connection>()
+        get() = field
 
     init {
         nodeViewList.add(NodeView(Node(),this, Vector2f(0f, 0f)))
@@ -30,14 +32,18 @@ class Field(private val context:Context) : Drawable{
         nodeViewList.add(NodeView(Node(),this, Vector2f(200f, 1000f)))
         nodeViewList.add(NodeView(Node(),this, Vector2f(-200f, 1200f)))
         nodeViewList[0].colorN = Color.BLACK
+
+        connectionsList.add(Connection(this, Vector2f(100f, 100f), Vector2f(500f, 1200f)))
     }
 
 
     override fun draw(canvas:Canvas){
         canvas.drawColor(context.getColor(R.color.fieldBG))
         grid.draw(canvas)
-        for (node in nodeViewList)
-        {
+        for (con in connectionsList){
+            con.draw(canvas)
+        }
+        for (node in nodeViewList) {
             node.draw(canvas)
         }
     }

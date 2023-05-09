@@ -5,7 +5,9 @@ import android.graphics.Paint
 
 class NodeViewBody(nodeView: NodeView) : Drawable, NodeViewUnit(nodeView) {
 
-    private val round = 20f
+    var round = 20f
+        get() = field
+        set(value) {field = value}
     private var displayRound = 0f
 
     override fun solveDisplayPosition(){

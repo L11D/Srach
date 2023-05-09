@@ -14,7 +14,7 @@ class GListener(private val context: Context, private val fieldView: FieldView) 
 
     private val listenerLoop = ListenerLoop(this, fieldView)
     private val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-   private fun vibrate(){
+    private fun vibrate(){
        vibrator.vibrate(
            VibrationEffect.createOneShot(
                20,

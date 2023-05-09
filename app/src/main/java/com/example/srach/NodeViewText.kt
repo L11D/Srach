@@ -9,6 +9,8 @@ class NodeViewText(nodeView: NodeView) : Drawable, NodeViewUnit(nodeView) {
         get() = field
         set(value) {field = value}
 
+    private var displayTextSize = 0f
+
     var text = "lorem ipsun"
         get() = field
         set(value) {field = value}
@@ -19,8 +21,15 @@ class NodeViewText(nodeView: NodeView) : Drawable, NodeViewUnit(nodeView) {
         paint.textSize = textSize
     }
 
+    override fun solveDisplayPosition() {
+        displayPosition = nodeView.displayPosition + position * nodeView.field.scale
+        displayTextSize = textSize * nodeView.field.scale
+        paint.textSize = displayTextSize
+        displaySize = Vector2f(paint.measureText(text), displayTextSize)
+    }
+
     override fun draw(canvas: Canvas) {
         super.draw(canvas)
-        canvas.drawOval(displayPosition.x, displayPosition.y, displayPosition.x + displaySize.x, displayPosition.y + displaySize.y, paint)
+        canvas.drawText(text, displayPosition.x, displayPosition.y + displayTextSize, paint)
     }
 }
