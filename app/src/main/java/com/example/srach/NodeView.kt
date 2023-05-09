@@ -5,15 +5,19 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.Log
 
-class NodeView(private val field:Field, private val position: Vector2f) : Drawable {
-
+class NodeView(private val field:Field, var position: Vector2f) : Drawable {
     var colorN = Color.BLUE
         get() = field
         set(value) {field = value}
 
-    private var size = Vector2f(50f, 50f)
+    private var size = Vector2f(100f, 100f)
     private var displayPosition = Vector2f()
     private var displaySize = Vector2f()
+
+    fun collision(pos:Vector2f):Boolean{
+        return pos.x in displayPosition.x..(displayPosition.x+displaySize.x)&&
+                pos.y in displayPosition.y..(displayPosition.y+displaySize.y)
+    }
     private fun solveDisplayPosition(){
         val viewPos = field.viewPosition
         val viewSize = field.viewSize

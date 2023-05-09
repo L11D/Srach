@@ -18,7 +18,8 @@ class Field(private val context:Context) : Drawable{
         set(value) {field = value}
 
     private val grid = Grid(context,this)
-    private val nodeViewList = mutableListOf<NodeView>()
+    val nodeViewList = mutableListOf<NodeView>()
+        get() = field
 
     init {
         nodeViewList.add(NodeView(this, Vector2f(0f, 0f)))

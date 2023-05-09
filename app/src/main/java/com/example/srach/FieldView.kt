@@ -29,6 +29,13 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
     private val scaleGestureListener = SGListener(this)
     private val scaleDetector = ScaleGestureDetector(this.context, scaleGestureListener)
 
+    fun nodeViewsCollision(pos:Vector2f):NodeView?{
+        for(node in field.nodeViewList){
+            if (node.collision(pos)) return node
+        }
+        return null
+    }
+
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
 
         val desiredWidth = 500 //govno
@@ -70,7 +77,8 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
     private val pathMeasure = PathMeasure()
 
     init {
-        curvePath.cubicTo(100f, 100f, 200f, 0f, 500f, 500f)
+        curvePath.moveTo(0f, 1000f)
+        curvePath.cubicTo(250f, 1000f, 250f, 500f, 500f, 500f)
         pathMeasure.setPath(curvePath, false)
     }
     private fun distanceBetween(x1: Float, y1: Float, x2: Float, y2: Float): Float {
@@ -108,11 +116,12 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
                 }
             }
         }
+
         scaleDetector.onTouchEvent(event)
         gestureDetector.onTouchEvent(event)
+        gListener.baseActions(event)
 
         invalidate()
-
         return true
     }
 
@@ -121,7 +130,7 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
         super.onDraw(canvas)
         field.draw(canvas)
 
-        canvas.drawPath(curvePath, paint)
+        //canvas.drawPath(curvePath, paint)
     }
 
 }

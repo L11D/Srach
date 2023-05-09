@@ -117,6 +117,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
 //        val constraintLayout = findViewById<ConstraintLayout>(R.id.constraintLayout)
 //
 //        var params = ConstraintLayout.LayoutParams(
