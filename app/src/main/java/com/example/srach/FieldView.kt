@@ -38,6 +38,14 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
         return null
     }
 
+    fun connectorsCollision(pos: Vector2f):NodeViewConnector?{
+        for(node in field.nodeViewList) {
+            val out = node.connectorCollision(pos)
+            if( out != null) return out
+        }
+        return null
+    }
+
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
 
         val desiredWidth = 500 //govno

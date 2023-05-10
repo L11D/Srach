@@ -12,6 +12,11 @@ class GListener(private val context: Context, private val fieldView: FieldView) 
     var movableNodeView:NodeView? = null
         get() = field
 
+    var nodeViewConnector1:NodeViewConnector? = null
+    var nodeViewConnector2:NodeViewConnector? = null
+    var oneTOtwo = false
+    var connection:Connection? = null
+
     private val listenerLoop = ListenerLoop(this, fieldView)
     private val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     private fun vibrate(){
@@ -31,6 +36,21 @@ class GListener(private val context: Context, private val fieldView: FieldView) 
         when (e.action) {
             MotionEvent.ACTION_DOWN -> {
                 lastTouchPos = Vector2f(e.x, e.y)
+
+                nodeViewConnector1 = fieldView.connectorsCollision(Vector2f(e.x, e.y))
+                if (nodeViewConnector1 != null){
+                    if (nodeViewConnector1!!.nodeOutput != null){
+                        oneTOtwo = true
+                        connection = Connection(fieldView.field, nodeViewConnector1!!, Vector2f(e.x, e.y))
+                        fieldView.field.connectionsList.add(connection!!)
+                    }
+                    else{
+                        oneTOtwo = false
+                        connection = Connection(fieldView.field, Vector2f(e.x, e.y), nodeViewConnector1!!)
+                        fieldView.field.connectionsList.add(connection!!)
+                    }
+                }
+
             }
 
             MotionEvent.ACTION_MOVE -> {
@@ -79,6 +99,7 @@ class GListener(private val context: Context, private val fieldView: FieldView) 
             movableNodeView!!.colorN = Color.GREEN
             vibrate()
         }
+        nodeViewConnector1 = null
 
         fieldView.invalidate()
     }

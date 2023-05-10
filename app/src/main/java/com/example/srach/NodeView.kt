@@ -32,7 +32,7 @@ class NodeView(node:Node, val field:Field, var position: Vector2f) : Drawable {
         paint.color = colorN
     }
 
-    public var connectors = mutableListOf<NodeViewConnector>()
+    public var connectorsList = mutableListOf<NodeViewConnector>()
 
     val description = NodeViewText(this).apply {
         position= Vector2f(5f, 0f)
@@ -47,7 +47,7 @@ class NodeView(node:Node, val field:Field, var position: Vector2f) : Drawable {
             if(i == node.nodeInputs.size - 1){
                 height += (connectorRadius + connectorOffset) * i
             }
-            connectors.add(
+            connectorsList.add(
                 NodeViewConnector(this, node.nodeInputs[i]).apply {
                 position = Vector2f(-connectorRadius/2, topPadding + (connectorRadius + connectorOffset) * i)
                 size = Vector2f(connectorRadius, connectorRadius)
@@ -56,7 +56,7 @@ class NodeView(node:Node, val field:Field, var position: Vector2f) : Drawable {
         }
         height += connectorRadius
 
-        connectors.add(NodeViewConnector(this, node.nodeOutput).apply {
+        connectorsList.add(NodeViewConnector(this, node.nodeOutput).apply {
             position = Vector2f(this@NodeView.size.x - connectorRadius/2, topPadding)
             size = Vector2f(connectorRadius, connectorRadius)
             paint.color = Color.RED
@@ -69,6 +69,14 @@ class NodeView(node:Node, val field:Field, var position: Vector2f) : Drawable {
         return pos.x in displayPosition.x..(displayPosition.x+displaySize.x)&&
                 pos.y in displayPosition.y..(displayPosition.y+displaySize.y)
     }
+
+    fun connectorCollision(pos: Vector2f):NodeViewConnector?{
+        for(con in connectorsList){
+            if(con.collision(pos)) return con
+        }
+        return null
+    }
+
     private fun solveDisplayPosition(){
         val viewPos = field.viewPosition
         val viewSize = field.viewSize
@@ -87,7 +95,7 @@ class NodeView(node:Node, val field:Field, var position: Vector2f) : Drawable {
         if (displayPosition.x < field.viewSize.x && right >= 0 &&
             displayPosition.y < field.viewSize.y && bottom >= 0){
             body.draw(canvas)
-            for (c in connectors){
+            for (c in connectorsList){
                 c.draw(canvas)
             }
             description.draw(canvas)

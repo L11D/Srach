@@ -10,11 +10,18 @@ class NodeViewConnector private constructor(nodeView: NodeView) : Drawable, Node
         this.nodeInput = nodeInput
     }
 
-    private var nodeOutput:NodeOutput? = null
-    private var nodeInput:NodeInput? = null
+    var nodeOutput:NodeOutput? = null
+        get() = field
+    var nodeInput:NodeInput? = null
+        get() = field
 
     var globalPosition = Vector2f()
         get() = field
+
+    fun collision(pos:Vector2f):Boolean{
+        return pos.x in displayPosition.x..(displayPosition.x+displaySize.x)&&
+                pos.y in displayPosition.y..(displayPosition.y+displaySize.y)
+    }
 
     override fun solveDisplayPosition() {
         super.solveDisplayPosition()

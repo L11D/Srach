@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PathMeasure
+import java.lang.Math.abs
 
 class Connection private constructor(private val field: Field):Drawable {
     constructor(field: Field, pos1:Vector2f, pos2: Vector2f) : this(field){
@@ -33,10 +34,10 @@ class Connection private constructor(private val field: Field):Drawable {
     private var displayPos1 = Vector2f()
     private var displayPos2 = Vector2f()
 
-    private var controllerLength = 250f
+    private var controllerLength = 0f
     private var displayControllerLength = 0f
 
-    private val strokeWidth = 6.5f
+    private val strokeWidth = 8f
 
     private var path = Path()
     private val paint = Paint().apply {
@@ -54,12 +55,15 @@ class Connection private constructor(private val field: Field):Drawable {
         val viewSize = field.viewSize
         val scale = field.scale
 
-        if(connectorInput != null){
-            pos1 = connectorInput!!.globalPosition
-        }
         if(connectorOutput != null){
-            pos2 = connectorOutput!!.globalPosition
+            pos1 = connectorOutput!!.globalPosition
         }
+        if(connectorInput != null){
+            pos2 = connectorInput!!.globalPosition
+        }
+
+        controllerLength = 50f + abs(pos1.x - pos2.x) * 0.5f + abs(pos1.y - pos2.y) * 0.1f
+
         displayPos1.x = pos1.x * scale - viewPos.x + viewSize.x/2
         displayPos1.y = pos1.y * scale - viewPos.y + viewSize.y/2
 
