@@ -34,6 +34,7 @@ class Field(private val context:Context) : Drawable{
         nodeViewList[0].colorN = Color.BLACK
 
         connectionsList.add(Connection(this, Vector2f(100f, 100f), Vector2f(500f, 1200f)))
+        connectionsList.add(Connection(this, nodeViewList[0].connectors[2],  nodeViewList[1].connectors[0]))
     }
 
 

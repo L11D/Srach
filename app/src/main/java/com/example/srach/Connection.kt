@@ -6,7 +6,29 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PathMeasure
 
-class Connection(private val field: Field, var pos1:Vector2f, var pos2: Vector2f):Drawable {
+class Connection private constructor(private val field: Field):Drawable {
+    constructor(field: Field, pos1:Vector2f, pos2: Vector2f) : this(field){
+        this.pos1 = pos1
+        this.pos2 = pos2
+    }
+    constructor(field: Field, connectorOutput: NodeViewConnector, pos2: Vector2f) : this(field){
+        this.connectorOutput = connectorOutput
+        this.pos2 = pos2
+    }
+    constructor(field: Field, pos1:Vector2f, connectorInput: NodeViewConnector) : this(field){
+        this.pos1 = pos1
+        this.connectorInput = connectorInput
+    }
+    constructor(field: Field, connectorOutput: NodeViewConnector, connectorInput: NodeViewConnector) : this(field){
+        this.connectorInput = connectorInput
+        this.connectorOutput = connectorOutput
+    }
+
+    private var connectorInput:NodeViewConnector? = null
+    private var connectorOutput:NodeViewConnector? = null
+
+    private var pos1 = Vector2f()
+    private var pos2 = Vector2f()
 
     private var displayPos1 = Vector2f()
     private var displayPos2 = Vector2f()
@@ -32,6 +54,12 @@ class Connection(private val field: Field, var pos1:Vector2f, var pos2: Vector2f
         val viewSize = field.viewSize
         val scale = field.scale
 
+        if(connectorInput != null){
+            pos1 = connectorInput!!.globalPosition
+        }
+        if(connectorOutput != null){
+            pos2 = connectorOutput!!.globalPosition
+        }
         displayPos1.x = pos1.x * scale - viewPos.x + viewSize.x/2
         displayPos1.y = pos1.y * scale - viewPos.y + viewSize.y/2
 

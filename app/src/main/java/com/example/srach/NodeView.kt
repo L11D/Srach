@@ -11,10 +11,9 @@ import android.graphics.drawable.shapes.RoundRectShape
 import android.util.Log
 import kotlin.math.roundToInt
 
-class NodeView(val node:Node, val field:Field, var position: Vector2f) : Drawable {
+class NodeView(node:Node, val field:Field, var position: Vector2f) : Drawable {
+
     var colorN = Color.BLUE
-        get() = field
-        set(value) {field = value}
 
     private var size = Vector2f(150f, 100f)
     var displayPosition = Vector2f()
@@ -33,7 +32,7 @@ class NodeView(val node:Node, val field:Field, var position: Vector2f) : Drawabl
         paint.color = colorN
     }
 
-    val connectors = mutableListOf<NodeViewConnector>()
+    public var connectors = mutableListOf<NodeViewConnector>()
 
     val description = NodeViewText(this).apply {
         position= Vector2f(5f, 0f)
@@ -48,7 +47,8 @@ class NodeView(val node:Node, val field:Field, var position: Vector2f) : Drawabl
             if(i == node.nodeInputs.size - 1){
                 height += (connectorRadius + connectorOffset) * i
             }
-            connectors.add(NodeViewConnector(this).apply {
+            connectors.add(
+                NodeViewConnector(this, node.nodeInputs[i]).apply {
                 position = Vector2f(-connectorRadius/2, topPadding + (connectorRadius + connectorOffset) * i)
                 size = Vector2f(connectorRadius, connectorRadius)
                 paint.color = Color.RED
@@ -56,7 +56,7 @@ class NodeView(val node:Node, val field:Field, var position: Vector2f) : Drawabl
         }
         height += connectorRadius
 
-        connectors.add(NodeViewConnector(this).apply {
+        connectors.add(NodeViewConnector(this, node.nodeOutput).apply {
             position = Vector2f(this@NodeView.size.x - connectorRadius/2, topPadding)
             size = Vector2f(connectorRadius, connectorRadius)
             paint.color = Color.RED

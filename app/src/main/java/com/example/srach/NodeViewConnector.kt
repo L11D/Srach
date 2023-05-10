@@ -2,7 +2,26 @@ package com.example.srach
 
 import android.graphics.Canvas
 
-class NodeViewConnector(nodeView: NodeView) : Drawable, NodeViewUnit(nodeView) {
+class NodeViewConnector private constructor(nodeView: NodeView) : Drawable, NodeViewUnit(nodeView) {
+    constructor(nodeView: NodeView, nodeOutput: NodeOutput):this(nodeView){
+        this.nodeOutput = nodeOutput
+    }
+    constructor(nodeView: NodeView, nodeInput: NodeInput):this(nodeView){
+        this.nodeInput = nodeInput
+    }
+
+    private var nodeOutput:NodeOutput? = null
+    private var nodeInput:NodeInput? = null
+
+    var globalPosition = Vector2f()
+        get() = field
+
+    override fun solveDisplayPosition() {
+        super.solveDisplayPosition()
+        globalPosition = position + nodeView.position
+        globalPosition.x += size.x/2
+        globalPosition.y += size.y/2
+    }
 
     override fun draw(canvas: Canvas) {
         super.draw(canvas)
