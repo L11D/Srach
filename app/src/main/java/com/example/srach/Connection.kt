@@ -57,17 +57,17 @@ class Connection private constructor(private val field: Field) : Drawable {
         strokeJoin = Paint.Join.ROUND // default: MITER
         strokeCap = Paint.Cap.ROUND // default: BUTT
     }
-    private val pathMeasure = PathMeasure()
+    private var pathMeasure = PathMeasure()
 
     fun collision(pos: Vector2f): Boolean {
         val x = pos.x
         val y = pos.y
-        val distanceThreshold = 20f
+        val distanceThreshold = 25f
 
         val pointCoords = floatArrayOf(0f, 0f)
         var distance = Float.MAX_VALUE
         var position = 0f
-        var step = 1f // шаг для определения ближайшей точки на кривой
+        val step = 1f
 
         while (position <= pathMeasure.length) {
             pathMeasure.getPosTan(position, pointCoords, null)
@@ -131,6 +131,7 @@ class Connection private constructor(private val field: Field) : Drawable {
             displayPos2.x,
             displayPos2.y
         )
+        pathMeasure = PathMeasure(path, false)
         canvas.drawPath(path, paint)
         path = Path()
     }

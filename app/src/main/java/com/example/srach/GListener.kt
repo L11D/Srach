@@ -13,8 +13,8 @@ class GListener(private val context: Context, private val fieldView: FieldView) 
     var movableNodeView: NodeView? = null
         get() = field
 
-    var nodeViewConnector1: NodeViewConnector? = null
-    var nodeViewConnector2: NodeViewConnector? = null
+    private var nodeViewConnector1: NodeViewConnector? = null
+    private var nodeViewConnector2: NodeViewConnector? = null
     var oneTOtwo = false
     var connection: Connection? = null
 
@@ -106,29 +106,25 @@ class GListener(private val context: Context, private val fieldView: FieldView) 
                                     connection!!.connectorInput = nodeViewConnector2
                                     vibrateConnectionMove()
                                 }
-                            }
-                            else {
+                            } else {
                                 if (nodeViewConnector2!!.nodeOutput != null && connection!!.connectorOutput == null) {
                                     connection!!.connectorOutput = nodeViewConnector2
                                     vibrateConnectionMove()
                                 }
                             }
-                        }
-                        else{
-                            if(oneTOtwo){
-                                if(connection!!.connectorInput != null){
+                        } else {
+                            if (oneTOtwo) {
+                                if (connection!!.connectorInput != null) {
                                     connection!!.connectorInput = null
                                     vibrateConnectionMove()
                                 }
-                            }
-                            else{
-                                if(connection!!.connectorOutput != null){
+                            } else {
+                                if (connection!!.connectorOutput != null) {
                                     connection!!.connectorOutput = null
                                     vibrateConnectionMove()
                                 }
                             }
                         }
-
                     }
                 }
 
@@ -168,8 +164,6 @@ class GListener(private val context: Context, private val fieldView: FieldView) 
         if (movableNodeView == null && connection == null) {
             fieldView.field.viewPosition += Vector2f(distanceX, distanceY)
         }
-//        Log.d("dddd", "onScroll")
-        //Log.d("dddd", fieldView.getField().getViewPosition().x.toString())
         return true
     }
 
@@ -184,6 +178,14 @@ class GListener(private val context: Context, private val fieldView: FieldView) 
             vibrateNodeMove()
         }
         nodeViewConnector1 = null
+
+        for(con in fieldView.field.connectionsList){
+            if(con.collision(Vector2f(e.x, e.y))){
+                vibrateNodeMove()
+                fieldView.field.connectionsList.remove(con)
+                break
+            }
+        }
 
         fieldView.invalidate()
     }

@@ -32,7 +32,7 @@ class NodeView(node:Node, val field:Field, var position: Vector2f) : Drawable {
         paint.color = colorN
     }
 
-    public var connectorsList = mutableListOf<NodeViewConnector>()
+    var connectorsList = mutableListOf<NodeViewConnector>()
 
     val description = NodeViewText(this).apply {
         position= Vector2f(5f, 0f)
