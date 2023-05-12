@@ -13,14 +13,24 @@ class ListenerLoop(private val gListener: GListener, val fieldView: FieldView) :
 
     private fun move(delta:Vector2f){
         fieldView.field.viewPosition += delta
-        gListener.movableNodeView!!.position += delta * (1/fieldView.field.scale)
+        if( gListener.movableNodeView != null){
+            gListener.movableNodeView!!.position += delta * (1/fieldView.field.scale)
+        }
+        if(gListener.connection != null){
+            if(gListener.oneTOtwo){
+                gListener.connection!!.pos2 += delta * (1/fieldView.field.scale)
+            }
+            else{
+                gListener.connection!!.pos1 += delta * (1/fieldView.field.scale)
+            }
+        }
     }
     override fun run() {
         super.run()
         var speed = moveSpeed
         var i = 0
         while (true){
-            if (gListener.movableNodeView != null)
+        if (gListener.movableNodeView != null || gListener.connection != null)
             {
                 if(fieldView.field.viewSize.x - gListener.lastTouchPos.x < moveViewThreshold){
                     move(Vector2f(speed, 0f))
@@ -47,7 +57,6 @@ class ListenerLoop(private val gListener: GListener, val fieldView: FieldView) :
                     speed = moveFastSpeed
                 }
             }
-
 
             sleep(50)
         }

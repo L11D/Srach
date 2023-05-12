@@ -102,6 +102,7 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
+
                 val x = event.x
                 val y = event.y
                 val distanceThreshold = 20f
