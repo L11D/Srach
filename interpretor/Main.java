@@ -1,27 +1,40 @@
 public class Main {
     public static void main(String[] args) {
+        Variables vars = new Variables();
+
+        VariableNode a = new VariableNode("a", vars);
         StartLogicNode start = new StartLogicNode();
-        BranchNode branch = new BranchNode();
-        InputNode input1 = new InputNode();
-        InputNode input2 = new InputNode();
-        EqualNode equal = new EqualNode();
-        PrintNode printTrue = new PrintNode();
-        PrintNode printFalse = new PrintNode();
-        NumberNode numberTrue = new NumberNode();
-        NumberNode numberFalse = new NumberNode();
+        LessNode less = new LessNode();
+        AssignmentNode ass = new AssignmentNode();
+        AddNode add = new AddNode();
+        NumberNode num1 = new NumberNode();
+        num1.setValue(1);
+        NumberNode num50 = new NumberNode();
+        num50.setValue(50);
+        PrintNode print = new PrintNode();
+        WhileLoopNode loop = new WhileLoopNode();
 
-        start.setNext(branch);
-        equal.setLeft(input1);
-        equal.setRight(input2);
-        branch.setNextTrue(printTrue);
-        branch.setNextFalse(printFalse);
-        branch.setEvaluateResult(equal);
-        numberTrue.setValue(1);
-        numberFalse.setValue(0);
-        printTrue.setEvaluateResult(numberTrue);
-        printFalse.setEvaluateResult(numberFalse);
+        start.setNext(loop);
+        add.setLeft(a);
+        add.setRight(num1);
+        ass.setVariable(a);
+        ass.setEvaluateResult(add);
+        loop.setLoopBody(ass);
+        print.setEvaluateResult(a);
+        loop.setCompleted(print);
+        less.setLeft(a);
+        less.setRight(num50);
+        loop.setCondition(less);
 
+        checkLoops(start);
         goLogic(start);
+    }
+
+    public static void checkLoops(LogicNode node) {
+        if (node.getNext() instanceof WhileLoopNode) {
+            ((WhileLoopNode) node.getNext()).setEndOfLoopBody((WhileLoopNode) node.getNext());
+            checkLoops(node.getNext());
+        }
     }
 
     public static void goLogic(LogicNode node) {

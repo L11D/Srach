@@ -1,6 +1,5 @@
 public abstract class LogicNode implements LogicNodeWork {
     private LogicNode next;
-
     {
         this.next = null;
     }
