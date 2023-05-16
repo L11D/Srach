@@ -1,3 +1,5 @@
+package com.example.srach.interpretator;
+
 public class DivideRemainderNode extends OperatorNodeInt {
     @Override
     public int evaluate() {

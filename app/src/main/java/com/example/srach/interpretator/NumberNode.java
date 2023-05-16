@@ -1,3 +1,5 @@
+package com.example.srach.interpretator;
+
 public class NumberNode extends OperandNode {
     private int value;
 

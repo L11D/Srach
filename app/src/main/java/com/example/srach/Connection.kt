@@ -59,6 +59,12 @@ class Connection private constructor(private val field: Field) : Drawable {
     }
     private var pathMeasure = PathMeasure()
 
+    fun connect(){
+        if(isComplete()){
+            //connectorInput!!.nodeInput!!.node.setInput(connectorInput!!.nodeInput!!, connectorOutput!!.nodeOutput!!)
+        }
+    }
+
     fun collision(pos: Vector2f): Boolean {
         val x = pos.x
         val y = pos.y

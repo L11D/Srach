@@ -1,3 +1,5 @@
+package com.example.srach.interpretator;
+
 public class VariableNode extends OperandNode {
     private final String name;
     private final Variables storage;

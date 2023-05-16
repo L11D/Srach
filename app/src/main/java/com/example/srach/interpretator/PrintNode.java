@@ -1,3 +1,5 @@
+package com.example.srach.interpretator;
+
 public class PrintNode extends LogicNode {
     private MathNodeInt evaluateResult;
 

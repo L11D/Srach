@@ -1,3 +1,5 @@
+package com.example.srach.interpretator;
+
 public class Main {
     public static void main(String[] args) {
         Variables vars = new Variables();

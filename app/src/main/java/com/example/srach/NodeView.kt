@@ -11,7 +11,7 @@ import android.graphics.drawable.shapes.RoundRectShape
 import android.util.Log
 import kotlin.math.roundToInt
 
-class NodeView(node:Node, val field:Field, var position: Vector2f) : Drawable {
+class NodeView(var node:Node, val field:Field, var position: Vector2f) : Drawable {
 
     var colorN = Color.BLUE
 

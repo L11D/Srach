@@ -9,11 +9,11 @@ class NodeViewConnector private constructor(nodeView: NodeView) : Drawable, Node
     constructor(nodeView: NodeView, nodeInput: NodeInput):this(nodeView){
         this.nodeInput = nodeInput
     }
-
     var nodeOutput:NodeOutput? = null
         get() = field
     var nodeInput:NodeInput? = null
         get() = field
+
 
     var globalPosition = Vector2f()
         get() = field

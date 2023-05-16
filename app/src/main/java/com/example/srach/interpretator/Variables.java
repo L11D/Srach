@@ -1,5 +1,8 @@
+package com.example.srach.interpretator;
+
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class Variables {
     private final Map<String, Integer> storage = new HashMap<>();

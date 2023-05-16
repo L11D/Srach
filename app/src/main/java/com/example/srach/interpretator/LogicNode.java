@@ -1,3 +1,5 @@
+package com.example.srach.interpretator;
+
 public abstract class LogicNode implements LogicNodeWork {
     private LogicNode next;
     {
