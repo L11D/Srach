@@ -23,15 +23,11 @@ class Field(private val context:Context) : Drawable{
     val connectionsList = mutableListOf<Connection>()
         get() = field
 
+
     init {
         nodeViewList.add(NodeView(Node(),this, Vector2f(0f, 0f)))
-        nodeViewList.add(NodeView(Node(),this, Vector2f(100f, 300f)))
-        nodeViewList.add(NodeView(Node(),this, Vector2f(-100f, 300f)))
-        nodeViewList.add(NodeView(Node(),this, Vector2f(0f, 500f)))
-        nodeViewList.add(NodeView(Node(),this, Vector2f(0f, 1000f)))
-        nodeViewList.add(NodeView(Node(),this, Vector2f(200f, 1000f)))
-        nodeViewList.add(NodeView(Node(),this, Vector2f(-200f, 1200f)))
-        nodeViewList[0].colorN = Color.BLACK
+        nodeViewList.add(NodeView(Node(),this, Vector2f(200f, 0f)))
+        nodeViewList.add(NodeView(Node(),this, Vector2f(400f, 0f)))
     }
 
 

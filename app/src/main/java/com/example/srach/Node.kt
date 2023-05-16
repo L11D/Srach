@@ -1,10 +1,12 @@
 package com.example.srach
 
+import android.util.Log
+
 class Node {
-    val nodeInputs = mutableListOf<NodeInput>()
+    var nodeInputs = mutableListOf<NodeInput>()
+
     val nodeOutput = NodeOutput(this)
     val name = "Node"
-    val OPSCharacter = "+"
 
     init {
         nodeInputs.add(NodeInput(this))
