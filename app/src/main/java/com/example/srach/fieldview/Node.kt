@@ -1,6 +1,7 @@
-package com.example.srach
+package com.example.srach.fieldview
 
-import android.util.Log
+import com.example.srach.nodeview.NodeInput
+import com.example.srach.nodeview.NodeOutput
 
 class Node {
     var nodeInputs = mutableListOf<NodeInput>()

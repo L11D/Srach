@@ -1,7 +1,9 @@
-package com.example.srach
+package com.example.srach.nodeview
 
 import android.graphics.Canvas
 import android.graphics.Typeface
+import com.example.srach.fieldview.Drawable
+import com.example.srach.fieldview.Vector2f
 
 class NodeViewText(nodeView: NodeView) : Drawable, NodeViewUnit(nodeView) {
 

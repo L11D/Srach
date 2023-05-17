@@ -1,4 +1,4 @@
-package com.example.srach
+package com.example.srach.fieldview
 
 import android.graphics.Canvas
 

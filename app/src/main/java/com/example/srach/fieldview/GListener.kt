@@ -1,12 +1,13 @@
-package com.example.srach
+package com.example.srach.fieldview
 
 import android.content.Context
 import android.graphics.Color
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
+import com.example.srach.nodeview.NodeView
+import com.example.srach.nodeview.NodeViewConnector
 
 class GListener(private val context: Context, private val fieldView: FieldView) :
     GestureDetector.OnGestureListener {

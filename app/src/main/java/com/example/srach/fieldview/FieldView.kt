@@ -1,4 +1,4 @@
-package com.example.srach
+package com.example.srach.fieldview
 
 import android.content.Context
 import android.graphics.Canvas
@@ -7,6 +7,8 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.View
+import com.example.srach.nodeview.NodeView
+import com.example.srach.nodeview.NodeViewConnector
 
 class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
 
@@ -19,14 +21,14 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
     private val scaleGestureListener = SGListener(this)
     private val scaleDetector = ScaleGestureDetector(this.context, scaleGestureListener)
 
-    fun nodeViewsCollision(pos:Vector2f):NodeView?{
+    fun nodeViewsCollision(pos: Vector2f): NodeView?{
         for(node in field.nodeViewList){
             if (node.collision(pos)) return node
         }
         return null
     }
 
-    fun connectorsCollision(pos: Vector2f):NodeViewConnector?{
+    fun connectorsCollision(pos: Vector2f): NodeViewConnector?{
         for(node in field.nodeViewList) {
             val out = node.connectorCollision(pos)
             if( out != null) return out

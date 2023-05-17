@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
 
-    <com.example.srach.FieldView
+    <com.example.srach.fieldview.FieldView
         android:id="@+id/fieldView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
