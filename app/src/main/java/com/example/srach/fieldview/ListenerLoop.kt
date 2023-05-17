@@ -1,8 +1,4 @@
-package com.example.srach
-
-import android.graphics.Color
-import android.util.Log
-import kotlin.random.Random
+package com.example.srach.fieldview
 
 class ListenerLoop(private val gListener: GListener, val fieldView: FieldView) : Thread() {
 
@@ -11,7 +7,7 @@ class ListenerLoop(private val gListener: GListener, val fieldView: FieldView) :
     private val moveFastSpeed = 100f
     private val stepsToSpeedUp = 25
 
-    private fun move(delta:Vector2f){
+    private fun move(delta: Vector2f){
         fieldView.field.viewPosition += delta
         if( gListener.movableNodeView != null){
             gListener.movableNodeView!!.position += delta * (1/fieldView.field.scale)

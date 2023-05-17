@@ -1,11 +1,11 @@
-package com.example.srach
+package com.example.srach.fieldview
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
+import com.example.srach.R
 
-class Grid(private val context: Context, private val field: Field):Drawable {
+class Grid(private val context: Context, private val field: Field): Drawable {
     private val cellSize = 50f
     private val cellHideThreshold = 50f
     private val paintGrid = Paint().apply { color = context.getColor(R.color.grid) }

@@ -1,11 +1,11 @@
-package com.example.srach
+package com.example.srach.fieldview
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
-import android.util.Log
+import com.example.srach.R
+import com.example.srach.nodeview.NodeView
 
-class Field(private val context:Context) : Drawable{
+class Field(private val context:Context) : Drawable {
     var viewSize = Vector2i()
         get() = field
         set(value) {field = value}

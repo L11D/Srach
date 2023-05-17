@@ -1,4 +1,4 @@
-package com.example.srach
+package com.example.srach.fieldview
 class Vector2i() {
     var x = 0
         get() = field
@@ -12,10 +12,10 @@ class Vector2i() {
         this.y = y
     }
 
-    operator fun plus(a:Vector2i) : Vector2i{
+    operator fun plus(a: Vector2i) : Vector2i {
         return Vector2i(x + a.x, y + a.y)
     }
-    operator fun minus(a:Vector2i) : Vector2i{
+    operator fun minus(a: Vector2i) : Vector2i {
         return Vector2i(x - a.x, y - a.y)
     }
 }

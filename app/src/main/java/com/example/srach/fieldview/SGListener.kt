@@ -1,7 +1,5 @@
-package com.example.srach
+package com.example.srach.fieldview
 
-import android.graphics.PointF
-import android.util.Log
 import android.view.ScaleGestureDetector
 
 class SGListener(private val fieldView: FieldView) : ScaleGestureDetector.SimpleOnScaleGestureListener() {

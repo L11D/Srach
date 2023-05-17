@@ -1,17 +1,13 @@
-package com.example.srach
+package com.example.srach.nodeview
 
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Rect
-import android.graphics.RectF
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.OvalShape
-import android.graphics.drawable.shapes.RoundRectShape
-import android.util.Log
-import kotlin.math.roundToInt
+import com.example.srach.fieldview.Drawable
+import com.example.srach.fieldview.Field
+import com.example.srach.fieldview.Node
+import com.example.srach.fieldview.Vector2f
 
-class NodeView(var node:Node, val field:Field, var position: Vector2f) : Drawable {
+class NodeView(var node: Node, val field: Field, var position: Vector2f) : Drawable {
 
     var colorN = Color.BLUE
 
@@ -65,12 +61,12 @@ class NodeView(var node:Node, val field:Field, var position: Vector2f) : Drawabl
         size.y = height
     }
 
-    fun collision(pos:Vector2f):Boolean{
+    fun collision(pos: Vector2f):Boolean{
         return pos.x in displayPosition.x..(displayPosition.x+displaySize.x)&&
                 pos.y in displayPosition.y..(displayPosition.y+displaySize.y)
     }
 
-    fun connectorCollision(pos: Vector2f):NodeViewConnector?{
+    fun connectorCollision(pos: Vector2f): NodeViewConnector?{
         for(con in connectorsList){
             if(con.collision(pos)) return con
         }

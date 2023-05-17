@@ -1,6 +1,8 @@
-package com.example.srach
+package com.example.srach.nodeview
 
 import android.graphics.Canvas
+import com.example.srach.fieldview.Drawable
+import com.example.srach.fieldview.Vector2f
 
 class NodeViewConnector private constructor(nodeView: NodeView) : Drawable, NodeViewUnit(nodeView) {
     constructor(nodeView: NodeView, nodeOutput: NodeOutput):this(nodeView){
@@ -9,16 +11,16 @@ class NodeViewConnector private constructor(nodeView: NodeView) : Drawable, Node
     constructor(nodeView: NodeView, nodeInput: NodeInput):this(nodeView){
         this.nodeInput = nodeInput
     }
-    var nodeOutput:NodeOutput? = null
+    var nodeOutput: NodeOutput? = null
         get() = field
-    var nodeInput:NodeInput? = null
+    var nodeInput: NodeInput? = null
         get() = field
 
 
     var globalPosition = Vector2f()
         get() = field
 
-    fun collision(pos:Vector2f):Boolean{
+    fun collision(pos: Vector2f):Boolean{
         return pos.x in displayPosition.x..(displayPosition.x+displaySize.x)&&
                 pos.y in displayPosition.y..(displayPosition.y+displaySize.y)
     }

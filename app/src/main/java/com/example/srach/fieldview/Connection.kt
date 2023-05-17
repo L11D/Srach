@@ -1,4 +1,4 @@
-package com.example.srach
+package com.example.srach.fieldview
 
 import android.graphics.Canvas
 import android.graphics.Color
@@ -6,6 +6,7 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PathMeasure
 import android.util.Log
+import com.example.srach.nodeview.NodeViewConnector
 import java.lang.Math.abs
 import kotlin.math.sqrt
 
