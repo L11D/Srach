@@ -1,6 +1,6 @@
 package com.example.srach.nodeview
 
-import com.example.srach.fieldview.Node
+import com.example.srach.interpretator.Node
 
 class NodeInput(var node: Node) {
 

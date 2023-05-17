@@ -4,22 +4,23 @@ import android.graphics.Canvas
 import android.graphics.Color
 import com.example.srach.fieldview.Drawable
 import com.example.srach.fieldview.Field
-import com.example.srach.fieldview.Node
+//import com.example.srach.fieldview.Node
 import com.example.srach.fieldview.Vector2f
+import com.example.srach.interpretator.Node
 
 class NodeView(var node: Node, val field: Field, var position: Vector2f) : Drawable {
 
     var colorN = Color.BLUE
 
-    private var size = Vector2f(150f, 100f)
+    protected var size = Vector2f(150f, 100f)
     var displayPosition = Vector2f()
         get() = field
     private var displaySize = Vector2f()
 
-    private val connectorRadius = 50f
-    private val connectorOffset = 25f
-    private val topPadding = 10f
-    private val bottomPadding = 10f
+    protected val connectorRadius = 50f
+    protected val connectorOffset = 25f
+    protected val topPadding = 10f
+    protected val bottomPadding = 10f
 
     val body = NodeViewBody(this).apply {
         position =  Vector2f(0f, 0f)
@@ -30,6 +31,9 @@ class NodeView(var node: Node, val field: Field, var position: Vector2f) : Drawa
 
     var connectorsList = mutableListOf<NodeViewConnector>()
 
+    protected val inputCount = 2
+    protected val outputCount = 1
+
     val description = NodeViewText(this).apply {
         position= Vector2f(5f, 0f)
         textSize = 20f
@@ -39,27 +43,54 @@ class NodeView(var node: Node, val field: Field, var position: Vector2f) : Drawa
 
     init {
         var height = topPadding + bottomPadding
-        for (i in 0 until node.nodeInputs.size){
-            if(i == node.nodeInputs.size - 1){
+        for (i in 0 until inputCount){
+            if(i < inputCount - 1){
                 height += (connectorRadius + connectorOffset) * i
             }
             connectorsList.add(
-                NodeViewConnector(this, node.nodeInputs[i]).apply {
+                NodeViewConnector(this, NodeInput(node)).apply {
                 position = Vector2f(-connectorRadius/2, topPadding + (connectorRadius + connectorOffset) * i)
                 size = Vector2f(connectorRadius, connectorRadius)
                 paint.color = Color.RED
             })
+
         }
         height += connectorRadius
 
-        connectorsList.add(NodeViewConnector(this, node.nodeOutput).apply {
-            position = Vector2f(this@NodeView.size.x - connectorRadius/2, topPadding)
-            size = Vector2f(connectorRadius, connectorRadius)
-            paint.color = Color.RED
-        })
+        for (i in 0..outputCount){
+            connectorsList.add(NodeViewConnector(this, NodeInput(node)).apply {
+                position = Vector2f(this@NodeView.size.x - connectorRadius/2, topPadding)
+                size = Vector2f(connectorRadius, connectorRadius)
+                paint.color = Color.RED
+            })
+        }
 
         size.y = height
     }
+
+//    init {
+//        var height = topPadding + bottomPadding
+//        for (i in 0 until node.nodeInputs.size){
+//            if(i == node.nodeInputs.size - 1){
+//                height += (connectorRadius + connectorOffset) * i
+//            }
+//            connectorsList.add(
+//                NodeViewConnector(this, node.nodeInputs[i]).apply {
+//                    position = Vector2f(-connectorRadius/2, topPadding + (connectorRadius + connectorOffset) * i)
+//                    size = Vector2f(connectorRadius, connectorRadius)
+//                    paint.color = Color.RED
+//                })
+//        }
+//        height += connectorRadius
+//
+//        connectorsList.add(NodeViewConnector(this, node.nodeOutput).apply {
+//            position = Vector2f(this@NodeView.size.x - connectorRadius/2, topPadding)
+//            size = Vector2f(connectorRadius, connectorRadius)
+//            paint.color = Color.RED
+//        })
+//
+//        size.y = height
+//    }
 
     fun collision(pos: Vector2f):Boolean{
         return pos.x in displayPosition.x..(displayPosition.x+displaySize.x)&&
