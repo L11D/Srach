@@ -4,7 +4,7 @@ public class VariableNode extends OperandNode {
     private final String name;
     private final Variables storage;
 
-    VariableNode(String name, Variables storage) {
+    public VariableNode(String name, Variables storage) {
         this.name = name;
         this.storage = storage;
         this.storage.setVariableValue(name, 0);

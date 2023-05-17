@@ -6,9 +6,11 @@ import com.example.srach.fieldview.Drawable
 import com.example.srach.fieldview.Field
 //import com.example.srach.fieldview.Node
 import com.example.srach.fieldview.Vector2f
+import com.example.srach.interpretator.AddNode
 import com.example.srach.interpretator.Node
+import com.example.srach.interpretator.OperatorNode
 
-class NodeView(var node: Node, val field: Field, var position: Vector2f) : Drawable {
+open class NodeView(val field: Field, var position: Vector2f) : Drawable {
 
     var colorN = Color.BLUE
 
@@ -23,7 +25,7 @@ class NodeView(var node: Node, val field: Field, var position: Vector2f) : Drawa
     protected val bottomPadding = 10f
 
     val body = NodeViewBody(this).apply {
-        position =  Vector2f(0f, 0f)
+        position = Vector2f(0f, 0f)
         this@apply.size = this@NodeView.size
         round = 12f
         paint.color = colorN
@@ -31,35 +33,35 @@ class NodeView(var node: Node, val field: Field, var position: Vector2f) : Drawa
 
     var connectorsList = mutableListOf<NodeViewConnector>()
 
-    protected val inputCount = 2
-    protected val outputCount = 1
+    protected var inputCount = 0
+    protected var outputCount = 0
 
     val description = NodeViewText(this).apply {
-        position= Vector2f(5f, 0f)
+        position = Vector2f(5f, 0f)
         textSize = 20f
         text = "node"
         paint.color = Color.WHITE
     }
 
-    init {
+    protected fun createConnectors(node: Node) {
         var height = topPadding + bottomPadding
-        for (i in 0 until inputCount){
-            if(i < inputCount - 1){
-                height += (connectorRadius + connectorOffset) * i
-            }
+        for (i in 0 until inputCount) {
+            height += (connectorRadius + connectorOffset) * i
             connectorsList.add(
                 NodeViewConnector(this, NodeInput(node)).apply {
-                position = Vector2f(-connectorRadius/2, topPadding + (connectorRadius + connectorOffset) * i)
-                size = Vector2f(connectorRadius, connectorRadius)
-                paint.color = Color.RED
-            })
-
+                    position = Vector2f(
+                        -connectorRadius / 2,
+                        topPadding + (connectorRadius + connectorOffset) * i
+                    )
+                    size = Vector2f(connectorRadius, connectorRadius)
+                    paint.color = Color.RED
+                })
         }
         height += connectorRadius
 
-        for (i in 0..outputCount){
-            connectorsList.add(NodeViewConnector(this, NodeInput(node)).apply {
-                position = Vector2f(this@NodeView.size.x - connectorRadius/2, topPadding)
+        for (i in 0 until outputCount) {
+            connectorsList.add(NodeViewConnector(this, NodeOutput(node)).apply {
+                position = Vector2f(this@NodeView.size.x - connectorRadius / 2, topPadding)
                 size = Vector2f(connectorRadius, connectorRadius)
                 paint.color = Color.RED
             })
@@ -67,6 +69,45 @@ class NodeView(var node: Node, val field: Field, var position: Vector2f) : Drawa
 
         size.y = height
     }
+
+    fun collision(pos: Vector2f): Boolean {
+        return pos.x in displayPosition.x..(displayPosition.x + displaySize.x) &&
+                pos.y in displayPosition.y..(displayPosition.y + displaySize.y)
+    }
+
+    fun connectorCollision(pos: Vector2f): NodeViewConnector? {
+        for (con in connectorsList) {
+            if (con.collision(pos)) return con
+        }
+        return null
+    }
+
+    private fun solveDisplayPosition() {
+        val viewPos = field.viewPosition
+        val viewSize = field.viewSize
+        val scale = field.scale
+
+        displayPosition.x = position.x * scale - viewPos.x + viewSize.x / 2
+        displayPosition.y = position.y * scale - viewPos.y + viewSize.y / 2
+        displaySize = size * scale
+    }
+
+    override fun draw(canvas: Canvas) {
+        solveDisplayPosition()
+        val right = displayPosition.x + displaySize.x
+        val bottom = displayPosition.y + displaySize.y
+
+        if (displayPosition.x < field.viewSize.x && right >= 0 &&
+            displayPosition.y < field.viewSize.y && bottom >= 0
+        ) {
+            body.draw(canvas)
+            for (c in connectorsList) {
+                c.draw(canvas)
+            }
+            description.draw(canvas)
+        }
+    }
+}
 
 //    init {
 //        var height = topPadding + bottomPadding
@@ -91,41 +132,3 @@ class NodeView(var node: Node, val field: Field, var position: Vector2f) : Drawa
 //
 //        size.y = height
 //    }
-
-    fun collision(pos: Vector2f):Boolean{
-        return pos.x in displayPosition.x..(displayPosition.x+displaySize.x)&&
-                pos.y in displayPosition.y..(displayPosition.y+displaySize.y)
-    }
-
-    fun connectorCollision(pos: Vector2f): NodeViewConnector?{
-        for(con in connectorsList){
-            if(con.collision(pos)) return con
-        }
-        return null
-    }
-
-    private fun solveDisplayPosition(){
-        val viewPos = field.viewPosition
-        val viewSize = field.viewSize
-        val scale = field.scale
-
-        displayPosition.x = position.x * scale - viewPos.x + viewSize.x/2
-        displayPosition.y = position.y * scale - viewPos.y + viewSize.y/2
-        displaySize = size * scale
-    }
-
-    override fun draw(canvas: Canvas) {
-        solveDisplayPosition()
-        val right = displayPosition.x + displaySize.x
-        val bottom = displayPosition.y + displaySize.y
-
-        if (displayPosition.x < field.viewSize.x && right >= 0 &&
-            displayPosition.y < field.viewSize.y && bottom >= 0){
-            body.draw(canvas)
-            for (c in connectorsList){
-                c.draw(canvas)
-            }
-            description.draw(canvas)
-        }
-    }
-}

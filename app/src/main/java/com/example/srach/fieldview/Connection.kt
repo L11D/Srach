@@ -63,6 +63,7 @@ class Connection private constructor(private val field: Field) : Drawable {
     fun connect(){
         if(isComplete()){
             //connectorInput!!.nodeInput!!.node.setInput(connectorInput!!.nodeInput!!, connectorOutput!!.nodeOutput!!)
+            //connectorInput!!.nodeInput!!.node.
         }
     }
 
