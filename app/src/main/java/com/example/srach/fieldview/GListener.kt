@@ -4,20 +4,25 @@ import android.content.Context
 import android.graphics.Color
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import com.example.srach.nodeview.NodeView
 import com.example.srach.nodeview.NodeViewConnector
+import com.example.srach.nodeview.NodeViewConnectorInput
+import com.example.srach.nodeview.NodeViewConnectorOutput
 
 class GListener(private val context: Context, private val fieldView: FieldView) :
     GestureDetector.OnGestureListener {
     var movableNodeView: NodeView? = null
         get() = field
 
-    private var nodeViewConnector1: NodeViewConnector? = null
-    private var nodeViewConnector2: NodeViewConnector? = null
+    private var connectorInput: NodeViewConnectorInput? = null
+    private var connectorOutput: NodeViewConnectorOutput? = null
+
     var oneTOtwo = false
     var connection: Connection? = null
+    var lastComplited = false
 
     private val listenerLoop = ListenerLoop(this, fieldView)
     private val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
@@ -51,30 +56,38 @@ class GListener(private val context: Context, private val fieldView: FieldView) 
             MotionEvent.ACTION_DOWN -> {
                 lastTouchPos = Vector2f(e.x, e.y)
 
-                nodeViewConnector1 = fieldView.connectorsCollision(Vector2f(e.x, e.y))
+                val con = fieldView.connectorsCollision(Vector2f(e.x, e.y))
 
-                if (nodeViewConnector1 != null) {
+                if (con is NodeViewConnectorOutput)
+                    connectorOutput = con as NodeViewConnectorOutput
+                else if (con is NodeViewConnectorInput)
+                    connectorInput = con as NodeViewConnectorInput
+                else if (con == null) {
+                } else Log.d("dddd", "con isnt NodeViewConnectorOutput and NodeViewConnectorInput")
+
+                if (con != null) {
                     vibrateConnectionMove()
-                    if (nodeViewConnector1!!.nodeOutput != null) {
+                    if (connectorOutput != null) {
                         oneTOtwo = true
                         connection = Connection(
                             fieldView.field,
-                            nodeViewConnector1!!,
-                            nodeViewConnector1!!.globalPosition
+                            connectorOutput!!,
+                            connectorOutput!!.globalPosition
                         )
                         fieldView.field.connectionsList.add(connection!!)
-                    } else {
+                    }
+                    if (connectorInput != null) {
                         oneTOtwo = false
                         connection = Connection(
                             fieldView.field,
-                            nodeViewConnector1!!.globalPosition,
-                            nodeViewConnector1!!
+                            connectorInput!!.globalPosition,
+                            connectorInput!!
                         )
                         fieldView.field.connectionsList.add(connection!!)
                     }
                 }
-
             }
+
 
             MotionEvent.ACTION_MOVE -> {
 
@@ -85,45 +98,26 @@ class GListener(private val context: Context, private val fieldView: FieldView) 
                     ) - lastTouchPos) * (1 / fieldView.field.scale)
                 } else {
                     if (connection != null) {
-                        if (oneTOtwo) {
-                            connection!!.pos2 += (Vector2f(
-                                e.x,
-                                e.y
-                            ) - lastTouchPos) * (1 / fieldView.field.scale)
-                        } else {
-                            connection!!.pos1 += (Vector2f(
-                                e.x,
-                                e.y
-                            ) - lastTouchPos) * (1 / fieldView.field.scale)
-                        }
+                        connection!!.moveEnd((Vector2f(
+                            e.x,
+                            e.y
+                        ) - lastTouchPos) * (1 / fieldView.field.scale))
 
 
-                        nodeViewConnector2 = fieldView.connectorsCollision(Vector2f(e.x, e.y))
+                        val con = fieldView.connectorsCollision(Vector2f(e.x, e.y))
 
-                        if (nodeViewConnector2 != null) {
-
-                            if (oneTOtwo) {
-                                if (nodeViewConnector2!!.nodeInput != null && connection!!.connectorInput == null) {
-                                    connection!!.connectorInput = nodeViewConnector2
-                                    vibrateConnectionMove()
-                                }
-                            } else {
-                                if (nodeViewConnector2!!.nodeOutput != null && connection!!.connectorOutput == null) {
-                                    connection!!.connectorOutput = nodeViewConnector2
-                                    vibrateConnectionMove()
-                                }
+                        if (connectorOutput != null && con !is NodeViewConnectorOutput){
+                            connection!!.connectorInput = con as NodeViewConnectorInput?
+                            if (lastComplited != connection!!.isComplete()){
+                                vibrateConnectionMove()
+                                lastComplited = connection!!.isComplete()
                             }
-                        } else {
-                            if (oneTOtwo) {
-                                if (connection!!.connectorInput != null) {
-                                    connection!!.connectorInput = null
-                                    vibrateConnectionMove()
-                                }
-                            } else {
-                                if (connection!!.connectorOutput != null) {
-                                    connection!!.connectorOutput = null
-                                    vibrateConnectionMove()
-                                }
+                        }
+                        if (connectorInput != null && con !is NodeViewConnectorInput){
+                            connection!!.connectorOutput = con as NodeViewConnectorOutput?
+                            if (lastComplited != connection!!.isComplete()){
+                                vibrateConnectionMove()
+                                lastComplited = connection!!.isComplete()
                             }
                         }
                     }
@@ -136,10 +130,13 @@ class GListener(private val context: Context, private val fieldView: FieldView) 
                 if (connection != null && !connection!!.isComplete()) {
                     fieldView.field.connectionsList.removeLast()
                 }
-                if(connection != null) connection!!.connect()
+                if (connection != null) connection!!.connect()
 
+                connectorInput = null
+                connectorOutput = null
                 movableNodeView = null
                 connection = null
+                lastComplited = false
             }
         }
     }
@@ -176,14 +173,16 @@ class GListener(private val context: Context, private val fieldView: FieldView) 
             if (connection != null) {
                 fieldView.field.connectionsList.removeLast()
                 connection = null
+                connectorInput = null
+                connectorOutput = null
             }
             vibrateNodeMove()
         }
-        nodeViewConnector1 = null
 
-        for(con in fieldView.field.connectionsList){
-            if(con.collision(Vector2f(e.x, e.y))){
+        for (con in fieldView.field.connectionsList) {
+            if (con.collision(Vector2f(e.x, e.y))) {
                 vibrateNodeMove()
+                con.unconnect()
                 fieldView.field.connectionsList.remove(con)
                 break
             }

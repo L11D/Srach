@@ -7,6 +7,8 @@ import android.graphics.Path
 import android.graphics.PathMeasure
 import android.util.Log
 import com.example.srach.nodeview.NodeViewConnector
+import com.example.srach.nodeview.NodeViewConnectorInput
+import com.example.srach.nodeview.NodeViewConnectorOutput
 import java.lang.Math.abs
 import kotlin.math.sqrt
 
@@ -16,27 +18,27 @@ class Connection private constructor(private val field: Field) : Drawable {
         this.pos2 = pos2
     }
 
-    constructor(field: Field, connectorOutput: NodeViewConnector, pos2: Vector2f) : this(field) {
+    constructor(field: Field, connectorOutput: NodeViewConnectorOutput, pos2: Vector2f) : this(field) {
         this.connectorOutput = connectorOutput
         this.pos2 = pos2
     }
 
-    constructor(field: Field, pos1: Vector2f, connectorInput: NodeViewConnector) : this(field) {
+    constructor(field: Field, pos1: Vector2f, connectorInput: NodeViewConnectorInput) : this(field) {
         this.pos1 = pos1
         this.connectorInput = connectorInput
     }
 
     constructor(
         field: Field,
-        connectorOutput: NodeViewConnector,
-        connectorInput: NodeViewConnector
+        connectorOutput: NodeViewConnectorOutput,
+        connectorInput: NodeViewConnectorInput
     ) : this(field) {
         this.connectorInput = connectorInput
         this.connectorOutput = connectorOutput
     }
 
-    var connectorInput: NodeViewConnector? = null
-    var connectorOutput: NodeViewConnector? = null
+    var connectorInput: NodeViewConnectorInput? = null
+    var connectorOutput: NodeViewConnectorOutput? = null
 
     var pos1 = Vector2f()
     var pos2 = Vector2f()
@@ -60,10 +62,25 @@ class Connection private constructor(private val field: Field) : Drawable {
     }
     private var pathMeasure = PathMeasure()
 
+    fun moveEnd(delta:Vector2f){
+        if (!isComplete()){
+            if (connectorOutput != null){
+                pos2 += delta
+            }
+            else{
+                pos1 += delta
+            }
+        }
+    }
+
     fun connect(){
         if(isComplete()){
-            //connectorInput!!.nodeInput!!.node.setInput(connectorInput!!.nodeInput!!, connectorOutput!!.nodeOutput!!)
-            //connectorInput!!.nodeInput!!.node.
+            connectorInput!!.inputableNode.connect(connectorInput!!, connectorOutput!!)
+        }
+    }
+    fun unconnect(){
+        if(connectorInput != null){
+            connectorInput!!.inputableNode.unconnect(connectorInput!!)
         }
     }
 
@@ -86,9 +103,7 @@ class Connection private constructor(private val field: Field) : Drawable {
             position += step
         }
 
-
         if (distance < distanceThreshold) {
-            Log.d("dddd", "curvePress")
             return true
         }
         return false

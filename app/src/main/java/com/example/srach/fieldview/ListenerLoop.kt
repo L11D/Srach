@@ -13,12 +13,7 @@ class ListenerLoop(private val gListener: GListener, val fieldView: FieldView) :
             gListener.movableNodeView!!.position += delta * (1/fieldView.field.scale)
         }
         if(gListener.connection != null){
-            if(gListener.oneTOtwo){
-                gListener.connection!!.pos2 += delta * (1/fieldView.field.scale)
-            }
-            else{
-                gListener.connection!!.pos1 += delta * (1/fieldView.field.scale)
-            }
+            gListener.connection!!.moveEnd(delta * (1/fieldView.field.scale))
         }
     }
     override fun run() {

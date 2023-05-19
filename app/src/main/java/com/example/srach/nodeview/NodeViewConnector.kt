@@ -4,17 +4,37 @@ import android.graphics.Canvas
 import com.example.srach.fieldview.Drawable
 import com.example.srach.fieldview.Vector2f
 
-class NodeViewConnector private constructor(nodeView: NodeView) : Drawable, NodeViewUnit(nodeView) {
-    constructor(nodeView: NodeView, nodeOutput: NodeOutput):this(nodeView){
-        this.nodeOutput = nodeOutput
+class NodeViewConnectorInput private constructor(nodeView: NodeView) : NodeViewConnector(nodeView){
+    lateinit var inputableNode:AbleToInput
+    constructor(inputableNodeView: InputableNodeView, NULL:Int) : this(inputableNodeView){
+        inputableNode = inputableNodeView
     }
-    constructor(nodeView: NodeView, nodeInput: NodeInput):this(nodeView){
-        this.nodeInput = nodeInput
+    constructor(inOutAbleNodeView: InOutAbleNodeView, NULL: Int) : this(inOutAbleNodeView){
+        inputableNode = inOutAbleNodeView
     }
-    var nodeOutput: NodeOutput? = null
-        get() = field
-    var nodeInput: NodeInput? = null
-        get() = field
+}
+
+class NodeViewConnectorOutput private constructor(nodeView: NodeView) : NodeViewConnector(nodeView){
+    lateinit var outputableNode:AbleToOutput
+    constructor(outputableNodeView: OutputableNodeView, NULL:Int) : this(outputableNodeView){
+        outputableNode = outputableNodeView
+    }
+    constructor(inOutAbleNodeView: InOutAbleNodeView, NULL: Int) : this(inOutAbleNodeView){
+        outputableNode = inOutAbleNodeView
+    }
+}
+
+abstract class NodeViewConnector (nodeView: NodeView) : Drawable, NodeViewUnit(nodeView) {
+//    constructor(nodeView: NodeView, nodeOutput: NodeOutput):this(nodeView){
+//        this.nodeOutput = nodeOutput
+//    }
+//    constructor(nodeView: NodeView, nodeInput: NodeInput):this(nodeView){
+//        this.nodeInput = nodeInput
+//    }
+//    var nodeOutput: NodeOutput? = null
+//        get() = field
+//    var nodeInput: NodeInput? = null
+//        get() = field
 
 
     var globalPosition = Vector2f()

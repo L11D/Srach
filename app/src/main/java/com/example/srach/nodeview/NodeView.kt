@@ -10,7 +10,7 @@ import com.example.srach.interpretator.AddNode
 import com.example.srach.interpretator.Node
 import com.example.srach.interpretator.OperatorNode
 
-open class NodeView(val field: Field, var position: Vector2f) : Drawable {
+abstract class NodeView(val field: Field, var position: Vector2f) : Drawable {
 
     var colorN = Color.BLUE
 
@@ -31,10 +31,6 @@ open class NodeView(val field: Field, var position: Vector2f) : Drawable {
         paint.color = colorN
     }
 
-    var connectorsList = mutableListOf<NodeViewConnector>()
-
-    protected var inputCount = 0
-    protected var outputCount = 0
 
     val description = NodeViewText(this).apply {
         position = Vector2f(5f, 0f)
@@ -43,43 +39,9 @@ open class NodeView(val field: Field, var position: Vector2f) : Drawable {
         paint.color = Color.WHITE
     }
 
-    protected fun createConnectors(node: Node) {
-        var height = topPadding + bottomPadding
-        for (i in 0 until inputCount) {
-            height += (connectorRadius + connectorOffset) * i
-            connectorsList.add(
-                NodeViewConnector(this, NodeInput(node)).apply {
-                    position = Vector2f(
-                        -connectorRadius / 2,
-                        topPadding + (connectorRadius + connectorOffset) * i
-                    )
-                    size = Vector2f(connectorRadius, connectorRadius)
-                    paint.color = Color.RED
-                })
-        }
-        height += connectorRadius
-
-        for (i in 0 until outputCount) {
-            connectorsList.add(NodeViewConnector(this, NodeOutput(node)).apply {
-                position = Vector2f(this@NodeView.size.x - connectorRadius / 2, topPadding)
-                size = Vector2f(connectorRadius, connectorRadius)
-                paint.color = Color.RED
-            })
-        }
-
-        size.y = height
-    }
-
     fun collision(pos: Vector2f): Boolean {
         return pos.x in displayPosition.x..(displayPosition.x + displaySize.x) &&
                 pos.y in displayPosition.y..(displayPosition.y + displaySize.y)
-    }
-
-    fun connectorCollision(pos: Vector2f): NodeViewConnector? {
-        for (con in connectorsList) {
-            if (con.collision(pos)) return con
-        }
-        return null
     }
 
     private fun solveDisplayPosition() {
@@ -92,6 +54,9 @@ open class NodeView(val field: Field, var position: Vector2f) : Drawable {
         displaySize = size * scale
     }
 
+    abstract fun drawConnectors(canvas: Canvas)
+    abstract fun connectorCollision(pos: Vector2f): NodeViewConnector?
+
     override fun draw(canvas: Canvas) {
         solveDisplayPosition()
         val right = displayPosition.x + displaySize.x
@@ -101,9 +66,7 @@ open class NodeView(val field: Field, var position: Vector2f) : Drawable {
             displayPosition.y < field.viewSize.y && bottom >= 0
         ) {
             body.draw(canvas)
-            for (c in connectorsList) {
-                c.draw(canvas)
-            }
+            drawConnectors(canvas)
             description.draw(canvas)
         }
     }
