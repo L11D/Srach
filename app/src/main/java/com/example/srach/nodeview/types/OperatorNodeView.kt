@@ -1,5 +1,6 @@
 package com.example.srach.nodeview.types
 
+import android.content.Context
 import android.util.Log
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
@@ -9,8 +10,8 @@ import com.example.srach.nodeview.InOutAbleNodeView
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInput
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutput
 
-class OperatorNodeView(val operatorNodeInt: OperatorNodeInt, field: Field, position: Vector2f) :
-    InOutAbleNodeView(field, position, 2, 1) {
+class OperatorNodeView(context:Context, val operatorNodeInt: OperatorNodeInt, field: Field, position: Vector2f) :
+    InOutAbleNodeView(context, field, position, 2, 1) {
 
     override fun connect(
         connectorInput: NodeViewConnectorInput,

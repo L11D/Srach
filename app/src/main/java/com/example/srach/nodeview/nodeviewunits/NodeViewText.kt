@@ -1,12 +1,13 @@
 package com.example.srach.nodeview.nodeviewunits
 
+import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Typeface
 import com.example.srach.fieldview.Drawable
 import com.example.srach.fieldview.Vector2f
 import com.example.srach.nodeview.NodeView
 
-class NodeViewText(nodeView: NodeView) : Drawable, NodeViewUnit(nodeView) {
+class NodeViewText(context: Context, nodeView: NodeView) : Drawable, NodeViewUnit(context, nodeView) {
 
     var textSize = 30f
         get() = field

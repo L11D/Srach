@@ -1,5 +1,6 @@
 package com.example.srach.nodeview
 
+import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import com.example.srach.fieldview.Field
@@ -8,7 +9,7 @@ import com.example.srach.nodeview.nodeviewunits.NodeViewConnector
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInput
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutput
 
-abstract class InputableNodeView(field: Field, position: Vector2f, inputCount:Int) : NodeView(field, position), AbleToInput{
+abstract class InputableNodeView(context: Context, field: Field, position: Vector2f, inputCount:Int) : NodeView(context, field, position), AbleToInput{
 
     var inputConnectorsList = mutableListOf<NodeViewConnectorInput>()
 
@@ -18,7 +19,7 @@ abstract class InputableNodeView(field: Field, position: Vector2f, inputCount:In
             if(i > 0)  height += connectorOffset
             height += connectorRadius
             inputConnectorsList.add(
-                NodeViewConnectorInput(this, 0).apply {
+                NodeViewConnectorInput(context, this, 0).apply {
                     this@apply.position = Vector2f(
                         -connectorRadius / 2,
                         topPadding + (connectorRadius + connectorOffset) * i

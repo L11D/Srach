@@ -1,16 +1,21 @@
 package com.example.srach.nodeview.nodeviewunits
 
+import android.content.Context
 import com.example.srach.nodeview.AbleToInput
 import com.example.srach.nodeview.InOutAbleNodeView
 import com.example.srach.nodeview.InputableNodeView
 import com.example.srach.nodeview.NodeView
 
-class NodeViewConnectorInput private constructor(nodeView: NodeView) : NodeViewConnector(nodeView){
+//class NodeViewConnectorInput (context: Context, nodeView: NodeView) : NodeViewConnector(context, nodeView) {
+//
+//}
+//}
+class NodeViewConnectorInput private constructor(context: Context, nodeView: NodeView) : NodeViewConnector(context, nodeView){
     lateinit var inputableNode: AbleToInput
-    constructor(inputableNodeView: InputableNodeView, NULL:Int) : this(inputableNodeView){
+    constructor(context: Context, inputableNodeView: InputableNodeView, NULL:Int) : this(context, inputableNodeView){
         inputableNode = inputableNodeView
     }
-    constructor(inOutAbleNodeView: InOutAbleNodeView, NULL: Int) : this(inOutAbleNodeView){
+    constructor(context: Context, inOutAbleNodeView: InOutAbleNodeView, NULL: Int) : this(context, inOutAbleNodeView){
         inputableNode = inOutAbleNodeView
     }
 }

@@ -1,5 +1,6 @@
 package com.example.srach.nodeview
 
+import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import com.example.srach.fieldview.Drawable
@@ -10,7 +11,7 @@ import com.example.srach.nodeview.nodeviewunits.NodeViewBody
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnector
 import com.example.srach.nodeview.nodeviewunits.NodeViewText
 
-abstract class NodeView(val field: Field, var position: Vector2f) : Drawable {
+abstract class NodeView(context: Context, val field: Field, var position: Vector2f) : Drawable {
 
     var colorN = Color.BLUE
 
@@ -21,10 +22,10 @@ abstract class NodeView(val field: Field, var position: Vector2f) : Drawable {
 
     protected val connectorRadius = 50f
     protected val connectorOffset = 25f
-    protected val topPadding = 10f
+    protected var topPadding = 10f
     protected val bottomPadding = 10f
 
-    val body = NodeViewBody(this).apply {
+    val body = NodeViewBody(context, this).apply {
         position = Vector2f(0f, 0f)
         this@apply.size = this@NodeView.size
         round = 12f
@@ -32,7 +33,7 @@ abstract class NodeView(val field: Field, var position: Vector2f) : Drawable {
     }
 
 
-    val description = NodeViewText(this).apply {
+    val description = NodeViewText(context, this).apply {
         position = Vector2f(5f, 0f)
         textSize = 20f
         text = "node"
@@ -72,26 +73,3 @@ abstract class NodeView(val field: Field, var position: Vector2f) : Drawable {
     }
 }
 
-//    init {
-//        var height = topPadding + bottomPadding
-//        for (i in 0 until node.nodeInputs.size){
-//            if(i == node.nodeInputs.size - 1){
-//                height += (connectorRadius + connectorOffset) * i
-//            }
-//            connectorsList.add(
-//                NodeViewConnector(this, node.nodeInputs[i]).apply {
-//                    position = Vector2f(-connectorRadius/2, topPadding + (connectorRadius + connectorOffset) * i)
-//                    size = Vector2f(connectorRadius, connectorRadius)
-//                    paint.color = Color.RED
-//                })
-//        }
-//        height += connectorRadius
-//
-//        connectorsList.add(NodeViewConnector(this, node.nodeOutput).apply {
-//            position = Vector2f(this@NodeView.size.x - connectorRadius/2, topPadding)
-//            size = Vector2f(connectorRadius, connectorRadius)
-//            paint.color = Color.RED
-//        })
-//
-//        size.y = height
-//    }

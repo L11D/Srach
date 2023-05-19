@@ -1,12 +1,13 @@
 package com.example.srach.nodeview.nodeviewunits
 
+import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import com.example.srach.fieldview.Drawable
 import com.example.srach.fieldview.Vector2f
 import com.example.srach.nodeview.NodeView
 
-abstract class NodeViewUnit(protected val nodeView: NodeView) : Drawable {
+abstract class NodeViewUnit(val context: Context, protected val nodeView: NodeView) : Drawable {
     var position = Vector2f()
         get() = field
         set(value) {
