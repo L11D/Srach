@@ -5,6 +5,9 @@ import android.graphics.Color
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
 import com.example.srach.interpretator.MathNodeInt
+import com.example.srach.nodeview.nodeviewunits.NodeViewConnector
+import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInput
+import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutput
 
 abstract class InOutAbleNodeView(field: Field, position: Vector2f, inputCount:Int, outputCount:Int) : NodeView(field, position),
     AbleToInput, AbleToOutput {

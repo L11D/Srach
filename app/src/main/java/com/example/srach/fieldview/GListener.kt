@@ -8,9 +8,8 @@ import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import com.example.srach.nodeview.NodeView
-import com.example.srach.nodeview.NodeViewConnector
-import com.example.srach.nodeview.NodeViewConnectorInput
-import com.example.srach.nodeview.NodeViewConnectorOutput
+import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInput
+import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutput
 
 class GListener(private val context: Context, private val fieldView: FieldView) :
     GestureDetector.OnGestureListener {

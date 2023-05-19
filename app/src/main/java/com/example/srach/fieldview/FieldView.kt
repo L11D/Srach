@@ -8,7 +8,7 @@ import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.View
 import com.example.srach.nodeview.NodeView
-import com.example.srach.nodeview.NodeViewConnector
+import com.example.srach.nodeview.nodeviewunits.NodeViewConnector
 
 class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
 
@@ -62,6 +62,10 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         field.viewSize = Vector2i(width, height)
+    }
+
+    fun run(){
+        field.run()
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {

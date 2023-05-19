@@ -4,6 +4,9 @@ import android.graphics.Canvas
 import android.graphics.Color
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
+import com.example.srach.nodeview.nodeviewunits.NodeViewConnector
+import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInput
+import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutput
 
 abstract class InputableNodeView(field: Field, position: Vector2f, inputCount:Int) : NodeView(field, position), AbleToInput{
 

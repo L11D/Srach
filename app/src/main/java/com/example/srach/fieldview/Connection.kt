@@ -5,10 +5,8 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PathMeasure
-import android.util.Log
-import com.example.srach.nodeview.NodeViewConnector
-import com.example.srach.nodeview.NodeViewConnectorInput
-import com.example.srach.nodeview.NodeViewConnectorOutput
+import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInput
+import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutput
 import java.lang.Math.abs
 import kotlin.math.sqrt
 

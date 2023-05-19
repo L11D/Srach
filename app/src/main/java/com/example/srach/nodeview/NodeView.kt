@@ -6,9 +6,9 @@ import com.example.srach.fieldview.Drawable
 import com.example.srach.fieldview.Field
 //import com.example.srach.fieldview.Node
 import com.example.srach.fieldview.Vector2f
-import com.example.srach.interpretator.AddNode
-import com.example.srach.interpretator.Node
-import com.example.srach.interpretator.OperatorNode
+import com.example.srach.nodeview.nodeviewunits.NodeViewBody
+import com.example.srach.nodeview.nodeviewunits.NodeViewConnector
+import com.example.srach.nodeview.nodeviewunits.NodeViewText
 
 abstract class NodeView(val field: Field, var position: Vector2f) : Drawable {
 
@@ -39,7 +39,7 @@ abstract class NodeView(val field: Field, var position: Vector2f) : Drawable {
         paint.color = Color.WHITE
     }
 
-    fun collision(pos: Vector2f): Boolean {
+    open fun collision(pos: Vector2f): Boolean {
         return pos.x in displayPosition.x..(displayPosition.x + displaySize.x) &&
                 pos.y in displayPosition.y..(displayPosition.y + displaySize.y)
     }
