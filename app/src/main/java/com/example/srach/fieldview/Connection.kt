@@ -5,8 +5,11 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PathMeasure
+import com.example.srach.nodeview.nodeviewunits.NodeViewConnector
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInput
+import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInputData
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutput
+import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputData
 import java.lang.Math.abs
 import kotlin.math.sqrt
 
@@ -19,11 +22,15 @@ class Connection private constructor(private val field: Field) : Drawable {
     constructor(field: Field, connectorOutput: NodeViewConnectorOutput, pos2: Vector2f) : this(field) {
         this.connectorOutput = connectorOutput
         this.pos2 = pos2
+        this.paint.color = connectorOutput.paint.color
+        outputFirst = true
     }
 
     constructor(field: Field, pos1: Vector2f, connectorInput: NodeViewConnectorInput) : this(field) {
         this.pos1 = pos1
         this.connectorInput = connectorInput
+        this.paint.color = connectorInput.paint.color
+        outputFirst = false
     }
 
     constructor(
@@ -37,6 +44,8 @@ class Connection private constructor(private val field: Field) : Drawable {
 
     var connectorInput: NodeViewConnectorInput? = null
     var connectorOutput: NodeViewConnectorOutput? = null
+    var outputFirst = false
+    var lastIsComplete = false
 
     var pos1 = Vector2f()
     var pos2 = Vector2f()
@@ -51,7 +60,7 @@ class Connection private constructor(private val field: Field) : Drawable {
 
     private var path = Path()
     private val paint = Paint().apply {
-        color = Color.RED
+        //color = Color.RED
         isAntiAlias = true
         isDither = true
         style = Paint.Style.STROKE // default: FILL
@@ -71,14 +80,44 @@ class Connection private constructor(private val field: Field) : Drawable {
         }
     }
 
+    fun addConnector(con:NodeViewConnector?):Boolean{
+        if (outputFirst){
+            if (con is NodeViewConnectorInput && con.isSameType(connectorOutput!!)){
+                connectorInput = con
+            }
+            else{
+                connectorInput = null
+            }
+        }
+        else{
+            if (con is NodeViewConnectorOutput && con.isSameType(connectorInput!!)){
+                connectorOutput = con
+            }
+            else{
+                connectorOutput = null
+            }
+        }
+        if (lastIsComplete != isComplete()) {
+            lastIsComplete = isComplete()
+            return true
+        }
+        else{
+            return false
+        }
+    }
+
     fun connect(){
         if(isComplete()){
-            connectorInput!!.inputableNode.connect(connectorInput!!, connectorOutput!!)
+            if(connectorInput is NodeViewConnectorInputData<*>){
+                (connectorInput!! as NodeViewConnectorInputData<*>).connect(connectorOutput!! as NodeViewConnectorOutputData<*>)
+            }
         }
     }
     fun unconnect(){
         if(connectorInput != null){
-            connectorInput!!.inputableNode.unconnect(connectorInput!!)
+            if(connectorInput is NodeViewConnectorInputData<*>){
+                (connectorInput!! as NodeViewConnectorInputData<*>).unconnect()
+            }
         }
     }
 

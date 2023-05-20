@@ -6,16 +6,22 @@ import android.graphics.Color
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
 import com.example.srach.interpretator.MathNodeInt
+import com.example.srach.nodeview.nodeviewunits.DataTypes
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnector
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutput
+import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputData
 
-abstract class OutputableNodeView(context:Context, field: Field, position: Vector2f, outputCount:Int) : NodeView(context, field, position),
+abstract class OutputableNodeView(context:Context, field: Field, position: Vector2f, val outputCount:Int, val dataType: DataTypes) : NodeView(context, field, position),
     AbleToOutput {
 
     var outputConnectorsList = mutableListOf<NodeViewConnectorOutput>()
 
     init {
-//        var height = topPadding + bottomPadding
+       initConnectors()
+    }
+
+    open fun initConnectors(){
+        //var height = topPadding + bottomPadding
 //        for (i in 0 until inputCount) {
 //            height += (connectorRadius + connectorOffset) * i
 //            inputConnectorsList.add(
@@ -31,7 +37,7 @@ abstract class OutputableNodeView(context:Context, field: Field, position: Vecto
 //        height += connectorRadius
 
         for (i in 0 until outputCount) {
-            outputConnectorsList.add(NodeViewConnectorOutput(context, this, 0).apply {
+            outputConnectorsList.add(NodeViewConnectorOutputData(context, this, dataType).apply {
                 this@apply.position =
                     Vector2f(this@OutputableNodeView.size.x - connectorRadius / 2, topPadding)
                 size = Vector2f(connectorRadius, connectorRadius)
@@ -41,6 +47,7 @@ abstract class OutputableNodeView(context:Context, field: Field, position: Vecto
 
         //size.y = height
     }
+
 
     override fun connectorCollision(pos: Vector2f): NodeViewConnector? {
         for (con in outputConnectorsList) {

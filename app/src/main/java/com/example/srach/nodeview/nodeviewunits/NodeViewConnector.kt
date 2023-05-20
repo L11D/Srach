@@ -8,8 +8,13 @@ import com.example.srach.nodeview.NodeView
 
 abstract class NodeViewConnector (context: Context, nodeView: NodeView) : Drawable, NodeViewUnit(context, nodeView) {
 
+    var dataType = DataTypes.UNSPECIFIED
     var globalPosition = Vector2f()
         get() = field
+
+    fun isSameType(con:NodeViewConnector):Boolean{
+        return dataType == con.dataType
+    }
 
     fun collision(pos: Vector2f):Boolean{
         return pos.x in displayPosition.x..(displayPosition.x+displaySize.x)&&

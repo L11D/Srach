@@ -37,6 +37,7 @@ class Field(private val context:Context) : Drawable {
         nodeViewList.add(VariableNodeView(context, VariableNode("a", variables).apply {value=10 }, this, Vector2f(-200f, 0f)))
         nodeViewList.add(VariableNodeView(context, VariableNode("b", variables).apply {value=5 }, this, Vector2f(-200f, 200f)))
         nodeViewList.add(TestNodeView(context, this, Vector2f(300f, 300f)))
+        nodeViewList.add(TestNodeView(context, this, Vector2f(300f, -500f)))
     }
 
     fun run(){

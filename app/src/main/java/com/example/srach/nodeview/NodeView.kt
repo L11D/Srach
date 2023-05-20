@@ -11,7 +11,7 @@ import com.example.srach.nodeview.nodeviewunits.NodeViewBody
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnector
 import com.example.srach.nodeview.nodeviewunits.NodeViewText
 
-abstract class NodeView(context: Context, val field: Field, var position: Vector2f) : Drawable {
+abstract class NodeView(val context: Context, val field: Field, var position: Vector2f) : Drawable {
 
     var colorN = Color.BLUE
 

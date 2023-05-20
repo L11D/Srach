@@ -6,12 +6,14 @@ import android.graphics.Color
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
 import com.example.srach.interpretator.MathNodeInt
+import com.example.srach.nodeview.nodeviewunits.DataTypes
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnector
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInput
+import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInputData
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutput
-import com.example.srach.nodeview.nodeviewunits.NodeViewExecConnector
+import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputData
 
-abstract class InOutAbleNodeView(val context: Context, field: Field, position: Vector2f, val inputCount:Int, val outputCount:Int) : NodeView(context, field, position),
+abstract class InOutAbleNodeView(context: Context, field: Field, position: Vector2f, val inputCount:Int, val outputCount:Int, var dataType: DataTypes) : NodeView(context, field, position),
     AbleToInput, AbleToOutput {
 
     var inputConnectorsList = mutableListOf<NodeViewConnectorInput>()
@@ -26,7 +28,7 @@ abstract class InOutAbleNodeView(val context: Context, field: Field, position: V
             if(i > 0)  height += connectorOffset
             height += connectorRadius
             inputConnectorsList.add(
-                NodeViewConnectorInput(context, this, 0).apply {
+                NodeViewConnectorInputData(context, this, dataType).apply {
                     this@apply.position = Vector2f(
                         -connectorRadius / 2,
                         topPadding + (connectorRadius + connectorOffset) * i
@@ -37,7 +39,7 @@ abstract class InOutAbleNodeView(val context: Context, field: Field, position: V
         }
 
         for (i in 0 until outputCount) {
-            outputConnectorsList.add(NodeViewConnectorOutput(context, this, 0).apply {
+            outputConnectorsList.add(NodeViewConnectorOutputData(context, this, dataType).apply {
                 this@apply.position =
                     Vector2f(this@InOutAbleNodeView.size.x - connectorRadius / 2, topPadding)
                 size = Vector2f(connectorRadius, connectorRadius)
@@ -67,10 +69,10 @@ abstract class InOutAbleNodeView(val context: Context, field: Field, position: V
         }
     }
 
-    abstract override fun connect(
-        connectorInput: NodeViewConnectorInput,
-        connectorOutput: NodeViewConnectorOutput
-    )
+    abstract override fun <I, O> connect(
+        connectorInput: NodeViewConnectorInputData<I>,
+        connectorOutput: NodeViewConnectorOutputData<O>
+    ) where O : NodeView, I : NodeView, I:AbleToInput, O:AbleToOutput
 
     abstract override fun getNodeOutput(): MathNodeInt
 }

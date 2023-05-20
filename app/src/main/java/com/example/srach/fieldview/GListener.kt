@@ -104,21 +104,7 @@ class GListener(private val context: Context, private val fieldView: FieldView) 
 
 
                         val con = fieldView.connectorsCollision(Vector2f(e.x, e.y))
-
-                        if (connectorOutput != null && con !is NodeViewConnectorOutput){
-                            connection!!.connectorInput = con as NodeViewConnectorInput?
-                            if (lastComplited != connection!!.isComplete()){
-                                vibrateConnectionMove()
-                                lastComplited = connection!!.isComplete()
-                            }
-                        }
-                        if (connectorInput != null && con !is NodeViewConnectorInput){
-                            connection!!.connectorOutput = con as NodeViewConnectorOutput?
-                            if (lastComplited != connection!!.isComplete()){
-                                vibrateConnectionMove()
-                                lastComplited = connection!!.isComplete()
-                            }
-                        }
+                        if(connection!!.addConnector(con)) vibrateConnectionMove()
                     }
                 }
 
@@ -129,7 +115,7 @@ class GListener(private val context: Context, private val fieldView: FieldView) 
                 if (connection != null && !connection!!.isComplete()) {
                     fieldView.field.connectionsList.removeLast()
                 }
-                if (connection != null) connection!!.connect()
+                //if (connection != null) connection!!.connect()
 
                 connectorInput = null
                 connectorOutput = null
