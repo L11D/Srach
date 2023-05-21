@@ -3,18 +3,18 @@ package com.example.srach.interpretor;
 public class GreaterNode extends OperatorNode {
     @Override
     public Data evaluate() {
-        if (leftType == DataType.BOOL || rightType == DataType.BOOL || leftType == DataType.STRING || rightType == DataType.STRING)
+        if (getLeft().evaluate().type == DataType.BOOL || getRight().evaluate().type == DataType.BOOL || getLeft().evaluate().type == DataType.STRING || getRight().evaluate().type == DataType.STRING)
             throw new IllegalStateException();
-        if (leftType == rightType) {
-            switch (leftType) {
+        if (getLeft().evaluate().type == getRight().evaluate().type) {
+            switch (getLeft().evaluate().type) {
                 case INT -> {
-                    return new Data(String.valueOf(Integer.parseInt(leftValue) > Integer.parseInt(rightValue)), DataType.BOOL);
+                    return new Data(String.valueOf(Integer.parseInt(getLeft().evaluate().value) > Integer.parseInt(getRight().evaluate().value)), DataType.BOOL);
                 }
                 case CHAR -> {
-                    return new Data(String.valueOf(leftValue.charAt(0) > rightValue.charAt(0)), DataType.BOOL);
+                    return new Data(String.valueOf(getLeft().evaluate().value.charAt(0) > getRight().evaluate().value.charAt(0)), DataType.BOOL);
                 }
                 case DOUBLE -> {
-                    return new Data(String.valueOf(Double.parseDouble(leftValue) > Double.parseDouble(rightValue)), DataType.BOOL);
+                    return new Data(String.valueOf(Double.parseDouble(getLeft().evaluate().value) > Double.parseDouble(getRight().evaluate().value)), DataType.BOOL);
                 }
                 default -> throw new IllegalStateException();
             }

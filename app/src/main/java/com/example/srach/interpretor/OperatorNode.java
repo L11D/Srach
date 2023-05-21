@@ -1,10 +1,6 @@
 package com.example.srach.interpretor;
 
 public abstract class OperatorNode extends MathNode {
-    DataType leftType = getLeft().evaluate().type;
-    String leftValue = getLeft().evaluate().value;
-    DataType rightType = getRight().evaluate().type;
-    String rightValue = getRight().evaluate().value;
     private MathNode left;
     private MathNode right;
     OperatorNode() {

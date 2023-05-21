@@ -1,4 +1,4 @@
-//package com.example.srach.interpretator;
+package com.example.srach.interpretor;//package com.example.srach.interpretator;
 //
 //public class WhileLoopNode extends LogicNode {
 //    private BeginEnd loopBody;

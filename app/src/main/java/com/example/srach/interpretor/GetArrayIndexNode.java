@@ -2,7 +2,7 @@ package com.example.srach.interpretor;
 
 public class GetArrayIndexNode extends MathNode {
     ArrayNode array;
-    NumberNode index;
+    com.example.srach.interpretor.NumberNode index;
 
     GetArrayIndexNode() {
         array = null;
