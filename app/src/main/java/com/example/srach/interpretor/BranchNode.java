@@ -1,9 +1,10 @@
 package com.example.srach.interpretor;
+
 import java.util.Objects;
 
-public class BranchNode extends LogicNode {
-    private LogicNode nextTrue;
-    private LogicNode nextFalse;
+public class BranchNode extends com.example.srach.interpretor.LogicNode {
+    private com.example.srach.interpretor.LogicNode nextTrue;
+    private com.example.srach.interpretor.LogicNode nextFalse;
     private MathNode evaluateResult;
 
     {
@@ -12,7 +13,7 @@ public class BranchNode extends LogicNode {
         this.evaluateResult = null;
     }
 
-    public void setNextTrue(LogicNode nextTrue) {
+    public void setNextTrue(com.example.srach.interpretor.LogicNode nextTrue) {
         this.nextTrue = nextTrue;
     }
 

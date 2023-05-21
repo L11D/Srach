@@ -3,7 +3,7 @@ package com.example.srach.interpretor;
 public class VariableNode extends MathNode implements MathNodeEvaluate {
     private final String name;
     private final DataType type;
-    private final Variables variables;
+    private final com.example.srach.interpretor.Variables variables;
     VariableNode(String name, DataType type, Variables storage) {
         this.name = name;
         this.type = type;

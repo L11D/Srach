@@ -1,4 +1,4 @@
-package com.example.srach.interpretator;
+package com.example.srach.interpretor;
 import java.util.Objects;
 
 public class EqualNode extends OperatorNode {

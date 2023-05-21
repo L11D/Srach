@@ -2,7 +2,7 @@ package com.example.srach.interpretor;
 
 public class SetArrayIndexNode extends LogicNode {
     ArrayNode array;
-    NumberNode index;
+    com.example.srach.interpretor.NumberNode index;
     MathNode value;
 
     SetArrayIndexNode() {

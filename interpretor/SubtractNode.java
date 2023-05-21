@@ -1,4 +1,4 @@
-package com.example.srach.interpretator;
+package com.example.srach.interpretor;
 
 public class SubtractNode extends OperatorNode {
     @Override
