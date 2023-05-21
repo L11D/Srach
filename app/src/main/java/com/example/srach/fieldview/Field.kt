@@ -3,14 +3,15 @@ package com.example.srach.fieldview
 import android.content.Context
 import android.graphics.Canvas
 import com.example.srach.R
-import com.example.srach.interpretator.AddNode
+import com.example.srach.interpretator.LogicNode
 import com.example.srach.interpretator.MinusNode
-import com.example.srach.interpretator.Node
+import com.example.srach.interpretator.PrintNode
 import com.example.srach.interpretator.VariableNode
 import com.example.srach.interpretator.Variables
 import com.example.srach.nodeview.NodeView
+import com.example.srach.nodeview.types.BeginNodeView
 import com.example.srach.nodeview.types.OperatorNodeView
-import com.example.srach.nodeview.types.TestNodeView
+import com.example.srach.nodeview.types.PrintNodeView
 import com.example.srach.nodeview.types.VariableNodeView
 
 class Field(private val context:Context) : Drawable {
@@ -33,16 +34,24 @@ class Field(private val context:Context) : Drawable {
 
     private var variables = Variables()
     init {
+        nodeViewList.add(BeginNodeView(context, this, Vector2f(-300f,0f)))
         nodeViewList.add(OperatorNodeView(context, MinusNode(),this, Vector2f(0f, 0f)))
         nodeViewList.add(VariableNodeView(context, VariableNode("a", variables).apply {value=10 }, this, Vector2f(-200f, 0f)))
         nodeViewList.add(VariableNodeView(context, VariableNode("b", variables).apply {value=5 }, this, Vector2f(-200f, 200f)))
-        nodeViewList.add(TestNodeView(context, this, Vector2f(300f, 300f)))
-        nodeViewList.add(TestNodeView(context, this, Vector2f(300f, -500f)))
+        nodeViewList.add(PrintNodeView(context, PrintNode(), this, Vector2f(0f, -500f)))
+        nodeViewList.add(PrintNodeView(context, PrintNode(), this, Vector2f(300f, -500f)))
+    }
+
+    fun goLogic(node: LogicNode) {
+        if (node.next != null) {
+            node.next.work()
+            goLogic(node.next)
+        } else print("End")
     }
 
     fun run(){
-        if(nodeViewList[0] is OperatorNodeView){
-            (nodeViewList[0] as OperatorNodeView).print()
+        if(nodeViewList[0] is BeginNodeView){
+            goLogic((nodeViewList[0] as BeginNodeView).getNodeToWork())
         }
     }
 

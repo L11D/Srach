@@ -3,6 +3,8 @@ package com.example.srach.nodeview.nodeviewunits
 import android.content.Context
 import android.graphics.Canvas
 import com.example.srach.R
+import com.example.srach.interpretator.LogicNode
+import com.example.srach.interpretator.LogicNodeWork
 import com.example.srach.nodeview.AbleToExec
 import com.example.srach.nodeview.AbleToInput
 import com.example.srach.nodeview.InOutAbleNodeView
@@ -25,6 +27,11 @@ class NodeViewConnectorInputData <T> (context: Context, nodeView: T, dataType: D
     }
 }
 class NodeViewConnectorInputExec <T> (context: Context, nodeView: T) : NodeViewConnectorInput(context, nodeView) where T:NodeView, T:AbleToExec{
+
+    fun getNode(): LogicNode {
+        return (nodeView as AbleToExec).getExecNode()
+    }
+
     init {
         dataType = DataTypes.EXEC
         paint.color = context.getColor(R.color.execConnector)

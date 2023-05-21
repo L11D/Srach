@@ -9,9 +9,14 @@ import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
 import com.example.srach.nodeview.nodeviewunits.NodeViewBody
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnector
+import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInput
+import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutput
 import com.example.srach.nodeview.nodeviewunits.NodeViewText
 
 abstract class NodeView(val context: Context, val field: Field, var position: Vector2f) : Drawable {
+
+    var inputConnectorsList = mutableListOf<NodeViewConnectorInput>()
+    var outputConnectorsList = mutableListOf<NodeViewConnectorOutput>()
 
     var colorN = Color.BLUE
 
@@ -55,8 +60,24 @@ abstract class NodeView(val context: Context, val field: Field, var position: Ve
         displaySize = size * scale
     }
 
-    abstract fun drawConnectors(canvas: Canvas)
-    abstract fun connectorCollision(pos: Vector2f): NodeViewConnector?
+    fun drawConnectors(canvas: Canvas){
+        for (c in inputConnectorsList) {
+            c.draw(canvas)
+        }
+        for (c in outputConnectorsList) {
+            c.draw(canvas)
+        }
+    }
+    fun connectorCollision(pos: Vector2f): NodeViewConnector?{
+        for (con in inputConnectorsList) {
+            if (con.collision(pos)) return con
+        }
+        for (con in outputConnectorsList) {
+            if (con.collision(pos)) return con
+        }
+        return null
+    }
+
 
     override fun draw(canvas: Canvas) {
         solveDisplayPosition()

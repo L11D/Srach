@@ -13,7 +13,7 @@ abstract class NodeViewConnector (context: Context, nodeView: NodeView) : Drawab
         get() = field
 
     fun isSameType(con:NodeViewConnector):Boolean{
-        return dataType == con.dataType
+        return dataType == con.dataType || con.dataType == DataTypes.UNSPECIFIED || dataType == DataTypes.UNSPECIFIED
     }
 
     fun collision(pos: Vector2f):Boolean{

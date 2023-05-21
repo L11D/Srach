@@ -115,7 +115,7 @@ class GListener(private val context: Context, private val fieldView: FieldView) 
                 if (connection != null && !connection!!.isComplete()) {
                     fieldView.field.connectionsList.removeLast()
                 }
-                //if (connection != null) connection!!.connect()
+                if (connection != null) connection!!.connect()
 
                 connectorInput = null
                 connectorOutput = null

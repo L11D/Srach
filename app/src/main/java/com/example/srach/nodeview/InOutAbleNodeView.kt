@@ -16,8 +16,6 @@ import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputData
 abstract class InOutAbleNodeView(context: Context, field: Field, position: Vector2f, val inputCount:Int, val outputCount:Int, var dataType: DataTypes) : NodeView(context, field, position),
     AbleToInput, AbleToOutput {
 
-    var inputConnectorsList = mutableListOf<NodeViewConnectorInput>()
-    var outputConnectorsList = mutableListOf<NodeViewConnectorOutput>()
     init {
         initConnectors()
     }
@@ -48,25 +46,6 @@ abstract class InOutAbleNodeView(context: Context, field: Field, position: Vecto
         }
 
         size.y = height
-    }
-
-    override fun connectorCollision(pos: Vector2f): NodeViewConnector? {
-        for (con in inputConnectorsList) {
-            if (con.collision(pos)) return con
-        }
-        for (con in outputConnectorsList) {
-            if (con.collision(pos)) return con
-        }
-        return null
-    }
-
-    override fun drawConnectors(canvas: Canvas) {
-        for (c in inputConnectorsList) {
-            c.draw(canvas)
-        }
-        for (c in outputConnectorsList) {
-            c.draw(canvas)
-        }
     }
 
     abstract override fun <I, O> connect(

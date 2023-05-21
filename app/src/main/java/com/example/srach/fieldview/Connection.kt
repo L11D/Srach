@@ -8,8 +8,10 @@ import android.graphics.PathMeasure
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnector
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInput
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInputData
+import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInputExec
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutput
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputData
+import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputExec
 import java.lang.Math.abs
 import kotlin.math.sqrt
 
@@ -111,12 +113,20 @@ class Connection private constructor(private val field: Field) : Drawable {
             if(connectorInput is NodeViewConnectorInputData<*>){
                 (connectorInput!! as NodeViewConnectorInputData<*>).connect(connectorOutput!! as NodeViewConnectorOutputData<*>)
             }
+            if (connectorOutput is NodeViewConnectorOutputExec<*>){
+                (connectorOutput!! as NodeViewConnectorOutputExec<*>).connect(connectorInput!! as NodeViewConnectorInputExec<*>)
+            }
         }
     }
     fun unconnect(){
         if(connectorInput != null){
             if(connectorInput is NodeViewConnectorInputData<*>){
                 (connectorInput!! as NodeViewConnectorInputData<*>).unconnect()
+            }
+        }
+        if(connectorOutput != null){
+            if (connectorOutput is NodeViewConnectorOutputExec<*>){
+                (connectorOutput!! as NodeViewConnectorOutputExec<*>).unconnect()
             }
         }
     }
