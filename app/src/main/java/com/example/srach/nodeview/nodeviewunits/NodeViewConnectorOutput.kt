@@ -3,7 +3,7 @@ package com.example.srach.nodeview.nodeviewunits
 import android.content.Context
 import android.graphics.Canvas
 import com.example.srach.R
-import com.example.srach.interpretator.MathNodeInt
+import com.example.srach.interpretator.MathNode
 import com.example.srach.nodeview.AbleToExec
 import com.example.srach.nodeview.AbleToInput
 import com.example.srach.nodeview.AbleToOutput
@@ -16,7 +16,7 @@ class NodeViewConnectorOutputData<T> (context: Context, nodeView: T, dataType: D
     init {
         this.dataType = dataType
     }
-    fun getNodeOutput():MathNodeInt{
+    fun getNodeOutput():MathNode{
         return (nodeView as AbleToOutput).getNodeOutput()
     }
 }

@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Canvas
 import com.example.srach.R
 import com.example.srach.interpretator.LogicNode
-import com.example.srach.interpretator.LogicNodeWork
 import com.example.srach.nodeview.AbleToExec
 import com.example.srach.nodeview.AbleToInput
 import com.example.srach.nodeview.InOutAbleNodeView

@@ -1,22 +1,20 @@
 package com.example.srach.interpretator;
 
-public class NumberNode extends OperandNode {
-    private int value;
-
-    {
-        value = 0;
+public class NumberNode extends MathNode {
+    private String value;
+    NumberNode() {
+        this.value = "0";
     }
 
-    public void setValue(int value) {
+    public void setValue(String value) {
         this.value = value;
     }
 
-    public int getValue() {
-        return value;
-    }
-
     @Override
-    public int evaluate() {
-        return value;
+    public Data evaluate() {
+        if (value.contains("."))
+            return new Data(value, DataType.DOUBLE);
+        else
+            return new Data(value, DataType.INT);
     }
 }

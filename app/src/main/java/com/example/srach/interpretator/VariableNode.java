@@ -1,29 +1,38 @@
 package com.example.srach.interpretator;
 
-public class VariableNode extends OperandNode {
+public class VariableNode extends MathNode implements MathNodeEvaluate {
     private final String name;
-    private final Variables storage;
-
-    public VariableNode(String name, Variables storage) {
+    private final DataType type;
+    private final Variables variables;
+    public VariableNode(String name, DataType type, Variables storage) {
         this.name = name;
-        this.storage = storage;
-        this.storage.setVariableValue(name, 0);
+        this.type = type;
+        this.variables = storage;
+        this.variables.setVariableValue(name, null);
     }
 
-    public String getName() {
-        return name;
+    public String getValue() {
+        return variables.getVariableValue(name);
     }
 
-    public int getValue() {
-        return storage.getVariableValue(name);
+    public DataType getType() {
+        return type;
     }
 
-    public void setValue(int value) {
-        storage.setVariableValue(name, value);
+    public void setValue(String value) {
+        variables.setVariableValue(name, value);
     }
 
     @Override
-    public int evaluate() {
-        return getValue();
+    public Data evaluate() {
+        Data data = null;
+        switch (type) {
+            case INT -> data = new Data(getValue(), DataType.INT);
+            case BOOL -> data = new Data(getValue(), DataType.BOOL);
+            case CHAR -> data = new Data(getValue(), DataType.CHAR);
+            case DOUBLE -> data = new Data(getValue(), DataType.DOUBLE);
+            case STRING -> data = new Data(getValue(), DataType.STRING);
+        }
+        return data;
     }
 }

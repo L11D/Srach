@@ -1,9 +1,9 @@
 package com.example.srach.interpretator;
 
-public abstract class LogicNode implements LogicNodeWork {
+public abstract class LogicNode extends Node implements LogicNodeWork {
     private LogicNode next;
-    {
-        this.next = null;
+    LogicNode() {
+        next = null;
     }
 
     public LogicNode getNext() {

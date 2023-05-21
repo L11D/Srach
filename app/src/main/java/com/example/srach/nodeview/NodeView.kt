@@ -5,7 +5,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import com.example.srach.fieldview.Drawable
 import com.example.srach.fieldview.Field
-//import com.example.srach.fieldview.Node
 import com.example.srach.fieldview.Vector2f
 import com.example.srach.nodeview.nodeviewunits.NodeViewBody
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnector

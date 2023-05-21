@@ -1,7 +1,7 @@
 package com.example.srach.nodeview
 
-import com.example.srach.interpretator.MathNodeInt
+import com.example.srach.interpretator.MathNode
 
 interface AbleToOutput {
-    fun getNodeOutput():MathNodeInt
+    fun getNodeOutput(): MathNode
 }

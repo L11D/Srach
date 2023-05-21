@@ -3,9 +3,9 @@ package com.example.srach.nodeview.types
 import android.content.Context
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
+import com.example.srach.interpretator.BeginNode
 import com.example.srach.interpretator.LogicNode
-import com.example.srach.interpretator.MathNodeInt
-import com.example.srach.interpretator.StartLogicNode
+import com.example.srach.interpretator.MathNode
 import com.example.srach.nodeview.AbleToExec
 import com.example.srach.nodeview.NodeView
 import com.example.srach.nodeview.OutputableNodeView
@@ -15,9 +15,9 @@ import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputExec
 
 class BeginNodeView(context: Context, field: Field, position: Vector2f) : OutputableNodeView(context, field, position, 0, DataTypes.UNSPECIFIED), AbleToExec {
 
-    val node = StartLogicNode()
+    val node = BeginNode()
 
-    fun getNodeToWork():StartLogicNode{
+    fun getNodeToWork(): LogicNode {
         return node
     }
 
@@ -31,7 +31,7 @@ class BeginNodeView(context: Context, field: Field, position: Vector2f) : Output
         outputConnectorsList.add(con2)
     }
 
-    override fun getNodeOutput(): MathNodeInt {
+    override fun getNodeOutput(): MathNode {
         TODO("Not yet implemented")
     }
 

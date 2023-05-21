@@ -1,17 +1,25 @@
 package com.example.srach.interpretator;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class Variables {
-    private final Map<String, Integer> storage = new HashMap<>();
+    private final Map<String, String> variables = new HashMap<>();
+    private final Map<String, ArrayList<String>> arrays = new HashMap<>();
 
-    public int getVariableValue(String name) {
-        return this.storage.get(name);
+    public String getVariableValue(String name) {
+        return this.variables.get(name);
     }
 
-    public void setVariableValue(String name, int value) {
-        this.storage.put(name, value);
+    public void setVariableValue(String name, String value) {
+        this.variables.put(name, value);
+    }
+
+    public ArrayList<String> getArrayValue(String name) {
+        return this.arrays.get(name);
+    }
+
+    public ArrayList<String> setArrayValue(String name, ArrayList<String> value) {
+        return this.arrays.get(name);
     }
 }

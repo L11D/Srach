@@ -5,7 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
-import com.example.srach.interpretator.MathNodeInt
+import com.example.srach.interpretator.MathNode
 import com.example.srach.nodeview.nodeviewunits.DataTypes
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnector
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInput
@@ -53,5 +53,5 @@ abstract class InOutAbleNodeView(context: Context, field: Field, position: Vecto
         connectorOutput: NodeViewConnectorOutputData<O>
     ) where O : NodeView, I : NodeView, I:AbleToInput, O:AbleToOutput
 
-    abstract override fun getNodeOutput(): MathNodeInt
+    abstract override fun getNodeOutput(): MathNode
 }

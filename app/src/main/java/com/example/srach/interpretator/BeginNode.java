@@ -1,6 +1,6 @@
 package com.example.srach.interpretator;
 
-public class StartLogicNode extends LogicNode {
+public class BeginNode extends LogicNode {
     @Override
     public void work() {
     }

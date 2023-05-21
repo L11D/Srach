@@ -1,43 +1,41 @@
 package com.example.srach.interpretator;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        Variables vars = new Variables();
+        Variables variables = new Variables();
 
-        VariableNode a = new VariableNode("a", vars);
-        StartLogicNode start = new StartLogicNode();
-        LessNode less = new LessNode();
+        VariableNode a = new VariableNode("a", DataType.DOUBLE, variables);
+        BeginNode start = new BeginNode();
+        PrintNode print1 = new PrintNode();
+        PrintNode print2 = new PrintNode();
         AssignmentNode ass = new AssignmentNode();
+        NumberNode num = new NumberNode();
         AddNode add = new AddNode();
-        NumberNode num1 = new NumberNode();
-        num1.setValue(1);
-        NumberNode num50 = new NumberNode();
-        num50.setValue(50);
-        PrintNode print = new PrintNode();
-        WhileLoopNode loop = new WhileLoopNode();
 
-        start.setNext(loop);
-        add.setLeft(a);
-        add.setRight(num1);
+        a.setValue("150.0");
+        num.setValue("423.52");
+        start.setNext(print1);
+        print1.setNext(ass);
+        ass.setNext(print2);
         ass.setVariable(a);
-        ass.setEvaluateResult(add);
-        loop.setLoopBody(ass);
-        print.setEvaluateResult(a);
-        loop.setCompleted(print);
-        less.setLeft(a);
-        less.setRight(num50);
-        loop.setCondition(less);
+        ass.setEvaluateResult(num);
+        print2.setEvaluateResult(add);
+        print1.setEvaluateResult(a);
+        add.setLeft(a);
+        add.setRight(num);
 
-        checkLoops(start);
+
+
         goLogic(start);
     }
 
-    public static void checkLoops(LogicNode node) {
-        if (node.getNext() instanceof WhileLoopNode) {
-            ((WhileLoopNode) node.getNext()).setEndOfLoopBody((WhileLoopNode) node.getNext());
-            checkLoops(node.getNext());
-        }
-    }
+//    public static void checkLoops(LogicNode node) {
+//        if (node.getNext() instanceof WhileLoopNode) {
+//            ((WhileLoopNode) node.getNext()).setEndOfLoopBody((WhileLoopNode) node.getNext());
+//            checkLoops(node.getNext());
+//        }
+//    }
 
     public static void goLogic(LogicNode node) {
         if (node.getNext() != null) {
@@ -48,4 +46,46 @@ public class Main {
             System.out.print("End");
     }
 }
+
+//class Break extends LogicNode {
+//    WhileLoopNode loopNode;
+//
+//    public void setOwner(WhileLoopNode owner) {
+//        this.loopNode = owner;
+//    }
+//
+//    @Override
+//    public void work() {
+//        loopNode.setNext(loopNode.getCompleted());
+//    }
+//}
+//
+//class BeginEnd {
+//    LogicNode owner;
+//    LogicNode begin;
+//    LogicNode end;
+//    BeginEnd() {
+//        owner = null;
+//        begin = null;
+//        end = null;
+//    }
+//
+//    public void setOwner(LogicNode owner) {
+//        this.owner = owner;
+//    }
+//
+//    public void setBegin(LogicNode begin) {
+//        this.begin = begin;
+//    }
+//
+//    public void setEnd(LogicNode end) {
+//        this.end = end;
+//    }
+//
+//    public LogicNode getBegin() {
+//        return begin;
+//    }
+//}
+
+
 

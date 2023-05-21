@@ -4,7 +4,6 @@ import android.content.Context
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
 import com.example.srach.interpretator.LogicNode
-import com.example.srach.interpretator.LogicNodeWork
 import com.example.srach.interpretator.PrintNode
 import com.example.srach.nodeview.AbleToExec
 import com.example.srach.nodeview.AbleToInput
@@ -18,9 +17,10 @@ import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInputExec
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputData
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputExec
 
-class PrintNodeView(context: Context, val printNode: PrintNode, field: Field, position: Vector2f) :
+class PrintNodeView(context: Context, field: Field, position: Vector2f) :
     InputableExecNodeView(context, field, position, 1, DataTypes.UNSPECIFIED) {
 
+    private val printNode = PrintNode()
     override fun <I : NodeView, O : NodeView> connect(
         connectorInput: NodeViewConnectorInputData<I>,
         connectorOutput: NodeViewConnectorOutputData<O>
