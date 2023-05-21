@@ -1,16 +1,12 @@
 package com.example.srach.nodeview
 
 import android.content.Context
-import android.graphics.Canvas
 import android.graphics.Color
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
-import com.example.srach.interpretator.MathNode
+import com.example.srach.interpretor.MathNode
 import com.example.srach.nodeview.nodeviewunits.DataTypes
-import com.example.srach.nodeview.nodeviewunits.NodeViewConnector
-import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInput
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInputData
-import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutput
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputData
 
 abstract class InOutAbleNodeView(context: Context, field: Field, position: Vector2f, val inputCount:Int, val outputCount:Int, var dataType: DataTypes) : NodeView(context, field, position),

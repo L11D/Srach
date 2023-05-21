@@ -3,13 +3,11 @@ package com.example.srach.fieldview
 import android.content.Context
 import android.graphics.Canvas
 import com.example.srach.R
-import com.example.srach.interpretator.AddNode
-import com.example.srach.interpretator.DataType
-import com.example.srach.interpretator.LogicNode
-import com.example.srach.interpretator.PrintNode
-import com.example.srach.interpretator.SubtractNode
-import com.example.srach.interpretator.VariableNode
-import com.example.srach.interpretator.Variables
+import com.example.srach.interpretor.DataType
+import com.example.srach.interpretor.LogicNode
+import com.example.srach.interpretor.SubtractNode
+import com.example.srach.interpretor.VariableNode
+import com.example.srach.interpretor.Variables
 import com.example.srach.nodeview.NodeView
 import com.example.srach.nodeview.types.BeginNodeView
 import com.example.srach.nodeview.types.OperatorNodeView
@@ -37,7 +35,7 @@ class Field(private val context:Context) : Drawable {
     private var variables = Variables()
     init {
         nodeViewList.add(BeginNodeView(context, this, Vector2f(-300f,0f)))
-        //nodeViewList.add(OperatorNodeView(context, SubtractNode(),this, Vector2f(0f, 0f)))
+        nodeViewList.add(OperatorNodeView(context, SubtractNode(),this, Vector2f(0f, 0f)))
         nodeViewList.add(VariableNodeView(context, VariableNode("a", DataType.INT, variables).apply {value="10"}, this, Vector2f(-200f, 0f)))
         nodeViewList.add(VariableNodeView(context, VariableNode("b", DataType.INT, variables).apply {value="5"}, this, Vector2f(-200f, 200f)))
         nodeViewList.add(PrintNodeView(context, this, Vector2f(0f, -500f)))

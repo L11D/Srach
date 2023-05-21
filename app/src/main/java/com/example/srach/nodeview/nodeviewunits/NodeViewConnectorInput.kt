@@ -3,11 +3,9 @@ package com.example.srach.nodeview.nodeviewunits
 import android.content.Context
 import android.graphics.Canvas
 import com.example.srach.R
-import com.example.srach.interpretator.LogicNode
+import com.example.srach.interpretor.LogicNode
 import com.example.srach.nodeview.AbleToExec
 import com.example.srach.nodeview.AbleToInput
-import com.example.srach.nodeview.InOutAbleNodeView
-import com.example.srach.nodeview.InputableNodeView
 import com.example.srach.nodeview.NodeView
 
 abstract class NodeViewConnectorInput(context: Context, nodeView: NodeView) : NodeViewConnector(context, nodeView){

@@ -3,9 +3,8 @@ package com.example.srach.nodeview.nodeviewunits
 import android.content.Context
 import android.graphics.Canvas
 import com.example.srach.R
-import com.example.srach.interpretator.MathNode
+import com.example.srach.interpretor.MathNode
 import com.example.srach.nodeview.AbleToExec
-import com.example.srach.nodeview.AbleToInput
 import com.example.srach.nodeview.AbleToOutput
 import com.example.srach.nodeview.NodeView
 

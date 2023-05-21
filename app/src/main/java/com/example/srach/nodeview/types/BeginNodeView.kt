@@ -3,11 +3,10 @@ package com.example.srach.nodeview.types
 import android.content.Context
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
-import com.example.srach.interpretator.BeginNode
-import com.example.srach.interpretator.LogicNode
-import com.example.srach.interpretator.MathNode
+import com.example.srach.interpretor.BeginNode
+import com.example.srach.interpretor.LogicNode
+import com.example.srach.interpretor.MathNode
 import com.example.srach.nodeview.AbleToExec
-import com.example.srach.nodeview.NodeView
 import com.example.srach.nodeview.OutputableNodeView
 import com.example.srach.nodeview.nodeviewunits.DataTypes
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInputExec
