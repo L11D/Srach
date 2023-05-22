@@ -3,13 +3,13 @@ package com.example.srach.nodeview.types
 import android.content.Context
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
+import com.example.srach.interpretor.DataType
 import com.example.srach.interpretor.LogicNode
 import com.example.srach.interpretor.PrintNode
 import com.example.srach.nodeview.AbleToInput
 import com.example.srach.nodeview.AbleToOutput
 import com.example.srach.nodeview.InputableExecNodeView
 import com.example.srach.nodeview.NodeView
-import com.example.srach.nodeview.nodeviewunits.DataTypes
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInput
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInputData
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInputExec
@@ -17,7 +17,7 @@ import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputData
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputExec
 
 class PrintNodeView(context: Context, field: Field, position: Vector2f) :
-    InputableExecNodeView(context, field, position, 1, DataTypes.UNSPECIFIED) {
+    InputableExecNodeView(context, field, position, 1, DataType.UNSPECIFIED) {
 
     private val printNode = PrintNode()
     override fun <I : NodeView, O : NodeView> connect(

@@ -4,15 +4,15 @@ import android.content.Context
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
 import com.example.srach.interpretor.BeginNode
+import com.example.srach.interpretor.DataType
 import com.example.srach.interpretor.LogicNode
 import com.example.srach.interpretor.MathNode
 import com.example.srach.nodeview.AbleToExec
 import com.example.srach.nodeview.OutputableNodeView
-import com.example.srach.nodeview.nodeviewunits.DataTypes
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInputExec
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputExec
 
-class BeginNodeView(context: Context, field: Field, position: Vector2f) : OutputableNodeView(context, field, position, 0, DataTypes.UNSPECIFIED), AbleToExec {
+class BeginNodeView(context: Context, field: Field, position: Vector2f) : OutputableNodeView(context, field, position, 0, DataType.UNSPECIFIED), AbleToExec {
 
     val node = BeginNode()
 
@@ -42,7 +42,7 @@ class BeginNodeView(context: Context, field: Field, position: Vector2f) : Output
     }
 
     override fun unconnectExec() {
-        TODO("Not yet implemented")
+        node.next = null
     }
 
     override fun getExecNode(): LogicNode {

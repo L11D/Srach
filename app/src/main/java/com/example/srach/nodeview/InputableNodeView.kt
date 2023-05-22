@@ -5,14 +5,14 @@ import android.graphics.Canvas
 import android.graphics.Color
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
-import com.example.srach.nodeview.nodeviewunits.DataTypes
+import com.example.srach.interpretor.DataType
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnector
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInput
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInputData
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutput
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputData
 
-abstract class InputableNodeView(context: Context, field: Field, position: Vector2f, val inputCount:Int, val dataType: DataTypes) : NodeView(context, field, position), AbleToInput{
+abstract class InputableNodeView(context: Context, field: Field, position: Vector2f, val inputCount:Int, val dataType: DataType) : NodeView(context, field, position), AbleToInput{
 
     init {
         initConnectors()

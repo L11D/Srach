@@ -4,19 +4,19 @@ import android.content.Context
 import android.util.Log
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
+import com.example.srach.interpretor.DataType
 import com.example.srach.interpretor.MathNode
 import com.example.srach.interpretor.OperatorNode
 import com.example.srach.nodeview.AbleToInput
 import com.example.srach.nodeview.AbleToOutput
 import com.example.srach.nodeview.InOutAbleNodeView
 import com.example.srach.nodeview.NodeView
-import com.example.srach.nodeview.nodeviewunits.DataTypes
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInput
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInputData
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputData
 
 class OperatorNodeView(context:Context, val operatorNode: OperatorNode, field: Field, position: Vector2f) :
-    InOutAbleNodeView(context, field, position, 2, 1, DataTypes.INT) {
+    InOutAbleNodeView(context, field, position, 2, 1, DataType.INT) {
 
     override fun <I, O> connect(
         connectorInput: NodeViewConnectorInputData<I>,

@@ -3,6 +3,7 @@ package com.example.srach.nodeview.nodeviewunits
 import android.content.Context
 import android.graphics.Canvas
 import com.example.srach.R
+import com.example.srach.interpretor.DataType
 import com.example.srach.interpretor.LogicNode
 import com.example.srach.nodeview.AbleToExec
 import com.example.srach.nodeview.AbleToInput
@@ -12,7 +13,7 @@ abstract class NodeViewConnectorInput(context: Context, nodeView: NodeView) : No
 
 }
 
-class NodeViewConnectorInputData <T> (context: Context, nodeView: T, dataType: DataTypes) : NodeViewConnectorInput(context, nodeView) where T:NodeView, T:AbleToInput{
+class NodeViewConnectorInputData <T> (context: Context, nodeView: T, dataType: DataType) : NodeViewConnectorInput(context, nodeView) where T:NodeView, T:AbleToInput{
     init {
         this.dataType = dataType
     }
@@ -30,8 +31,7 @@ class NodeViewConnectorInputExec <T> (context: Context, nodeView: T) : NodeViewC
     }
 
     init {
-        dataType = DataTypes.EXEC
-        paint.color = context.getColor(R.color.execConnector)
+        dataType = DataType.EXEC
     }
     var round = 8f
         get() = field
@@ -46,14 +46,3 @@ class NodeViewConnectorInputExec <T> (context: Context, nodeView: T) : NodeViewC
         canvas.drawRoundRect(displayPosition.x, displayPosition.y, displayPosition.x + displaySize.x, displayPosition.y + displaySize.y, displayRound, displayRound, paint)
     }
 }
-
-
-//class NodeViewConnectorInput private constructor(context: Context, nodeView: NodeView) : NodeViewConnector(context, nodeView){
-//    lateinit var inputableNode: AbleToInput
-//    constructor(context: Context, inputableNodeView: InputableNodeView, NULL:Int) : this(context, inputableNodeView){
-//        inputableNode = inputableNodeView
-//    }
-//    constructor(context: Context, inOutAbleNodeView: InOutAbleNodeView, NULL: Int) : this(context, inOutAbleNodeView){
-//        inputableNode = inOutAbleNodeView
-//    }
-//}

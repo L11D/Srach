@@ -3,6 +3,7 @@ package com.example.srach.nodeview.nodeviewunits
 import android.content.Context
 import android.graphics.Canvas
 import com.example.srach.R
+import com.example.srach.interpretor.DataType
 import com.example.srach.interpretor.MathNode
 import com.example.srach.nodeview.AbleToExec
 import com.example.srach.nodeview.AbleToOutput
@@ -11,7 +12,7 @@ import com.example.srach.nodeview.NodeView
 abstract class NodeViewConnectorOutput(context: Context, nodeView: NodeView) : NodeViewConnector(context, nodeView) {
 
 }
-class NodeViewConnectorOutputData<T> (context: Context, nodeView: T, dataType: DataTypes) : NodeViewConnectorOutput(context, nodeView) where T:NodeView, T: AbleToOutput {
+class NodeViewConnectorOutputData<T> (context: Context, nodeView: T, dataType: DataType) : NodeViewConnectorOutput(context, nodeView) where T:NodeView, T: AbleToOutput {
     init {
         this.dataType = dataType
     }
@@ -27,8 +28,7 @@ class NodeViewConnectorOutputExec <T> (context: Context, nodeView: T) : NodeView
         (nodeView as AbleToExec).unconnectExec()
     }
     init {
-        dataType = DataTypes.EXEC
-        paint.color = context.getColor(R.color.execConnector)
+        dataType = DataType.EXEC
     }
 
     var round = 8f
@@ -44,13 +44,3 @@ class NodeViewConnectorOutputExec <T> (context: Context, nodeView: T) : NodeView
         canvas.drawRoundRect(displayPosition.x, displayPosition.y, displayPosition.x + displaySize.x, displayPosition.y + displaySize.y, displayRound, displayRound, paint)
     }
 }
-
-//class NodeViewConnectorOutput private constructor(context: Context, nodeView: NodeView) : NodeViewConnector(context, nodeView){
-//    lateinit var outputableNode: AbleToOutput
-//    constructor(context: Context, outputableNodeView: OutputableNodeView, NULL:Int) : this(context, outputableNodeView){
-//        outputableNode = outputableNodeView
-//    }
-//    constructor(context: Context, inOutAbleNodeView: InOutAbleNodeView, NULL: Int) : this(context, inOutAbleNodeView){
-//        outputableNode = inOutAbleNodeView
-//    }
-//}

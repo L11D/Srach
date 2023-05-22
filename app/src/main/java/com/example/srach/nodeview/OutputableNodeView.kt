@@ -4,11 +4,11 @@ import android.content.Context
 import android.graphics.Color
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
+import com.example.srach.interpretor.DataType
 import com.example.srach.interpretor.MathNode
-import com.example.srach.nodeview.nodeviewunits.DataTypes
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputData
 
-abstract class OutputableNodeView(context:Context, field: Field, position: Vector2f, val outputCount:Int, val dataType: DataTypes) : NodeView(context, field, position),
+abstract class OutputableNodeView(context:Context, field: Field, position: Vector2f, val outputCount:Int, val dataType: DataType) : NodeView(context, field, position),
     AbleToOutput {
 
 

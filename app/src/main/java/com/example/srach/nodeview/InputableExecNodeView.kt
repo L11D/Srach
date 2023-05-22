@@ -3,11 +3,11 @@ package com.example.srach.nodeview
 import android.content.Context
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
-import com.example.srach.nodeview.nodeviewunits.DataTypes
+import com.example.srach.interpretor.DataType
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInputExec
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputExec
 
-abstract class InputableExecNodeView(context: Context, field: Field, position: Vector2f, inputCount: Int, dataType: DataTypes) :
+abstract class InputableExecNodeView(context: Context, field: Field, position: Vector2f, inputCount: Int, dataType: DataType) :
     InputableNodeView(context, field, position, inputCount, dataType), AbleToExec {
 
     override fun initConnectors() {
