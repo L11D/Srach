@@ -71,6 +71,11 @@ class Connection private constructor(private val field: Field) : Drawable {
     }
     private var pathMeasure = PathMeasure()
 
+    fun delete(){
+        unconnect()
+        field.connectionsList.remove(this)
+    }
+
     fun moveEnd(delta:Vector2f){
         if (!isComplete()){
             if (connectorOutput != null){
@@ -84,16 +89,26 @@ class Connection private constructor(private val field: Field) : Drawable {
 
     fun addConnector(con:NodeViewConnector?):Boolean{
         if (outputFirst){
-            if (con is NodeViewConnectorInput && con.isSameType(connectorOutput!!)){
+            if (con is NodeViewConnectorInputExec<*> && con.isSameType(connectorOutput!!)){
                 connectorInput = con
+            }
+            else if (con is NodeViewConnectorInputData<*> && connectorOutput is NodeViewConnectorOutputData<*>){
+                if ((con as NodeViewConnectorInputData<*>).tryToConnect(connectorOutput!! as NodeViewConnectorOutputData<*>)){
+                    connectorInput = con
+                }
             }
             else{
                 connectorInput = null
             }
         }
         else{
-            if (con is NodeViewConnectorOutput && con.isSameType(connectorInput!!)){
+            if (con is NodeViewConnectorOutputExec<*> && con.isSameType(connectorInput!!)){
                 connectorOutput = con
+            }
+            else if (con is NodeViewConnectorOutputData<*> && connectorInput is NodeViewConnectorInputData<*>){
+                if ((connectorInput as NodeViewConnectorInputData<*>).tryToConnect(con as NodeViewConnectorOutputData<*>)){
+                    connectorOutput = con
+                }
             }
             else{
                 connectorOutput = null
@@ -111,10 +126,10 @@ class Connection private constructor(private val field: Field) : Drawable {
     fun connect(){
         if(isComplete()){
             if(connectorInput is NodeViewConnectorInputData<*>){
-                (connectorInput!! as NodeViewConnectorInputData<*>).connect(connectorOutput!! as NodeViewConnectorOutputData<*>)
+                (connectorInput!! as NodeViewConnectorInputData<*>).connect(connectorOutput!! as NodeViewConnectorOutputData<*>, this)
             }
             if (connectorOutput is NodeViewConnectorOutputExec<*>){
-                (connectorOutput!! as NodeViewConnectorOutputExec<*>).connect(connectorInput!! as NodeViewConnectorInputExec<*>)
+                (connectorOutput!! as NodeViewConnectorOutputExec<*>).connect(connectorInput!! as NodeViewConnectorInputExec<*>, this)
             }
         }
     }

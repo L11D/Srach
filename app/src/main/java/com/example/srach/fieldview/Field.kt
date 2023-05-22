@@ -37,7 +37,11 @@ class Field(private val context:Context) : Drawable {
         nodeViewList.add(BeginNodeView(context, this, Vector2f(-300f,0f)))
         nodeViewList.add(OperatorNodeView(context, SubtractNode(),this, Vector2f(0f, 0f)))
         nodeViewList.add(VariableNodeView(context, VariableNode("a", DataType.INT, variables).apply {value="10"}, this, Vector2f(-200f, 0f)))
-        nodeViewList.add(VariableNodeView(context, VariableNode("b", DataType.DOUBLE, variables).apply {value="5"}, this, Vector2f(-200f, 200f)))
+        nodeViewList.add(VariableNodeView(context, VariableNode("b", DataType.INT, variables).apply {value="5"}, this, Vector2f(-200f, 200f)))
+        nodeViewList.add(VariableNodeView(context, VariableNode("c", DataType.STRING, variables).apply {value="5"}, this, Vector2f(-200f, 300f)))
+        nodeViewList.add(VariableNodeView(context, VariableNode("d", DataType.DOUBLE, variables).apply {value="5"}, this, Vector2f(-200f, 400f)))
+        nodeViewList.add(VariableNodeView(context, VariableNode("r", DataType.CHAR, variables).apply {value="5"}, this, Vector2f(-200f, 500f)))
+        nodeViewList.add(VariableNodeView(context, VariableNode("g", DataType.BOOL, variables).apply {value="0"}, this, Vector2f(-200f, 600f)))
         nodeViewList.add(PrintNodeView(context, this, Vector2f(0f, -500f)))
         nodeViewList.add(PrintNodeView(context, this, Vector2f(300f, -500f)))
     }

@@ -27,6 +27,13 @@ class PrintNodeView(context: Context, field: Field, position: Vector2f) :
         printNode.setEvaluateResult(connectorOutput.getNodeOutput())
     }
 
+    override fun <I : NodeView, O : NodeView> tryToConnect(
+        connectorInput: NodeViewConnectorInputData<I>,
+        connectorOutput: NodeViewConnectorOutputData<O>
+    ): Boolean where I : AbleToInput, O : AbleToOutput {
+        return true
+    }
+
     override fun unconnect(connectorInput: NodeViewConnectorInput) {
         printNode.setEvaluateResult(null)
     }

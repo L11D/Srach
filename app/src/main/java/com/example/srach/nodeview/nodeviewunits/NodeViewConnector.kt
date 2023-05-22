@@ -3,6 +3,7 @@ package com.example.srach.nodeview.nodeviewunits
 import android.content.Context
 import android.graphics.Canvas
 import com.example.srach.R
+import com.example.srach.fieldview.Connection
 import com.example.srach.fieldview.Drawable
 import com.example.srach.fieldview.Vector2f
 import com.example.srach.interpretor.DataType
@@ -11,6 +12,8 @@ import com.example.srach.nodeview.NodeView
 abstract class NodeViewConnector (context: Context, nodeView: NodeView) : Drawable, NodeViewUnit(context, nodeView) {
 
     var dataType = DataType.UNSPECIFIED
+    var connection:Connection? = null
+
     var globalPosition = Vector2f()
         get() = field
 

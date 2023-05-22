@@ -3,6 +3,7 @@ package com.example.srach.nodeview.nodeviewunits
 import android.content.Context
 import android.graphics.Canvas
 import com.example.srach.R
+import com.example.srach.fieldview.Connection
 import com.example.srach.interpretor.DataType
 import com.example.srach.interpretor.LogicNode
 import com.example.srach.nodeview.AbleToExec
@@ -17,11 +18,19 @@ class NodeViewConnectorInputData <T> (context: Context, nodeView: T, dataType: D
     init {
         this.dataType = dataType
     }
-    fun connect(connectorOutputData: NodeViewConnectorOutputData<*>){
+    fun tryToConnect(connectorOutputData: NodeViewConnectorOutputData<*>):Boolean{
+        return (nodeView as AbleToInput).tryToConnect(this, connectorOutputData)
+    }
+    fun connect(connectorOutputData: NodeViewConnectorOutputData<*>, connection:Connection){
+        if (this.connection != null) this.connection!!.delete()
         (nodeView as AbleToInput).connect(this, connectorOutputData)
+        dataType = connectorOutputData.dataType
+        this.connection = connection
     }
     fun unconnect(){
         (nodeView as AbleToInput).unconnect(this)
+        dataType = DataType.UNSPECIFIED
+        this.connection = null
     }
 }
 class NodeViewConnectorInputExec <T> (context: Context, nodeView: T) : NodeViewConnectorInput(context, nodeView) where T:NodeView, T:AbleToExec{

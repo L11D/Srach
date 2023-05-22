@@ -113,7 +113,7 @@ class GListener(private val context: Context, private val fieldView: FieldView) 
 
             MotionEvent.ACTION_UP -> {
                 if (connection != null && !connection!!.isComplete()) {
-                    fieldView.field.connectionsList.removeLast()
+                    connection!!.delete()
                 }
                 if (connection != null) connection!!.connect()
 
@@ -167,8 +167,7 @@ class GListener(private val context: Context, private val fieldView: FieldView) 
         for (con in fieldView.field.connectionsList) {
             if (con.collision(Vector2f(e.x, e.y))) {
                 vibrateNodeMove()
-                con.unconnect()
-                fieldView.field.connectionsList.remove(con)
+                con.delete()
                 break
             }
         }

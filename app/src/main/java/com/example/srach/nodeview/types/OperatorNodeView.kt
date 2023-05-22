@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
+import com.example.srach.interpretor.CoolNumberNode
 import com.example.srach.interpretor.DataType
 import com.example.srach.interpretor.MathNode
 import com.example.srach.interpretor.OperatorNode
@@ -16,7 +17,7 @@ import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInputData
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputData
 
 class OperatorNodeView(context:Context, val operatorNode: OperatorNode, field: Field, position: Vector2f) :
-    InOutAbleNodeView(context, field, position, 2, 1, DataType.INT) {
+    InOutAbleNodeView(context, field, position, 2, 1, DataType.UNSPECIFIED) {
 
     override fun <I, O> connect(
         connectorInput: NodeViewConnectorInputData<I>,
@@ -45,5 +46,41 @@ class OperatorNodeView(context:Context, val operatorNode: OperatorNode, field: F
 
     override fun getNodeOutput(): MathNode {
         return operatorNode
+    }
+
+    override fun <I : NodeView, O : NodeView> tryToConnect(
+        connectorInput: NodeViewConnectorInputData<I>,
+        connectorOutput: NodeViewConnectorOutputData<O>
+    ): Boolean where I : AbleToInput, O : AbleToOutput {
+        var ans = true
+
+        if (inputConnectorsList[0].dataType == DataType.UNSPECIFIED && inputConnectorsList[1].dataType == DataType.UNSPECIFIED){
+            operatorNode.left = CoolNumberNode(connectorOutput.dataType)
+            operatorNode.right = CoolNumberNode(connectorOutput.dataType)
+            try {
+                operatorNode.evaluate()
+            }catch (e:Throwable){
+                ans = false
+            }
+            operatorNode.left = null
+            operatorNode.right = null
+        }else if (inputConnectorsList[0].dataType == DataType.UNSPECIFIED){
+            operatorNode.left = CoolNumberNode(connectorOutput.dataType)
+            try {
+                operatorNode.evaluate()
+            }catch (e:Throwable){
+                ans = false
+            }
+            operatorNode.left = null
+        }else{
+            operatorNode.right = CoolNumberNode(connectorOutput.dataType)
+            try {
+                operatorNode.evaluate()
+            }catch (e:Throwable){
+                ans = false
+            }
+            operatorNode.right = null
+        }
+        return ans
     }
 }
