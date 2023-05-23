@@ -18,6 +18,9 @@ import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputExec
 
 class PrintNodeView(context: Context, field: Field, position: Vector2f) :
     InputableExecNodeView(context, field, position, 1, DataType.UNSPECIFIED) {
+    init {
+        description.text = "Print"
+    }
 
     private val printNode = PrintNode()
     override fun <I : NodeView, O : NodeView> connect(
@@ -34,7 +37,7 @@ class PrintNodeView(context: Context, field: Field, position: Vector2f) :
         return true
     }
 
-    override fun unconnect(connectorInput: NodeViewConnectorInput) {
+    override fun disconnect(connectorInput: NodeViewConnectorInput) {
         printNode.setEvaluateResult(null)
     }
 
@@ -45,7 +48,7 @@ class PrintNodeView(context: Context, field: Field, position: Vector2f) :
         printNode.next = connectorInput.getNode()
     }
 
-    override fun unconnectExec() {
+    override fun disconnectExec(connectorOutput: NodeViewConnectorOutputExec<*>) {
         printNode.next = null
     }
 

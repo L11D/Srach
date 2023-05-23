@@ -16,32 +16,76 @@ import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInput
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInputData
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputData
 
-class OperatorNodeView(context:Context, val operatorNode: OperatorNode, field: Field, position: Vector2f) :
+abstract class OperatorNodeView(context:Context, val operatorNode: OperatorNode, field: Field, position: Vector2f) :
     InOutAbleNodeView(context, field, position, 2, 1, DataType.UNSPECIFIED) {
 
     override fun <I, O> connect(
         connectorInput: NodeViewConnectorInputData<I>,
         connectorOutput: NodeViewConnectorOutputData<O>
     ) where O : NodeView, I : NodeView, I : AbleToInput, O : AbleToOutput {
+        println((operatorNode.left != null).toString() + " " +(operatorNode.right != null).toString() )
+
         if (inputConnectorsList.indexOf(connectorInput) == 0) { // индексы могут не совападать
             operatorNode.left = connectorOutput.getNodeOutput()
-            Log.d("dddd", "connectLeft")
+            println("con0")
         }
         if (inputConnectorsList.indexOf(connectorInput) == 1) {
             operatorNode.right = connectorOutput.getNodeOutput()
-            Log.d("dddd", "connectRight")
+            println("con1")
         }
+//        if(inputConnectorsList[0].dataType == DataType.UNSPECIFIED && inputConnectorsList[1].dataType == DataType.UNSPECIFIED){
+//
+//        }
+//        else if (inputConnectorsList[0].dataType == DataType.UNSPECIFIED){
+//            operatorNode.left = CoolNumberNode(connectorOutput.dataType)
+//            outputConnectorsList[0].dataType = operatorNode.evaluate().type
+//            operatorNode.left = null
+//        }
+//        else if (inputConnectorsList[1].dataType == DataType.UNSPECIFIED) {
+//            operatorNode.right = CoolNumberNode(connectorOutput.dataType)
+//            outputConnectorsList[0].dataType = operatorNode.evaluate().type
+//            operatorNode.right = null
+//        }
+//        else{
+//            try{
+//                outputConnectorsList[0].dataType = operatorNode.evaluate().type
+//            }catch (e:Throwable){}
+//        }
+        if (operatorNode.left == null && operatorNode.right == null){
+
+        }
+        else if (operatorNode.left == null){
+            operatorNode.left = CoolNumberNode(connectorOutput.dataType)
+            outputConnectorsList[0].dataType = operatorNode.evaluate().type
+            operatorNode.left = null
+        }
+        else if (operatorNode.right == null) {
+            operatorNode.right = CoolNumberNode(connectorOutput.dataType)
+            outputConnectorsList[0].dataType = operatorNode.evaluate().type
+            operatorNode.right = null
+        }
+        else{
+            outputConnectorsList[0].dataType = operatorNode.evaluate().type
+        }
+
+
+        println((operatorNode.left != null).toString() + " " +(operatorNode.right != null).toString() )
+
+
     }
 
-    override fun unconnect(connectorInput: NodeViewConnectorInput) {
+    override fun disconnect(connectorInput: NodeViewConnectorInput) {
+        println((operatorNode.left != null).toString() + " " +(operatorNode.right != null).toString() )
+
         if (inputConnectorsList.indexOf(connectorInput) == 0) { // индексы могут не совападать
             operatorNode.left = null
-            Log.d("dddd", "unconnectLeft")
+            println("disc0")
         }
         if (inputConnectorsList.indexOf(connectorInput) == 1) {
             operatorNode.right = null
-            Log.d("dddd", "unconnectRight")
+            println("disc1")
         }
+        println((operatorNode.left != null).toString() + " " +(operatorNode.right != null).toString() )
     }
 
     override fun getNodeOutput(): MathNode {

@@ -7,6 +7,6 @@ import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputExec
 interface AbleToExec {
     fun connectExec(connectorInput: NodeViewConnectorInputExec<*>, connectorOutput: NodeViewConnectorOutputExec<*>)
 
-    fun unconnectExec()
+    fun disconnectExec(connectorOutput: NodeViewConnectorOutputExec<*>)
     fun getExecNode(): LogicNode
 }

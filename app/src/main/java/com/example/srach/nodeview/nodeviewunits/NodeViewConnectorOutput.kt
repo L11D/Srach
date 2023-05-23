@@ -14,6 +14,7 @@ abstract class NodeViewConnectorOutput(context: Context, nodeView: NodeView) : N
 
 }
 class NodeViewConnectorOutputData<T> (context: Context, nodeView: T, dataType: DataType) : NodeViewConnectorOutput(context, nodeView) where T:NodeView, T: AbleToOutput {
+
     init {
         this.dataType = dataType
     }
@@ -27,8 +28,8 @@ class NodeViewConnectorOutputExec <T> (context: Context, nodeView: T) : NodeView
         (nodeView as AbleToExec).connectExec(connectorInputData, this)
         this.connection = connection
     }
-    fun unconnect(){
-        (nodeView as AbleToExec).unconnectExec()
+    fun disconnect(){
+        (nodeView as AbleToExec).disconnectExec(this)
     }
     init {
         dataType = DataType.EXEC

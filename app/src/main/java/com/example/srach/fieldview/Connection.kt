@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PathMeasure
+import com.example.srach.interpretor.DataType
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnector
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInput
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInputData
@@ -24,14 +25,14 @@ class Connection private constructor(private val field: Field) : Drawable {
     constructor(field: Field, connectorOutput: NodeViewConnectorOutput, pos2: Vector2f) : this(field) {
         this.connectorOutput = connectorOutput
         this.pos2 = pos2
-        this.paint.color = connectorOutput.paint.color
+        color = connectorOutput.paint.color
         outputFirst = true
     }
 
     constructor(field: Field, pos1: Vector2f, connectorInput: NodeViewConnectorInput) : this(field) {
         this.pos1 = pos1
         this.connectorInput = connectorInput
-        this.paint.color = connectorInput.paint.color
+        color = connectorInput.paint.color
         outputFirst = false
     }
 
@@ -61,6 +62,23 @@ class Connection private constructor(private val field: Field) : Drawable {
     private val strokeWidth = 8f
 
     private var path = Path()
+
+    var color = 0
+        get() = field
+        set(value) {
+            field = value
+            if (isComplete()){
+                if (connectorInput is NodeViewConnectorInputData<*> && connectorOutput is NodeViewConnectorOutputData<*>){
+                    (connectorInput!! as NodeViewConnectorInputData<*>).disconnect()
+                    if((connectorInput as NodeViewConnectorInputData<*>).tryToConnect(connectorOutput!! as NodeViewConnectorOutputData<*>)){
+                        (connectorInput!! as NodeViewConnectorInputData<*>).connect(connectorOutput!! as NodeViewConnectorOutputData<*>, this)
+                   }else{
+                       delete()
+                    }
+                }
+            }
+        }
+
     private val paint = Paint().apply {
         //color = Color.RED
         isAntiAlias = true
@@ -72,7 +90,9 @@ class Connection private constructor(private val field: Field) : Drawable {
     private var pathMeasure = PathMeasure()
 
     fun delete(){
-        unconnect()
+        disconnect()
+        if(connectorInput != null) connectorInput!!.connection = null
+        if(connectorOutput != null) connectorOutput!!.connection = null
         field.connectionsList.remove(this)
     }
 
@@ -131,17 +151,19 @@ class Connection private constructor(private val field: Field) : Drawable {
             if (connectorOutput is NodeViewConnectorOutputExec<*>){
                 (connectorOutput!! as NodeViewConnectorOutputExec<*>).connect(connectorInput!! as NodeViewConnectorInputExec<*>, this)
             }
+
+            paint.color = connectorOutput!!.paint.color
         }
     }
-    fun unconnect(){
+    fun disconnect(){
         if(connectorInput != null){
             if(connectorInput is NodeViewConnectorInputData<*>){
-                (connectorInput!! as NodeViewConnectorInputData<*>).unconnect()
+                (connectorInput!! as NodeViewConnectorInputData<*>).disconnect()
             }
         }
         if(connectorOutput != null){
             if (connectorOutput is NodeViewConnectorOutputExec<*>){
-                (connectorOutput!! as NodeViewConnectorOutputExec<*>).unconnect()
+                (connectorOutput!! as NodeViewConnectorOutputExec<*>).disconnect()
             }
         }
     }
@@ -203,6 +225,7 @@ class Connection private constructor(private val field: Field) : Drawable {
 
         displayControllerLength = controllerLength * field.scale
         paint.strokeWidth = strokeWidth * field.scale
+        paint.color = color
     }
 
     override fun draw(canvas: Canvas) {

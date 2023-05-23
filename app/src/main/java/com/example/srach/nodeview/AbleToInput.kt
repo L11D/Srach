@@ -10,5 +10,5 @@ interface AbleToInput {
             where O:NodeView, O:AbleToOutput, I:NodeView, I:AbleToInput
     fun <I, O> connect(connectorInput: NodeViewConnectorInputData<I>, connectorOutput: NodeViewConnectorOutputData<O>)
     where O:NodeView, O:AbleToOutput, I:NodeView, I:AbleToInput
-    fun unconnect(connectorInput: NodeViewConnectorInput)
+    fun disconnect(connectorInput: NodeViewConnectorInput)
 }

@@ -6,7 +6,7 @@ public class CoolNumberNode extends MathNode {
 
     public CoolNumberNode(DataType type) {
         this.type = type;
-        this.value = "0";
+        this.value = "1";
     }
 
     public void setValue(String value) {

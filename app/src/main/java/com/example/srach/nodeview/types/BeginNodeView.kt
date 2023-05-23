@@ -16,6 +16,10 @@ class BeginNodeView(context: Context, field: Field, position: Vector2f) : Output
 
     val node = BeginNode()
 
+    init {
+        description.text = "Begin"
+    }
+
     fun getNodeToWork(): LogicNode {
         return node
     }
@@ -41,10 +45,9 @@ class BeginNodeView(context: Context, field: Field, position: Vector2f) : Output
         node.next = connectorInput.getNode()
     }
 
-    override fun unconnectExec() {
+    override fun disconnectExec(connectorOutput: NodeViewConnectorOutputExec<*>) {
         node.next = null
     }
-
     override fun getExecNode(): LogicNode {
         TODO("Not yet implemented")
     }

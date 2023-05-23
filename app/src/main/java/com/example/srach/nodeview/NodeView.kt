@@ -36,10 +36,9 @@ abstract class NodeView(val context: Context, val field: Field, var position: Ve
         paint.color = colorN
     }
 
-
     val description = NodeViewText(context, this).apply {
-        position = Vector2f(5f, 0f)
-        textSize = 20f
+        position = Vector2f(30f, 3f)
+        textSize = 30f
         text = "node"
         paint.color = Color.WHITE
     }

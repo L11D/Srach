@@ -11,8 +11,15 @@ import com.example.srach.nodeview.NodeView
 
 abstract class NodeViewConnector (context: Context, nodeView: NodeView) : Drawable, NodeViewUnit(context, nodeView) {
 
-    var dataType = DataType.UNSPECIFIED
     var connection:Connection? = null
+
+    var dataType = DataType.UNSPECIFIED
+        get() = field
+        set(value) {
+            field = value
+            solveColor()
+            if (connection != null) {connection!!.color = paint.color }
+        }
 
     var globalPosition = Vector2f()
         get() = field
@@ -26,12 +33,7 @@ abstract class NodeViewConnector (context: Context, nodeView: NodeView) : Drawab
                 pos.y in displayPosition.y..(displayPosition.y+displaySize.y)
     }
 
-    override fun solveDisplayPosition() {
-        super.solveDisplayPosition()
-        globalPosition = position + nodeView.position
-        globalPosition.x += size.x/2
-        globalPosition.y += size.y/2
-
+    private fun solveColor(){
         when(dataType){
             DataType.INT -> paint.color = context.getColor(R.color.intColor)
             DataType.CHAR -> paint.color = context.getColor(R.color.charColor)
@@ -41,6 +43,14 @@ abstract class NodeViewConnector (context: Context, nodeView: NodeView) : Drawab
             DataType.EXEC -> paint.color = context.getColor(R.color.execColor)
             DataType.UNSPECIFIED -> paint.color = context.getColor(R.color.unspecifiedColor)
         }
+    }
+
+    override fun solveDisplayPosition() {
+        super.solveDisplayPosition()
+        globalPosition = position + nodeView.position
+        globalPosition.x += size.x/2
+        globalPosition.y += size.y/2
+        solveColor()
     }
 
     override fun draw(canvas: Canvas) {

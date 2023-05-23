@@ -3,16 +3,23 @@ package com.example.srach.fieldview
 import android.content.Context
 import android.graphics.Canvas
 import com.example.srach.R
+import com.example.srach.interpretor.BranchNode
 import com.example.srach.interpretor.DataType
+import com.example.srach.interpretor.LessNode
 import com.example.srach.interpretor.LogicNode
 import com.example.srach.interpretor.SubtractNode
 import com.example.srach.interpretor.VariableNode
 import com.example.srach.interpretor.Variables
 import com.example.srach.nodeview.NodeView
 import com.example.srach.nodeview.types.BeginNodeView
+import com.example.srach.nodeview.types.BranchNodeView
+import com.example.srach.nodeview.types.LoopNodeView
 import com.example.srach.nodeview.types.OperatorNodeView
 import com.example.srach.nodeview.types.PrintNodeView
 import com.example.srach.nodeview.types.VariableNodeView
+import com.example.srach.nodeview.types.math.AddNodeView
+import com.example.srach.nodeview.types.math.LessNodeView
+import com.example.srach.nodeview.types.math.SubtractNodeView
 
 class Field(private val context:Context) : Drawable {
     var viewSize = Vector2i()
@@ -35,13 +42,16 @@ class Field(private val context:Context) : Drawable {
     private var variables = Variables()
     init {
         nodeViewList.add(BeginNodeView(context, this, Vector2f(-300f,0f)))
-        nodeViewList.add(OperatorNodeView(context, SubtractNode(),this, Vector2f(0f, 0f)))
+        nodeViewList.add(AddNodeView(context, this, Vector2f(0f, 0f)))
+        nodeViewList.add(SubtractNodeView(context, this, Vector2f(500f, 0f)))
+        nodeViewList.add(BranchNodeView(context, this, Vector2f(300f, 0f)))
         nodeViewList.add(VariableNodeView(context, VariableNode("a", DataType.INT, variables).apply {value="10"}, this, Vector2f(-200f, 0f)))
         nodeViewList.add(VariableNodeView(context, VariableNode("b", DataType.INT, variables).apply {value="5"}, this, Vector2f(-200f, 200f)))
-        nodeViewList.add(VariableNodeView(context, VariableNode("c", DataType.STRING, variables).apply {value="5"}, this, Vector2f(-200f, 300f)))
+        nodeViewList.add(VariableNodeView(context, VariableNode("c", DataType.STRING, variables).apply {value="па"}, this, Vector2f(-200f, 300f)))
         nodeViewList.add(VariableNodeView(context, VariableNode("d", DataType.DOUBLE, variables).apply {value="5"}, this, Vector2f(-200f, 400f)))
         nodeViewList.add(VariableNodeView(context, VariableNode("r", DataType.CHAR, variables).apply {value="5"}, this, Vector2f(-200f, 500f)))
-        nodeViewList.add(VariableNodeView(context, VariableNode("g", DataType.BOOL, variables).apply {value="0"}, this, Vector2f(-200f, 600f)))
+        nodeViewList.add(VariableNodeView(context, VariableNode("g", DataType.BOOL, variables).apply {value="false"}, this, Vector2f(-200f, 600f)))
+        nodeViewList.add(LessNodeView(context, this, Vector2f(0f, 300f)))
         nodeViewList.add(PrintNodeView(context, this, Vector2f(0f, -500f)))
         nodeViewList.add(PrintNodeView(context, this, Vector2f(300f, -500f)))
     }

@@ -15,22 +15,26 @@ abstract class NodeViewConnectorInput(context: Context, nodeView: NodeView) : No
 }
 
 class NodeViewConnectorInputData <T> (context: Context, nodeView: T, dataType: DataType) : NodeViewConnectorInput(context, nodeView) where T:NodeView, T:AbleToInput{
+    private var permanentDataType = false
     init {
         this.dataType = dataType
+        if(dataType != DataType.UNSPECIFIED) permanentDataType = true
     }
     fun tryToConnect(connectorOutputData: NodeViewConnectorOutputData<*>):Boolean{
+        if(connectorOutputData.dataType == DataType.UNSPECIFIED && dataType == DataType.UNSPECIFIED) return true
         return (nodeView as AbleToInput).tryToConnect(this, connectorOutputData)
     }
     fun connect(connectorOutputData: NodeViewConnectorOutputData<*>, connection:Connection){
         if (this.connection != null) this.connection!!.delete()
-        (nodeView as AbleToInput).connect(this, connectorOutputData)
         dataType = connectorOutputData.dataType
         this.connection = connection
+        (nodeView as AbleToInput).connect(this, connectorOutputData)
+        connectorOutputData.connection = connection
     }
-    fun unconnect(){
-        (nodeView as AbleToInput).unconnect(this)
-        dataType = DataType.UNSPECIFIED
+    fun disconnect(){
+        (nodeView as AbleToInput).disconnect(this)
         this.connection = null
+        if(!permanentDataType) dataType = DataType.UNSPECIFIED
     }
 }
 class NodeViewConnectorInputExec <T> (context: Context, nodeView: T) : NodeViewConnectorInput(context, nodeView) where T:NodeView, T:AbleToExec{
