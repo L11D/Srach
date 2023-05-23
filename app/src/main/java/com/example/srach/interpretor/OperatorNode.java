@@ -13,6 +13,7 @@ public abstract class OperatorNode extends MathNode {
     }
 
     public void setLeft(MathNode left) {
+
         this.left = left;
     }
 

@@ -23,15 +23,11 @@ abstract class OperatorNodeView(context:Context, val operatorNode: OperatorNode,
         connectorInput: NodeViewConnectorInputData<I>,
         connectorOutput: NodeViewConnectorOutputData<O>
     ) where O : NodeView, I : NodeView, I : AbleToInput, O : AbleToOutput {
-        println((operatorNode.left != null).toString() + " " +(operatorNode.right != null).toString() )
-
         if (inputConnectorsList.indexOf(connectorInput) == 0) { // индексы могут не совападать
             operatorNode.left = connectorOutput.getNodeOutput()
-            println("con0")
         }
         if (inputConnectorsList.indexOf(connectorInput) == 1) {
             operatorNode.right = connectorOutput.getNodeOutput()
-            println("con1")
         }
 //        if(inputConnectorsList[0].dataType == DataType.UNSPECIFIED && inputConnectorsList[1].dataType == DataType.UNSPECIFIED){
 //
@@ -67,25 +63,15 @@ abstract class OperatorNodeView(context:Context, val operatorNode: OperatorNode,
         else{
             outputConnectorsList[0].dataType = operatorNode.evaluate().type
         }
-
-
-        println((operatorNode.left != null).toString() + " " +(operatorNode.right != null).toString() )
-
-
     }
 
     override fun disconnect(connectorInput: NodeViewConnectorInput) {
-        println((operatorNode.left != null).toString() + " " +(operatorNode.right != null).toString() )
-
         if (inputConnectorsList.indexOf(connectorInput) == 0) { // индексы могут не совападать
             operatorNode.left = null
-            println("disc0")
         }
         if (inputConnectorsList.indexOf(connectorInput) == 1) {
             operatorNode.right = null
-            println("disc1")
         }
-        println((operatorNode.left != null).toString() + " " +(operatorNode.right != null).toString() )
     }
 
     override fun getNodeOutput(): MathNode {
@@ -98,7 +84,7 @@ abstract class OperatorNodeView(context:Context, val operatorNode: OperatorNode,
     ): Boolean where I : AbleToInput, O : AbleToOutput {
         var ans = true
 
-        if (inputConnectorsList[0].dataType == DataType.UNSPECIFIED && inputConnectorsList[1].dataType == DataType.UNSPECIFIED){
+        if (operatorNode.left == null && operatorNode.right == null){
             operatorNode.left = CoolNumberNode(connectorOutput.dataType)
             operatorNode.right = CoolNumberNode(connectorOutput.dataType)
             try {
@@ -108,7 +94,7 @@ abstract class OperatorNodeView(context:Context, val operatorNode: OperatorNode,
             }
             operatorNode.left = null
             operatorNode.right = null
-        }else if (inputConnectorsList[0].dataType == DataType.UNSPECIFIED){
+        }else if (operatorNode.left == null){
             operatorNode.left = CoolNumberNode(connectorOutput.dataType)
             try {
                 operatorNode.evaluate()
@@ -116,7 +102,7 @@ abstract class OperatorNodeView(context:Context, val operatorNode: OperatorNode,
                 ans = false
             }
             operatorNode.left = null
-        }else{
+        }else if (operatorNode.right == null){
             operatorNode.right = CoolNumberNode(connectorOutput.dataType)
             try {
                 operatorNode.evaluate()
@@ -125,6 +111,7 @@ abstract class OperatorNodeView(context:Context, val operatorNode: OperatorNode,
             }
             operatorNode.right = null
         }
+
         return ans
     }
 }
