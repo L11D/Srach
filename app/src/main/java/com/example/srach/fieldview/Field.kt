@@ -38,6 +38,18 @@ class Field(private val context:Context) : Drawable {
     val nodeViewList = mutableListOf<NodeView>()
     val connectionsList = mutableListOf<Connection>()
 
+    var activeNodeView:NodeView? = null
+        set(value) {
+            if (field != null) field!!.isActive = false
+            if (value != null){
+                field = value
+                field!!.isActive = true
+                nodeViewList.remove(field!!)
+                nodeViewList.add(field!!)
+            }
+            else field = value
+        }
+
     private var variables = Variables()
     init {
         nodeViewList.add(BeginNodeView(context, this, Vector2f(-300f,-500f)))
@@ -50,12 +62,12 @@ class Field(private val context:Context) : Drawable {
 
         nodeViewList.add(BranchNodeView(context, this, Vector2f(600f, -500f)))
 
-        nodeViewList.add(VariableNodeView(context, VariableNode("a", DataType.INT, variables).apply {value="1"}, this, Vector2f(-200f, 100f)))
-        nodeViewList.add(VariableNodeView(context, VariableNode("b", DataType.INT, variables).apply {value="2"}, this, Vector2f(-200f, 200f)))
-        nodeViewList.add(VariableNodeView(context, VariableNode("c", DataType.STRING, variables).apply {value="па"}, this, Vector2f(-200f, 300f)))
-        nodeViewList.add(VariableNodeView(context, VariableNode("d", DataType.DOUBLE, variables).apply {value="3"}, this, Vector2f(-200f, 400f)))
-        nodeViewList.add(VariableNodeView(context, VariableNode("r", DataType.CHAR, variables).apply {value="5"}, this, Vector2f(-200f, 500f)))
-        nodeViewList.add(VariableNodeView(context, VariableNode("g", DataType.BOOL, variables).apply {value="false"}, this, Vector2f(-200f, 600f)))
+        nodeViewList.add(VariableNodeView(context, variables, this, Vector2f(-200f, 100f)))
+        nodeViewList.add(VariableNodeView(context, variables, this, Vector2f(-200f, 200f)))
+        nodeViewList.add(VariableNodeView(context, variables, this, Vector2f(-200f, 300f)))
+        nodeViewList.add(VariableNodeView(context, variables, this, Vector2f(-200f, 400f)))
+        nodeViewList.add(VariableNodeView(context, variables, this, Vector2f(-200f, 500f)))
+        nodeViewList.add(VariableNodeView(context, variables, this, Vector2f(-200f, 600f)))
 
         nodeViewList.add(LessNodeView(context, this, Vector2f(50f, 200f)))
         nodeViewList.add(EqualNodeView(context, this, Vector2f(250f, 200f)))

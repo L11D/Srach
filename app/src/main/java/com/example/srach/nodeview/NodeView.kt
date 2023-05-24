@@ -18,10 +18,14 @@ abstract class NodeView(val context: Context, val field: Field, var position: Ve
     var outputConnectorsList = mutableListOf<NodeViewConnectorOutput>()
 
     var colorN = Color.BLUE
+    var isActive = false
+        set(value) {
+            body.isActive = value
+            field = value
+        }
 
     protected var size = Vector2f(150f, 100f)
     var displayPosition = Vector2f()
-        get() = field
     private var displaySize = Vector2f()
 
     protected val connectorRadius = 50f
@@ -48,7 +52,11 @@ abstract class NodeView(val context: Context, val field: Field, var position: Ve
                 pos.y in displayPosition.y..(displayPosition.y + displaySize.y)
     }
 
-    private fun solveDisplayPosition() {
+    fun delete(){
+        field.nodeViewList.remove(this)
+    }
+
+    protected open fun solveDisplayPosition() {
         val viewPos = field.viewPosition
         val viewSize = field.viewSize
         val scale = field.scale

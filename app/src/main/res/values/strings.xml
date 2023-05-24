@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Srach</string>
+    <string-array name="dataTypesNames">
+        <item>int</item>
+        <item>char</item>
+        <item>double</item>
+        <item>bool</item>
+        <item>string</item>
+    </string-array>
 </resources>

@@ -5,6 +5,9 @@
     <color name="fieldBG">#323844</color>
     <color name="grid">#717e99</color>
     <color name="gridBigger">#afc4ee</color>
+
+    <color name="activeNodeStroke">#4CAF50</color>
+
     <color name="execColor">#afc4ee</color>
     <color name="intColor">#2196F3</color>
     <color name="stringColor">#FFC107</color>
@@ -12,4 +15,6 @@
     <color name="boolColor">#4CAF50</color>
     <color name="doubleColor">#673AB7</color>
     <color name="unspecifiedColor">#4A4A4A</color>
+
+
 </resources>

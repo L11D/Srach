@@ -14,7 +14,6 @@ import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutput
 class GListener(private val context: Context, private val fieldView: FieldView) :
     GestureDetector.OnGestureListener {
     var movableNodeView: NodeView? = null
-        get() = field
 
     private var connectorInput: NodeViewConnectorInput? = null
     private var connectorOutput: NodeViewConnectorOutput? = null
@@ -135,6 +134,7 @@ class GListener(private val context: Context, private val fieldView: FieldView) 
     }
 
     override fun onSingleTapUp(e: MotionEvent): Boolean {
+        fieldView.field.activeNodeView = fieldView.nodeViewsCollision(Vector2f(e.x, e.y))
         return true
     }
 
@@ -152,6 +152,7 @@ class GListener(private val context: Context, private val fieldView: FieldView) 
 
     override fun onLongPress(e: MotionEvent) {
         movableNodeView = fieldView.nodeViewsCollision(Vector2f(e.x, e.y))
+        fieldView.field.activeNodeView = fieldView.nodeViewsCollision(Vector2f(e.x, e.y))
         if (movableNodeView != null) {
             movableNodeView!!.colorN = Color.GREEN
             if (connection != null) {

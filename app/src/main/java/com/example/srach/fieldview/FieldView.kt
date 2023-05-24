@@ -7,14 +7,14 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.View
+import android.view.ViewGroup
+import com.example.srach.nodeview.AbleToUserInput
 import com.example.srach.nodeview.NodeView
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnector
 
 class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
 
     var field = Field(this.context)
-        get() = field
-        set(value) {field = value}
 
     private var gListener = GListener(context,this)
     private var gestureDetector = GestureDetector(this.context, gListener)
@@ -22,8 +22,8 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
     private val scaleDetector = ScaleGestureDetector(this.context, scaleGestureListener)
 
     fun nodeViewsCollision(pos: Vector2f): NodeView?{
-        for(node in field.nodeViewList){
-            if (node.collision(pos)) return node
+        for(i in field.nodeViewList.size - 1 downTo 0){
+            if (field.nodeViewList[i].collision(pos)) return field.nodeViewList[i]
         }
         return null
     }
@@ -63,15 +63,40 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
         super.onSizeChanged(w, h, oldw, oldh)
         field.viewSize = Vector2i(width, height)
     }
-
     fun run(){
         field.run()
+    }
+
+    fun createNodeUserInput(layout:ViewGroup){
+        layout.removeAllViews()
+        if (field.activeNodeView is AbleToUserInput){
+            (field.activeNodeView as AbleToUserInput).createUserInput(layout)
+        }
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         scaleDetector.onTouchEvent(event)
         gestureDetector.onTouchEvent(event)
         gListener.baseActions(event)
+
+        object:GestureDetector.OnDoubleTapListener{
+            override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+                return true
+            }
+
+            override fun onDoubleTap(e: MotionEvent): Boolean {
+                var node =  nodeViewsCollision(Vector2f(e.x, e.y))
+                println("dobletap")
+                node?.delete()
+                return true
+            }
+
+            override fun onDoubleTapEvent(e: MotionEvent): Boolean {
+                println("dobletap")
+
+                return true
+            }
+        }
 
         invalidate()
         return true
