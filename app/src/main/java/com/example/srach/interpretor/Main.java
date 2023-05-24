@@ -9,11 +9,10 @@ public class Main {
         PrintNode print1 = new PrintNode();
         PrintNode print2 = new PrintNode();
         AssignmentNode ass = new AssignmentNode();
-        NumberNode num = new NumberNode();
+        ValueNode num = new ValueNode();
         AddNode add = new AddNode();
 
         a.setValue("150.0");
-        num.setValue("423.52");
         start.setNext(print1);
         print1.setNext(ass);
         ass.setNext(print2);
