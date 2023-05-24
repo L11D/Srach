@@ -31,21 +31,12 @@ import com.example.srach.nodeview.types.math.SubtractNodeView
 
 class Field(private val context:Context) : Drawable {
     var viewSize = Vector2i()
-        get() = field
-        set(value) {field = value}
-
     var viewPosition = Vector2f()
-        get() =  field
-        set(value) {field = value}
     var scale = 1f
-        get() = field
-        set(value) {field = value}
 
     private val grid = Grid(context,this)
     val nodeViewList = mutableListOf<NodeView>()
-        get() = field
     val connectionsList = mutableListOf<Connection>()
-        get() = field
 
     private var variables = Variables()
     init {
@@ -88,9 +79,15 @@ class Field(private val context:Context) : Drawable {
         }
     }
     fun run(){
-        if(nodeViewList[0] is BeginNodeView){
-            goLogic((nodeViewList[0] as BeginNodeView).getNodeToWork())
+        var a = false
+        for(node in nodeViewList){
+            if(node is BeginNodeView){
+                goLogic(node.getNodeToWork())
+                a = true
+                break
+            }
         }
+        if (!a) println("Begin not found")
     }
 
     override fun draw(canvas:Canvas){

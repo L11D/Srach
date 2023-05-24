@@ -87,7 +87,6 @@ class GListener(private val context: Context, private val fieldView: FieldView) 
                 }
             }
 
-
             MotionEvent.ACTION_MOVE -> {
 
                 if (movableNodeView != null) {
