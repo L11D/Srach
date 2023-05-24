@@ -6,11 +6,14 @@ import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
+import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.example.srach.nodeview.AbleToUserInput
 import com.example.srach.nodeview.NodeView
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnector
+import java.io.Console
 
 class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
 
@@ -20,6 +23,10 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
     private var gestureDetector = GestureDetector(this.context, gListener)
     private val scaleGestureListener = SGListener(this)
     private val scaleDetector = ScaleGestureDetector(this.context, scaleGestureListener)
+
+    fun bindConsole(console:TextView){
+        field.bindConsole(console)
+    }
 
     fun nodeViewsCollision(pos: Vector2f): NodeView?{
         for(i in field.nodeViewList.size - 1 downTo 0){
@@ -72,6 +79,10 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
         if (field.activeNodeView is AbleToUserInput){
             (field.activeNodeView as AbleToUserInput).createUserInput(layout)
         }
+    }
+
+    fun addNode(node:NodeView){
+
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {

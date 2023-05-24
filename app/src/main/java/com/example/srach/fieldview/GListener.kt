@@ -154,7 +154,6 @@ class GListener(private val context: Context, private val fieldView: FieldView) 
         movableNodeView = fieldView.nodeViewsCollision(Vector2f(e.x, e.y))
         fieldView.field.activeNodeView = fieldView.nodeViewsCollision(Vector2f(e.x, e.y))
         if (movableNodeView != null) {
-            movableNodeView!!.colorN = Color.GREEN
             if (connection != null) {
                 fieldView.field.connectionsList.removeLast()
                 connection = null

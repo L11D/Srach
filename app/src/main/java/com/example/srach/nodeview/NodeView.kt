@@ -3,6 +3,7 @@ package com.example.srach.nodeview
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
+import com.example.srach.R
 import com.example.srach.fieldview.Drawable
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
@@ -16,8 +17,6 @@ abstract class NodeView(val context: Context, val field: Field, var position: Ve
 
     var inputConnectorsList = mutableListOf<NodeViewConnectorInput>()
     var outputConnectorsList = mutableListOf<NodeViewConnectorOutput>()
-
-    var colorN = Color.BLUE
     var isActive = false
         set(value) {
             body.isActive = value
@@ -37,7 +36,7 @@ abstract class NodeView(val context: Context, val field: Field, var position: Ve
         position = Vector2f(0f, 0f)
         this@apply.size = this@NodeView.size
         round = 12f
-        paint.color = colorN
+        paint.color = context.getColor(R.color.nodeBody)
     }
 
     val description = NodeViewText(context, this).apply {

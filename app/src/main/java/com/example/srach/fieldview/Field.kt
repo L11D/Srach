@@ -2,6 +2,7 @@ package com.example.srach.fieldview
 
 import android.content.Context
 import android.graphics.Canvas
+import android.widget.TextView
 import com.example.srach.R
 import com.example.srach.interpretor.BranchNode
 import com.example.srach.interpretor.DataType
@@ -37,6 +38,8 @@ class Field(private val context:Context) : Drawable {
     private val grid = Grid(context,this)
     val nodeViewList = mutableListOf<NodeView>()
     val connectionsList = mutableListOf<Connection>()
+
+    private var console:TextView? = null
 
     var activeNodeView:NodeView? = null
         set(value) {
@@ -79,6 +82,14 @@ class Field(private val context:Context) : Drawable {
         nodeViewList.add(PrintNodeView(context, this, Vector2f(0f, -500f)))
         nodeViewList.add(PrintNodeView(context, this, Vector2f(300f, -500f)))
     }
+
+    fun bindConsole(console:TextView){
+        this.console = console
+        for (node in nodeViewList){
+            if(node is PrintNodeView) node.bindConsole(console)
+        }
+    }
+
 
     fun goLogic(node: LogicNode) {
         try {

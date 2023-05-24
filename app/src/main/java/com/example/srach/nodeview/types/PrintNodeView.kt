@@ -1,6 +1,7 @@
 package com.example.srach.nodeview.types
 
 import android.content.Context
+import android.widget.TextView
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
 import com.example.srach.interpretor.DataType
@@ -18,11 +19,15 @@ import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputExec
 
 class PrintNodeView(context: Context, field: Field, position: Vector2f) :
     InputableExecNodeView(context, field, position, 1, DataType.UNSPECIFIED) {
+    private val printNode = PrintNode()
     init {
         description.text = "Print"
     }
 
-    private val printNode = PrintNode()
+    fun bindConsole(console:TextView){
+        printNode.setConsole(console)
+    }
+
     override fun <I : NodeView, O : NodeView> connect(
         connectorInput: NodeViewConnectorInputData<I>,
         connectorOutput: NodeViewConnectorOutputData<O>

@@ -23,7 +23,7 @@ import com.example.srach.nodeview.OutputableNodeView
 class VariableNodeView(context: Context, variables: Variables, field: Field, position: Vector2f) :
     OutputableNodeView(context, field, position, 1,  DataType.UNSPECIFIED), AbleToUserInput{
 
-    private val variableNode = VariableNode("a", DataType.INT, variables)
+    private val variableNode = VariableNode("a", DataType.INT, variables).apply { value = "1" }
 
 
     override fun getNodeOutput(): MathNode {

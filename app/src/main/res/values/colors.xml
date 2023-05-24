@@ -5,6 +5,7 @@
     <color name="fieldBG">#323844</color>
     <color name="grid">#717e99</color>
     <color name="gridBigger">#afc4ee</color>
+    <color name="nodeBody">#21252B</color>
 
     <color name="activeNodeStroke">#4CAF50</color>
 
