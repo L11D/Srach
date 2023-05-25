@@ -1,45 +1,42 @@
 package com.example.srach.interpretor;
 
 public class VariableNode extends MathNode implements MathNodeEvaluate {
-    private final String name;
-    private final DataType type;
+    private String name;
     private final Variables variables;
-    VariableNode(String name, DataType type, Variables storage) {
+    VariableNode(Variables variables) {
+        name = null;
+        this.variables = variables;
+    }
+
+    public void setName(String name) {
         this.name = name;
-        this.type = type;
-        this.variables = storage;
-        this.variables.setVariableValue(name, null);
     }
 
-    public String getValue() {
-        return variables.getVariableValue(name);
+    public String getName() {
+        return name;
     }
 
-    public DataType getType() {
-        return type;
-    }
-
-    public void setValue(String value) {
-        variables.setVariableValue(name, value);
+    public Variables getVariables() {
+        return variables;
     }
 
     @Override
     public Data evaluate() {
-        switch (type) {
+        switch (variables.getVariable(name).type) {
             case INT -> {
-                return new Data(getValue(), DataType.INT);
+                return new Data(variables.getVariable(name).value, DataType.INT);
             }
             case BOOL -> {
-                return new Data(getValue(), DataType.BOOL);
+                return new Data(variables.getVariable(name).value, DataType.BOOL);
             }
             case CHAR -> {
-                return new Data(getValue(), DataType.CHAR);
+                return new Data(variables.getVariable(name).value, DataType.CHAR);
             }
             case DOUBLE -> {
-                return new Data(getValue(), DataType.DOUBLE);
+                return new Data(variables.getVariable(name).value, DataType.DOUBLE);
             }
             case STRING -> {
-                return new Data(getValue(), DataType.STRING);
+                return new Data(variables.getVariable(name).value, DataType.STRING);
             }
             default -> throw new IllegalStateException();
         }

@@ -1,35 +1,32 @@
 package com.example.srach.interpretor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import kotlin.Pair;
 
 public class ArrayNode extends Node {
-    private final String name;
-    private final DataType type;
-    private final Variables variables;
-    ArrayNode(String name, DataType type, Variables storage) {
-        this.name = name;
-        this.type = type;
-        this.variables = storage;
-        this.variables.setVariableValue(name, null);
+    private String name;
+    private final Map<String, Pair<ArrayList<String>, DataType>> arrays;
+    ArrayNode(Map<String, Pair<ArrayList<String>, DataType>> arrays) {
+        name = null;
+        this.arrays = arrays;
     }
 
-    public ArrayList<String> getValue() {
-        return variables.getArrayValue(name);
+    public void setName(String name) {
+        this.name = name;
     }
 
     public DataType getType() {
-        return type;
+        return arrays.get(name).component2();
     }
 
-    public void setValue(ArrayList<String> array) {
-        variables.setArrayValue(name, array);
+    public Data getArrayIndexValue(int index) {
+        return new Data(arrays.get(name).component1().get(index), arrays.get(name).component2());
     }
 
-    public String getArrayIndexValue(int index) {
-        return variables.getArrayValue(name).get(index);
-    }
-
-    public String setArrayIndexValue(int index, String value) {
-        return variables.getArrayValue(name).set(index, value);
+    public void setArrayIndexValue(int index, String value) {
+        arrays.get(name).component1().set(index, value);
     }
 }
