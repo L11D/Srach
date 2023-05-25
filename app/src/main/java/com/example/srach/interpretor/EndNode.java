@@ -1,13 +1,13 @@
 package com.example.srach.interpretor;
 
 public class EndNode extends LogicNode {
-    private WhileLoopNode loopNode;
+    private LoopNode loopNode;
 
-    public void setLoopNode(WhileLoopNode loopNode) {
+    public void setLoopNode(LoopNode loopNode) {
         this.loopNode = loopNode;
     }
 
-    public WhileLoopNode getLoopNode() {
+    public LoopNode getLoopNode() {
         return loopNode;
     }
 
