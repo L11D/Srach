@@ -5,10 +5,10 @@ public class ContinueNode extends LogicNode {
 
     public void setLoopNode(EndNode loopNode) {
         this.loopNode = loopNode;
-        setNext(loopNode.getLoopNode());
     }
 
     @Override
     public void work() {
+        setNext(loopNode.getLoopNode());
     }
 }

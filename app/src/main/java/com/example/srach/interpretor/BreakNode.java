@@ -5,9 +5,10 @@ public class BreakNode extends LogicNode {
 
     public void setLoopNode(EndNode loopNode) {
         this.loopNode = loopNode;
-        setNext(loopNode.getLoopNode().getCompleted());
     }
 
     @Override
-    public void work(){}
+    public void work() {
+        setNext(loopNode.getLoopNode().getCompleted());
+    }
 }
