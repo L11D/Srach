@@ -10,17 +10,25 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.example.srach.databinding.ActivityMainBinding
 import com.example.srach.fieldview.FieldView
 import com.example.srach.nodeview.types.math.DivideNodeView
 
 class MainActivity : AppCompatActivity() {
+    lateinit var bindingClass: ActivityMainBinding
+    var text = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        bindingClass = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(bindingClass.root)
+        //setContentView(R.layout.activity_main)
 
         val fieldView = findViewById<FieldView>(R.id.fieldView)
         val runButton = findViewById<Button>(R.id.button).setOnClickListener {
             fieldView.run()
+            val intentCreate = Intent(this, Console::class.java)
+            intentCreate.putExtra("action", text)
+            startActivity(intentCreate)
         }
 
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
