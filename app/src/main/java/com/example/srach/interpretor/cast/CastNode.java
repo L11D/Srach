@@ -5,22 +5,22 @@ import com.example.srach.interpretor.DataType;
 import com.example.srach.interpretor.math.MathNode;
 
 public class CastNode extends MathNode {
-    private MathNode parsingNode;
+    private MathNode castingNode;
     private DataType parseTo;
     public CastNode() {
-        parsingNode = null;
+        castingNode = null;
         parseTo = null;
     }
 
-    public MathNode getParsingNode() {
-        return parsingNode;
+    public MathNode getCastingNode() {
+        return castingNode;
     }
 
-    public void setParsingNode(MathNode parsingNode) {
-        this.parsingNode = parsingNode;
+    public void setCastingNode(MathNode castingNode) {
+        this.castingNode = castingNode;
     }
 
-    public DataType getParseTo() {
+    public DataType getCastTo() {
         return parseTo;
     }
 
@@ -32,59 +32,59 @@ public class CastNode extends MathNode {
     public Data evaluate() {
         switch (parseTo) {
             case INT -> {
-                switch (parsingNode.evaluate().type) {
+                switch (castingNode.evaluate().type) {
                     case INT, STRING -> {
-                        return new Data(parsingNode.evaluate().value, DataType.INT);
+                        return new Data(castingNode.evaluate().value, DataType.INT);
                     }
                     case CHAR -> {
-                        return new Data(String.valueOf((int) parsingNode.evaluate().value.charAt(0)), DataType.INT);
+                        return new Data(String.valueOf((int) castingNode.evaluate().value.charAt(0)), DataType.INT);
                     }
                     case DOUBLE -> {
-                        return new Data(String.valueOf((int) Double.parseDouble(parsingNode.evaluate().value)), DataType.INT);
+                        return new Data(String.valueOf((int) Double.parseDouble(castingNode.evaluate().value)), DataType.INT);
                     }
                     default -> throw new IllegalStateException();
                 }
             }
             case DOUBLE -> {
-                switch (parsingNode.evaluate().type) {
+                switch (castingNode.evaluate().type) {
                     case DOUBLE, STRING -> {
-                        return new Data(parsingNode.evaluate().value, DataType.DOUBLE);
+                        return new Data(castingNode.evaluate().value, DataType.DOUBLE);
                     }
                     case INT -> {
-                        return new Data(String.valueOf((double) Integer.parseInt(parsingNode.evaluate().value)), DataType.DOUBLE);
+                        return new Data(String.valueOf((double) Integer.parseInt(castingNode.evaluate().value)), DataType.DOUBLE);
                     }
                     case CHAR -> {
-                        return new Data(String.valueOf((double) parsingNode.evaluate().value.charAt(0)), DataType.DOUBLE);
+                        return new Data(String.valueOf((double) castingNode.evaluate().value.charAt(0)), DataType.DOUBLE);
                     }
                     default -> throw new IllegalStateException();
                 }
             }
             case BOOL -> {
-                switch (parsingNode.evaluate().type) {
+                switch (castingNode.evaluate().type) {
                     case BOOL, STRING -> {
-                        return new Data(parsingNode.evaluate().value, DataType.BOOL);
+                        return new Data(castingNode.evaluate().value, DataType.BOOL);
                     }
                     default -> throw new IllegalStateException();
                 }
             }
             case CHAR -> {
-                switch (parsingNode.evaluate().type) {
+                switch (castingNode.evaluate().type) {
                     case CHAR, STRING -> {
-                        return new Data(parsingNode.evaluate().value, DataType.CHAR);
+                        return new Data(castingNode.evaluate().value, DataType.CHAR);
                     }
                     case DOUBLE -> {
-                        return new Data(String.valueOf((char) Double.parseDouble(parsingNode.evaluate().value)), DataType.CHAR);
+                        return new Data(String.valueOf((char) Double.parseDouble(castingNode.evaluate().value)), DataType.CHAR);
                     }
                     case INT -> {
-                        return new Data(String.valueOf((char) Integer.parseInt(parsingNode.evaluate().value)), DataType.CHAR);
+                        return new Data(String.valueOf((char) Integer.parseInt(castingNode.evaluate().value)), DataType.CHAR);
                     }
                     default -> throw new IllegalStateException();
                 }
             }
             case STRING -> {
-                switch (parsingNode.evaluate().type) {
+                switch (castingNode.evaluate().type) {
                     case CHAR, INT, BOOL, DOUBLE, STRING -> {
-                        return new Data(parsingNode.evaluate().value, DataType.STRING);
+                        return new Data(castingNode.evaluate().value, DataType.STRING);
                     }
                     default -> throw new IllegalStateException();
                 }

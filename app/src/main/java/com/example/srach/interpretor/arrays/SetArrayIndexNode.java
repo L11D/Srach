@@ -6,7 +6,7 @@ import com.example.srach.interpretor.ValueNode;
 
 public class SetArrayIndexNode extends LogicNode {
     private ArrayNode array;
-    private ValueNode index;
+    private MathNode index;
     private MathNode value;
     public SetArrayIndexNode() {
         array = null;
@@ -18,7 +18,7 @@ public class SetArrayIndexNode extends LogicNode {
         this.array = array;
     }
 
-    public void setIndex(ValueNode index) {
+    public void setIndex(MathNode index) {
         this.index = index;
     }
 
