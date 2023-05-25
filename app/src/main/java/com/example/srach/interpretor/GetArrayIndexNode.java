@@ -19,6 +19,6 @@ public class GetArrayIndexNode extends MathNode {
 
     @Override
     public Data evaluate() {
-        return new Data(array.getArrayIndexValue(Integer.parseInt(index.evaluate().value)), array.getType());
+        return new Data(array.getArrayIndexValue(Integer.parseInt(index.evaluate().value)).value, array.getType());
     }
 }

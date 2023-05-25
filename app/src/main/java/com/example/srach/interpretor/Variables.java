@@ -4,23 +4,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Variables {
-    private final Map<String, String> variables = new HashMap<>();
-    private final Map<String, ArrayList<String>> arrays = new HashMap<>();
+import kotlin.Pair;
 
-    public String getVariableValue(String name) {
+public class Variables {
+    private final Map<String, Data> variables = new HashMap<>();
+    private final Map<String, Pair<ArrayList<String>, DataType>> arrays = new HashMap<>();
+
+    public Data getVariable(String name) {
         return this.variables.get(name);
     }
 
-    public void setVariableValue(String name, String value) {
-        this.variables.put(name, value);
+    public void setVariable(String name, String value, DataType type) {
+        this.variables.put(name, new Data(value, type));
     }
 
-    public ArrayList<String> getArrayValue(String name) {
+    public Pair<ArrayList<String>, DataType> getArray(String name) {
         return this.arrays.get(name);
     }
 
-    public ArrayList<String> setArrayValue(String name, ArrayList<String> array) {
-        return this.arrays.put(name, array);
+    public void setArray(String name, ArrayList<String> array, DataType type) {
+        this.arrays.put(name, new Pair<>(array, type));
     }
 }

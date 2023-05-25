@@ -14,10 +14,10 @@ public class AssignmentNode extends LogicNode {
 
     @Override
     public void work() {
-        if (evaluateResult.evaluate().type != variable.getType()) {
+        if (evaluateResult.evaluate().type != variable.evaluate().type) {
             throw new IllegalStateException();
         }
         else
-            variable.setValue(evaluateResult.evaluate().value);
+            variable.getVariables().setVariable(variable.getName(), evaluateResult.evaluate().value, evaluateResult.evaluate().type);
     }
 }
