@@ -4,36 +4,30 @@ public class Main {
     public static void main(String[] args) {
         Variables variables = new Variables();
 
-        VariableNode a = new VariableNode("a", DataType.DOUBLE, variables);
-        BeginNode start = new BeginNode();
-        PrintNode print1 = new PrintNode();
-        PrintNode print2 = new PrintNode();
+        WhileLoopNode loop = new WhileLoopNode();
+        BeginNode begin = new BeginNode();
+        EndNode end = new EndNode();
+        VariableNode a = new VariableNode("a", DataType.INT, variables);
+        StartNode start = new StartNode();
+        PrintNode print = new PrintNode();
         AssignmentNode ass = new AssignmentNode();
         ValueNode num = new ValueNode();
         AddNode add = new AddNode();
 
-        a.setValue("150.0");
-        start.setNext(print1);
-        print1.setNext(ass);
-        ass.setNext(print2);
+        start.setNext(loop);
+        loop.setLoopBegin(begin);
+        begin.setNext(ass);
+        end.setLoopNode(loop);
         ass.setVariable(a);
-        ass.setEvaluateResult(num);
-        print2.setEvaluateResult(add);
-        print1.setEvaluateResult(a);
+        ass.setEvaluateResult(add);
         add.setLeft(a);
         add.setRight(num);
-
-
+        num.setValue(new Data("1", DataType.INT));
+        print.setEvaluateResult(a);
+        ass.setNext(print);
 
         goLogic(start);
     }
-
-//    public static void checkLoops(LogicNode node) {
-//        if (node.getNext() instanceof WhileLoopNode) {
-//            ((WhileLoopNode) node.getNext()).setEndOfLoopBody((WhileLoopNode) node.getNext());
-//            checkLoops(node.getNext());
-//        }
-//    }
 
     public static void goLogic(LogicNode node) {
         if (node.getNext() != null) {
@@ -44,46 +38,6 @@ public class Main {
             System.out.print("End");
     }
 }
-
-//class Break extends LogicNode {
-//    WhileLoopNode loopNode;
-//
-//    public void setOwner(WhileLoopNode owner) {
-//        this.loopNode = owner;
-//    }
-//
-//    @Override
-//    public void work() {
-//        loopNode.setNext(loopNode.getCompleted());
-//    }
-//}
-//
-//class BeginEnd {
-//    LogicNode owner;
-//    LogicNode begin;
-//    LogicNode end;
-//    BeginEnd() {
-//        owner = null;
-//        begin = null;
-//        end = null;
-//    }
-//
-//    public void setOwner(LogicNode owner) {
-//        this.owner = owner;
-//    }
-//
-//    public void setBegin(LogicNode begin) {
-//        this.begin = begin;
-//    }
-//
-//    public void setEnd(LogicNode end) {
-//        this.end = end;
-//    }
-//
-//    public LogicNode getBegin() {
-//        return begin;
-//    }
-//}
 
 
 
