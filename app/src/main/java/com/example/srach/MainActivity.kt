@@ -9,6 +9,7 @@ import com.example.srach.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     lateinit var  bindingClass : ActivityMainBinding
+    var  text = "";
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindingClass = ActivityMainBinding.inflate(layoutInflater)
@@ -16,84 +17,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onClickStart(view: View){
+        //тут идет часть где запускается приложение
+        //и начинают перебиратсья ноды
+
+        if (true)//если она принт
+        {
+            text += ("То что лежит в ноде" + "\n")
+        }
+
         val intentCreate = Intent(this, Console::class.java)
-        intentCreate.putExtra("action", "Hello World!\nIts working!\nYes!\nA\n" +
-                "Agfdjgdfogjklfghdlkgfkgsdkjgfdkgjsdfgjldjgkldfjgjgldjgldfjglfdjlgkdjlftgkjdlgjdlkgjdflgjdlfgjldfjgdjgldfjgldfjgldfjglkdfjgldjflgdjlkgjdolgjdflgjdolgjdfoljfgd\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A\n" +
-                "A")
-        //тут надо подумать что передавать
+        intentCreate.putExtra("action", text)
         startActivity(intentCreate)
     }
 
     fun onClickMenu(view: View){
         finish();
+    }
+
+    fun onClickOnTest(view: View){
+        fieldView.createNodeUserInput(bindingClass.root)
     }
 
 }
