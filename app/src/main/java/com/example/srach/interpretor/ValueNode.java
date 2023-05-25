@@ -1,8 +1,10 @@
 package com.example.srach.interpretor;
 
+import com.example.srach.interpretor.math.MathNode;
+
 public class ValueNode extends MathNode {
     private Data value;
-    ValueNode() {
+    public ValueNode() {
         this.value = null;
     }
 

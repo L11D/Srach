@@ -1,8 +1,10 @@
 package com.example.srach.interpretor;
 
+import com.example.srach.interpretor.logic.LogicNode;
+
 public class Main {
     public static void main(String[] args) {
-//        Variables variables = new Variables();
+//        VariablesAndArraysStorage variables = new VariablesAndArraysStorage();
 //        ArrayList listOfVars = new ArrayList<>();
 //
 //        WhileLoopNode loop = new WhileLoopNode();
