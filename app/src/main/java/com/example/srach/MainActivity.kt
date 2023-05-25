@@ -1,5 +1,6 @@
 package com.example.srach
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -51,5 +52,9 @@ class MainActivity : AppCompatActivity() {
             override fun onDrawerStateChanged(newState: Int) {
             }
         })
+    }
+
+    fun onClickAddNodes(view: View){
+
     }
 }

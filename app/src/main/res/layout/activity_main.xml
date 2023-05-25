@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <!-- ... Основное содержимое вашей активности ... -->
+
         <ViewStub
             android:id="@+id/drawer1Stub"
             android:layout_width="match_parent"
@@ -48,6 +49,18 @@
             android:text="Button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/buttonAddNodes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:onClick="onClickAddNodes"
+            android:text="ADD"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
@@ -62,13 +75,13 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Введите текст"/>
+            android:hint="Введите текст" />
 
         <!-- Кнопка -->
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Нажать"/>
+            android:text="Нажать" />
     </LinearLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>
