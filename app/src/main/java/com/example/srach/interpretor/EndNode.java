@@ -5,7 +5,6 @@ public class EndNode extends LogicNode {
 
     public void setLoopNode(WhileLoopNode loopNode) {
         this.loopNode = loopNode;
-        setNext(loopNode);
     }
 
     public WhileLoopNode getLoopNode() {
@@ -14,5 +13,6 @@ public class EndNode extends LogicNode {
 
     @Override
     public void work() {
+        setNext(loopNode);
     }
 }

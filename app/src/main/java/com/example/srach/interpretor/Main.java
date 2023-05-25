@@ -34,8 +34,6 @@ public class Main {
             node.getNext().work();
             goLogic(node.getNext());
         }
-        else
-            System.out.print("End");
     }
 }
 

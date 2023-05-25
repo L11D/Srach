@@ -3,7 +3,6 @@ package com.example.srach.interpretor;
 public class ParseNode extends MathNode {
     private MathNode parsingNode;
     private DataType parseTo;
-
     ParseNode() {
         parsingNode = null;
         parseTo = null;
