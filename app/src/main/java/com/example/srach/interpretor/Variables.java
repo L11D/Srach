@@ -1,4 +1,5 @@
 package com.example.srach.interpretor;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class Variables {
         return this.arrays.get(name);
     }
 
-    public ArrayList<String> setArrayValue(String name, ArrayList<String> value) {
-        return this.arrays.get(name);
+    public ArrayList<String> setArrayValue(String name, ArrayList<String> array) {
+        return this.arrays.put(name, array);
     }
 }

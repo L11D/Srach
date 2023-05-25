@@ -1,7 +1,7 @@
 package com.example.srach.interpretor;
 
 public class AssignmentNode extends LogicNode {
-    private com.example.srach.interpretor.VariableNode variable;
+    private VariableNode variable;
     private MathNode evaluateResult;
 
     public void setVariable(VariableNode variable) {

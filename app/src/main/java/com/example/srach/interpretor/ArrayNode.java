@@ -6,7 +6,6 @@ public class ArrayNode extends Node {
     private final String name;
     private final DataType type;
     private final Variables variables;
-
     ArrayNode(String name, DataType type, Variables storage) {
         this.name = name;
         this.type = type;
@@ -22,8 +21,8 @@ public class ArrayNode extends Node {
         return type;
     }
 
-    public void setValue(ArrayList<String> value) {
-        variables.setArrayValue(name, value);
+    public void setValue(ArrayList<String> array) {
+        variables.setArrayValue(name, array);
     }
 
     public String getArrayIndexValue(int index) {

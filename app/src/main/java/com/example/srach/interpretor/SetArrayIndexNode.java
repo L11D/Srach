@@ -4,7 +4,6 @@ public class SetArrayIndexNode extends LogicNode {
     ArrayNode array;
     ValueNode index;
     MathNode value;
-
     SetArrayIndexNode() {
         array = null;
         index = null;
