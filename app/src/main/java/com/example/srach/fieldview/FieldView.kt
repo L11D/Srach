@@ -10,6 +10,7 @@ import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.example.srach.NewConsole
 import com.example.srach.nodeview.AbleToUserInput
 import com.example.srach.nodeview.NodeView
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnector
@@ -28,8 +29,8 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
     private val doubleTapListener = DoubleTapListener(this)
     private val doubleTapDetector = GestureDetector(this.context, doubleTapListener)
 
-    fun bindConsole(console:TextView){
-        field.bindConsole(console)
+    fun bindConsole(console:NewConsole){
+        field.console = console
     }
 
     fun nodeViewsCollision(pos: Vector2f): NodeView?{
@@ -71,8 +72,12 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
         super.onSizeChanged(w, h, oldw, oldh)
         field.viewSize = Vector2i(width, height)
     }
+
+    val runLoop = RunLoop(field)
+
     fun run(){
-        field.run()
+        //field.run()
+        runLoop.start()
     }
 
     fun createNodeUserInput(layout:ViewGroup){

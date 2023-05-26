@@ -22,15 +22,17 @@ import com.example.srach.nodeview.types.math.DivideNodeView
 
 class MainActivity : AppCompatActivity() {
     lateinit var bindingClass: ActivityMainBinding
-    var text = "Hello World!"
+    var text = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindingClass = ActivityMainBinding.inflate(layoutInflater)
         setContentView(bindingClass.root)
+
         val console = NewConsole()
         supportFragmentManager.beginTransaction().replace(R.id.contConsole, console).commit()
 
         val fieldView = findViewById<FieldView>(R.id.fieldView)
+        fieldView.bindConsole(console)
 
         val runButton = findViewById<Button>(R.id.button).setOnClickListener {
             val fragment = supportFragmentManager.findFragmentById(R.id.contConsole) as? NewConsole

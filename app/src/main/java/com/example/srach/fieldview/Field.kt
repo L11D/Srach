@@ -3,6 +3,7 @@ package com.example.srach.fieldview
 import android.content.Context
 import android.graphics.Canvas
 import android.widget.TextView
+import com.example.srach.NewConsole
 import com.example.srach.R
 import com.example.srach.interpretor.VariablesAndArraysStorage
 import com.example.srach.interpretor.logic.LogicNode
@@ -35,7 +36,7 @@ class Field(private val context: Context) : Drawable {
     val nodeViewList = mutableListOf<NodeView>()
     val connectionsList = mutableListOf<Connection>()
 
-    private var console: TextView? = null
+    var console: NewConsole? = null
 
     var activeNodeView: NodeView? = null
         set(value) {
@@ -125,10 +126,9 @@ class Field(private val context: Context) : Drawable {
         PrintNodeView(context, this, Vector2f(300f, -500f))
     }
 
-    fun bindConsole(console: TextView) {
-        this.console = console
+    fun bindConsole() {
         for (node in nodeViewList) {
-            if (node is PrintNodeView) node.bindConsole(console)
+            if (node is PrintNodeView && console != null) node.bindConsole(console!!)
         }
     }
 
@@ -162,6 +162,7 @@ class Field(private val context: Context) : Drawable {
     fun run() {
         try {
             var a = false
+            bindConsole()
             createVariables()
             for (node in nodeViewList) {
                 if (node is BeginNodeView) {
