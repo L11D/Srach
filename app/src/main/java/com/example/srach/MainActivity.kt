@@ -70,7 +70,8 @@ class MainActivity : AppCompatActivity() {
 
             val addSelectedNode = findViewById<Button>(R.id.addSelectedNode).setOnClickListener{
                 var spinner2 =findViewById<Spinner>(R.id.spinner2)
-                fieldView.mediatorAddNode(spinner2.getSelectedItem().toString())
+                fieldView.addNode(spinner2.getSelectedItem().toString())
+                fieldView.invalidate()
             }
         }
         

@@ -31,39 +31,76 @@ class Field(private val context:Context) : Drawable {
     var viewPosition = Vector2f()
     var scale = 1f
 
-    private val grid = Grid(context,this)
+    private val grid = Grid(context, this)
     val nodeViewList = mutableListOf<NodeView>()
     val connectionsList = mutableListOf<Connection>()
 
-    private var console:TextView? = null
+    private var console: TextView? = null
 
-    var activeNodeView:NodeView? = null
+    var activeNodeView: NodeView? = null
         set(value) {
             if (field != null) field!!.isActive = false
-            if (value != null){
+            if (value != null) {
                 field = value
                 field!!.isActive = true
                 nodeViewList.remove(field!!)
                 nodeViewList.add(field!!)
-            }
-            else field = value
+            } else field = value
         }
 
     private var variables = VariablesAndArraysStorage()
 
-    fun findPosition(pos:Vector2f):Vector2f{
-        if(nodeViewsCollisionInFieldCoords(Vector2f(pos.x+10f, pos.y+10f)) == null) return pos
-        return findPosition(Vector2f(pos.x+20f, pos.y))
+    fun findPosition(pos: Vector2f): Vector2f {
+        if (nodeViewsCollisionInFieldCoords(Vector2f(pos.x + 10f, pos.y + 10f)) == null) return pos
+        return findPosition(Vector2f(pos.x + 20f, pos.y))
     }
-    fun addNode(nodeName: String){
-        var nodePosition = findPosition(viewPosition * (1f/scale))
-        when(nodeName){
-            "AddNode" ->{AddNodeView(context, this, nodePosition)}
+
+    fun addNode(name: String) {
+        var nodePosition = findPosition(viewPosition * (1f / scale))
+        when (name) {
+            "AddNode" -> nodeViewList.add(AddNodeView(context, this, nodePosition))
+            //"ArrayNode" -> nodeViewList.add(ArrayNodeView(context, this, nodePosition))
+            //"AssignmentNode" -> nodeViewList.add(AssignmentNodeView(context, this, nodePosition))
+            "BeginNode" -> nodeViewList.add(BeginNodeView(context, this, nodePosition))
+            "BranchNode" -> nodeViewList.add(BranchNodeView(context, this, nodePosition))
+            //"CoolNumberNode" -> nodeViewList.add(CoolNumberNodeView(context, this, nodePosition))
+            //"Data" -> nodeViewList.add(DataView(context, this, nodePosition))
+            "DivideNode" -> nodeViewList.add(DivideNodeView(context, this, nodePosition))
+            //"DivideRemainder"-> nodeViewList.add(DivideRemainderView(context, this, nodePosition))
+            "EqualNode" -> nodeViewList.add(EqualNodeView(context, this, nodePosition))
+            //"GetArrayIndexNode" -> nodeViewList.add(GetArrayIndexNodeView(context, this, nodePosition))
+            "GreaterEqualNode" -> nodeViewList.add(
+                GreaterEqualNodeView(
+                    context,
+                    this,
+                    nodePosition
+                )
+            )
+
+            "GreaterNode" -> nodeViewList.add(GreaterNodeView(context, this, nodePosition))
+            //"InputNode" -> nodeViewList.add(InputNodeView(context, this, nodePosition))
+            "LessEqualNode" -> nodeViewList.add(LessEqualNodeView(context, this, nodePosition))
+            "LessNode" -> nodeViewList.add(LessNodeView(context, this, nodePosition))
+            "MultiplyNode" -> nodeViewList.add(MultiplyNodeView(context, this, nodePosition))
+            "NotEqualNode" -> nodeViewList.add(NotEqualNodeView(context, this, nodePosition))
+            //"NumberNode" -> nodeViewList.add(NumberNodeView(context, this, nodePosition))
+            "PrintNode" -> nodeViewList.add(PrintNodeView(context, this, nodePosition))
+            //"SetArrayIndexNode" -> nodeViewList.add(SetArrayIndexNodeView(context, this, nodePosition))
+            "SubtractNode" -> nodeViewList.add(SubtractNodeView(context, this, nodePosition))
+            "VariableNode" -> nodeViewList.add(
+                DeclarationVariableNodeView(
+                    context,
+                    variables,
+                    this,
+                    nodePosition
+                )
+            )
+            //"Variables" -> nodeViewList.add(VariablesView(context, this, nodePosition))
         }
     }
 
     init {
-        BeginNodeView(context, this, Vector2f(-300f,-500f))
+        BeginNodeView(context, this, Vector2f(-300f, -500f))
 
         AddNodeView(context, this, Vector2f(50f, 0f))
         SubtractNodeView(context, this, Vector2f(250f, 0f))
@@ -91,29 +128,29 @@ class Field(private val context:Context) : Drawable {
         PrintNodeView(context, this, Vector2f(300f, -500f))
     }
 
-    fun bindConsole(console:TextView){
+    fun bindConsole(console: TextView) {
         this.console = console
-        for (node in nodeViewList){
-            if(node is PrintNodeView) node.bindConsole(console)
+        for (node in nodeViewList) {
+            if (node is PrintNodeView) node.bindConsole(console)
         }
     }
 
-    fun nodeViewsCollision(pos: Vector2f): NodeView?{
-        for(i in nodeViewList.size - 1 downTo 0){
+    fun nodeViewsCollision(pos: Vector2f): NodeView? {
+        for (i in nodeViewList.size - 1 downTo 0) {
             if (nodeViewList[i].collision(pos)) return nodeViewList[i]
         }
         return null
     }
 
-    fun nodeViewsCollisionInFieldCoords(pos: Vector2f): NodeView?{
-        for(i in nodeViewList.size - 1 downTo 0){
+    fun nodeViewsCollisionInFieldCoords(pos: Vector2f): NodeView? {
+        for (i in nodeViewList.size - 1 downTo 0) {
             if (nodeViewList[i].collisionInFieldCoords(pos)) return nodeViewList[i]
         }
         return null
     }
 
-    private fun createVariables(){
-        for (node in nodeViewList){
+    private fun createVariables() {
+        for (node in nodeViewList) {
             //if (node is DeclarationVariableNode) node
         }
     }
@@ -124,14 +161,15 @@ class Field(private val context:Context) : Drawable {
                 node.next.work()
                 goLogic(node.next)
             } else println("End")
-        }catch (e:Throwable){
+        } catch (e: Throwable) {
             println(e.message)
         }
     }
-    fun run(){
+
+    fun run() {
         var a = false
-        for(node in nodeViewList){
-            if(node is BeginNodeView){
+        for (node in nodeViewList) {
+            if (node is BeginNodeView) {
                 goLogic(node.getNodeToWork())
                 a = true
                 break
@@ -140,43 +178,15 @@ class Field(private val context:Context) : Drawable {
         if (!a) println("Begin not found")
     }
 
-    override fun draw(canvas:Canvas){
+    override fun draw(canvas: Canvas) {
         canvas.drawColor(context.getColor(R.color.fieldBG))
         grid.draw(canvas)
-        for (con in connectionsList){
+        for (con in connectionsList) {
             con.draw(canvas)
         }
         for (node in nodeViewList) {
             node.draw(canvas)
         }
     }
-
-    fun addNodes(name: String){
-        when(name){
-            "AddNode" -> nodeViewList.add(AddNodeView(context, this, Vector2f(50f, 0f)))
-            //"ArrayNode" -> nodeViewList.add(ArrayNodeView(context, this, Vector2f(50f, 0f)))
-            //"AssignmentNode" -> nodeViewList.add(AssignmentNodeView(context, this, Vector2f(50f, 0f)))
-            "BeginNode" -> nodeViewList.add(BeginNodeView(context, this, Vector2f(50f, 0f)))
-            "BranchNode" -> nodeViewList.add(BranchNodeView(context, this, Vector2f(50f, 0f)))
-            //"CoolNumberNode" -> nodeViewList.add(CoolNumberNodeView(context, this, Vector2f(50f, 0f)))
-            //"Data" -> nodeViewList.add(DataView(context, this, Vector2f(50f, 0f)))
-            "DivideNode" -> nodeViewList.add(DivideNodeView(context, this, Vector2f(50f, 0f)))
-            //"DivideRemainder"-> nodeViewList.add(DivideRemainderView(context, this, Vector2f(50f, 0f)))
-            "EqualNode" -> nodeViewList.add(EqualNodeView(context, this, Vector2f(50f, 0f)))
-            //"GetArrayIndexNode" -> nodeViewList.add(GetArrayIndexNodeView(context, this, Vector2f(50f, 0f)))
-            "GreaterEqualNode" -> nodeViewList.add(GreaterEqualNodeView(context, this, Vector2f(50f, 0f)))
-            "GreaterNode" -> nodeViewList.add(GreaterNodeView(context, this, Vector2f(50f, 0f)))
-            //"InputNode" -> nodeViewList.add(InputNodeView(context, this, Vector2f(50f, 0f)))
-            "LessEqualNode" -> nodeViewList.add(LessEqualNodeView(context, this, Vector2f(50f, 0f)))
-            "LessNode" -> nodeViewList.add(LessNodeView(context, this, Vector2f(50f, 0f)))
-            "MultiplyNode" -> nodeViewList.add(MultiplyNodeView(context, this, Vector2f(50f, 0f)))
-            "NotEqualNode" -> nodeViewList.add(NotEqualNodeView(context, this, Vector2f(50f, 0f)))
-            //"NumberNode" -> nodeViewList.add(NumberNodeView(context, this, Vector2f(50f, 0f)))
-            "PrintNode" -> nodeViewList.add(PrintNodeView(context, this, Vector2f(50f, 0f)))
-            //"SetArrayIndexNode" -> nodeViewList.add(SetArrayIndexNodeView(context, this, Vector2f(50f, 0f)))
-            "SubtractNode" -> nodeViewList.add(SubtractNodeView(context, this, Vector2f(50f, 0f)))
-            "VariableNode" -> nodeViewList.add(VariableNodeView(context,variables,this, Vector2f(50f, 0f)))
-            //"Variables" -> nodeViewList.add(VariablesView(context, this, Vector2f(50f, 0f)))
-        }
-    }
 }
+ 
