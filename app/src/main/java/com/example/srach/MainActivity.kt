@@ -35,20 +35,22 @@ class MainActivity : AppCompatActivity() {
 
         val runButton = findViewById<Button>(R.id.button).setOnClickListener {
             val fragment = supportFragmentManager.findFragmentById(R.id.contConsole) as? NewConsole
-            fragment?.deleteText();
+
 
             if (bindingClass.contConsole.visibility == View.GONE){
                 bindingClass.contConsole.visibility = View.VISIBLE
                 bindingClass.button.text = "CLOSE"
+                fieldView.run()
+                fragment?.inputText(text)
+                //должны передавать из рана в фрагмент
             }
             else{
                 bindingClass.contConsole.visibility = View.GONE
                 bindingClass.button.text = "RUN"
+                fragment?.deleteText();
             }
 
-            fieldView.run()
-            fragment?.inputText(text)
-            //должны передавать из рана в фрагмент
+
         }
 
 
