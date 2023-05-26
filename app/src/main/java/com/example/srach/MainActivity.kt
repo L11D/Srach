@@ -27,9 +27,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         bindingClass = ActivityMainBinding.inflate(layoutInflater)
         setContentView(bindingClass.root)
-
-        supportFragmentManager.beginTransaction().replace(R.id.contConsole, NewConsole.newInstance()).commit()
-
+        val console = NewConsole()
+        supportFragmentManager.beginTransaction().replace(R.id.contConsole, console).commit()
 
         val fieldView = findViewById<FieldView>(R.id.fieldView)
 
@@ -49,10 +48,7 @@ class MainActivity : AppCompatActivity() {
                 bindingClass.button.text = "RUN"
                 fragment?.deleteText();
             }
-
-
         }
-
 
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
 

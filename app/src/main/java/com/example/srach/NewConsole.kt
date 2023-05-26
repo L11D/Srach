@@ -24,11 +24,11 @@ class NewConsole : Fragment() {
         fun newInstance() = NewConsole()
     }
 
-    public fun inputText(text: String){
+    fun inputText(text: String){
         bindingClass.console.text = bindingClass.console.text.toString() +  text + "\n"
     }
 
-    public fun deleteText(){
+    fun deleteText(){
         bindingClass.console.text = ""
     }
 }
