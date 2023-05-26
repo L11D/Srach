@@ -6,14 +6,14 @@ import android.widget.TextView
 import com.example.srach.R
 import com.example.srach.interpretor.VariablesAndArraysStorage
 import com.example.srach.interpretor.logic.LogicNode
-import com.example.srach.interpretor.variables.DeclarationVariableNode
+import com.example.srach.interpretor.loops.WhileLoopNode
 import com.example.srach.nodeview.NodeView
 import com.example.srach.nodeview.types.BeginNodeView
 import com.example.srach.nodeview.types.BranchNodeView
 import com.example.srach.nodeview.types.DeclarationVariableNodeView
-import com.example.srach.nodeview.types.LoopNodeView
-import com.example.srach.nodeview.types.OperatorNodeView
 import com.example.srach.nodeview.types.PrintNodeView
+import com.example.srach.nodeview.types.loops.EndNodeView
+import com.example.srach.nodeview.types.loops.WhileLoopNodeView
 import com.example.srach.nodeview.types.math.AddNodeView
 import com.example.srach.nodeview.types.math.DivideNodeView
 import com.example.srach.nodeview.types.math.DivideRemainderNodeView
@@ -53,6 +53,11 @@ class Field(private val context: Context) : Drawable {
     fun findPosition(pos: Vector2f): Vector2f {
         if (nodeViewsCollisionInFieldCoords(Vector2f(pos.x + 10f, pos.y + 10f)) == null) return pos
         return findPosition(Vector2f(pos.x + 20f, pos.y))
+    }
+
+    private fun addWhileLoopNodeView(pos: Vector2f){
+        val loop = WhileLoopNodeView(context, this, pos)
+        EndNodeView(context, this, loop.whileLoopNode, Vector2f(pos.x + loop.size.x + 100f, pos.y))
     }
 
     fun addNode(name: String) {
@@ -99,6 +104,8 @@ class Field(private val context: Context) : Drawable {
         DivideRemainderNodeView(context, this, Vector2f(850f, 0f))
 
         BranchNodeView(context, this, Vector2f(600f, -500f))
+
+        addWhileLoopNodeView(Vector2f(900f, -500f))
 
         DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 100f))
         DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 200f))

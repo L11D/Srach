@@ -27,7 +27,7 @@ abstract class NodeView(val context: Context, val field: Field, var position: Ve
             field = value
         }
 
-    protected var size = Vector2f(150f, 100f)
+    var size = Vector2f(150f, 100f)
     var displayPosition = Vector2f()
     private var displaySize = Vector2f()
 
