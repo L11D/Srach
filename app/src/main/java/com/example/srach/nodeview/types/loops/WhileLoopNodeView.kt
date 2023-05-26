@@ -1,15 +1,15 @@
-package com.example.srach.nodeview.types
+package com.example.srach.nodeview.types.loops
 
 import android.content.Context
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
 import com.example.srach.interpretor.DataType
 import com.example.srach.interpretor.logic.LogicNode
+import com.example.srach.interpretor.loops.BeginNode
+import com.example.srach.interpretor.loops.WhileLoopNode
 import com.example.srach.interpretor.math.MathNode
-import com.example.srach.nodeview.AbleToExec
 import com.example.srach.nodeview.AbleToInput
 import com.example.srach.nodeview.AbleToOutput
-import com.example.srach.nodeview.InOutAbleNodeView
 import com.example.srach.nodeview.NodeView
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInput
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInputData
@@ -17,36 +17,21 @@ import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInputExec
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputData
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputExec
 
-abstract class LoopNodeView(context: Context, field: Field, position: Vector2f, inputCount: Int, outputCount: Int) :
-    InOutAbleNodeView(context, field, position, inputCount, outputCount, DataType.BOOL), AbleToExec {
+class WhileLoopNodeView(context: Context, field: Field, position: Vector2f) : LoopNodeView(context, field, position) {
 
-    override fun initConnectors() {
+    val whileLoopNode = WhileLoopNode()
+    private val loopBegin = BeginNode()
 
-        val con1 = NodeViewConnectorInputExec(context, this).apply {
-            position = Vector2f(-connectorRadius / 2, topPadding)
-            size = Vector2f(connectorRadius, connectorRadius)
-        }
-
-        val con2 = NodeViewConnectorOutputExec(context, this).apply {
-            position = Vector2f(this@LoopNodeView.size.x - connectorRadius / 2,topPadding)
-            size = Vector2f(connectorRadius, connectorRadius)
-        }
-        val con12 = NodeViewConnectorOutputExec(context, this).apply {
-            position = Vector2f(this@LoopNodeView.size.x - connectorRadius / 2,topPadding + connectorOffset + connectorRadius)
-            size = Vector2f(connectorRadius, connectorRadius)
-        }
-        topPadding += connectorRadius + connectorOffset;
-        super.initConnectors()
-        inputConnectorsList.add(con1)
-        outputConnectorsList.add(con2)
-        outputConnectorsList.add(con12)
+    init {
+        description.text = "While"
+        whileLoopNode.loopBegin = loopBegin
     }
 
     override fun <I : NodeView, O : NodeView> connect(
         connectorInput: NodeViewConnectorInputData<I>,
         connectorOutput: NodeViewConnectorOutputData<O>
     ) where I : AbleToInput, O : AbleToOutput {
-        TODO("Not yet implemented")
+        whileLoopNode.condition = connectorOutput.getNodeOutput()
     }
 
     override fun getNodeOutput(): MathNode {
@@ -57,25 +42,35 @@ abstract class LoopNodeView(context: Context, field: Field, position: Vector2f, 
         connectorInput: NodeViewConnectorInputData<I>,
         connectorOutput: NodeViewConnectorOutputData<O>
     ): Boolean where I : AbleToInput, O : AbleToOutput {
-        TODO("Not yet implemented")
+        return connectorOutput.dataType == DataType.BOOL
     }
 
     override fun disconnect(connectorInput: NodeViewConnectorInput) {
-        TODO("Not yet implemented")
+        whileLoopNode.condition = null
     }
 
     override fun connectExec(
         connectorInput: NodeViewConnectorInputExec<*>,
         connectorOutput: NodeViewConnectorOutputExec<*>
     ) {
-        TODO("Not yet implemented")
+        if (outputConnectorsList.indexOf(connectorOutput) == 0) {
+            loopBegin.next = connectorInput.getNode()
+        }
+        if (outputConnectorsList.indexOf(connectorOutput) == 1) {
+            whileLoopNode.completed = connectorInput.getNode()
+        }
     }
 
     override fun disconnectExec(connectorOutput: NodeViewConnectorOutputExec<*>) {
-        TODO("Not yet implemented")
+        if (outputConnectorsList.indexOf(connectorOutput) == 0) {
+            loopBegin.next = null
+        }
+        if (outputConnectorsList.indexOf(connectorOutput) == 1) {
+            whileLoopNode.completed = null
+        }
     }
 
     override fun getExecNode(): LogicNode {
-        TODO("Not yet implemented")
+        return whileLoopNode
     }
 }
