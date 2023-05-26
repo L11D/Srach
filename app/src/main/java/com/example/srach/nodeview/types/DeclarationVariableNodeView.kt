@@ -14,14 +14,14 @@ import com.example.srach.R
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
 import com.example.srach.interpretor.DataType
-import com.example.srach.interpretor.VariablesAndArraysStorage
+import com.example.srach.interpretor.Storage
 import com.example.srach.interpretor.math.MathNode
 import com.example.srach.interpretor.variables.DeclarationVariableNode
 import com.example.srach.interpretor.variables.VariableNode
 import com.example.srach.nodeview.AbleToUserInput
 import com.example.srach.nodeview.OutputableNodeView
 
-class DeclarationVariableNodeView(context: Context, storage: VariablesAndArraysStorage, field: Field, position: Vector2f) :
+class DeclarationVariableNodeView(context: Context, storage: Storage, field: Field, position: Vector2f) :
     OutputableNodeView(context, field, position, 1,  DataType.UNSPECIFIED), AbleToUserInput{
 
     init {

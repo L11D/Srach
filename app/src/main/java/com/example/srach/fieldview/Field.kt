@@ -5,7 +5,7 @@ import android.graphics.Canvas
 import android.widget.TextView
 import com.example.srach.NewConsole
 import com.example.srach.R
-import com.example.srach.interpretor.VariablesAndArraysStorage
+import com.example.srach.interpretor.Storage
 import com.example.srach.interpretor.logic.LogicNode
 import com.example.srach.interpretor.loops.WhileLoopNode
 import com.example.srach.nodeview.NodeView
@@ -49,7 +49,7 @@ class Field(private val context: Context) : Drawable {
             } else field = value
         }
 
-    private var variables = VariablesAndArraysStorage()
+    private var variables = Storage()
 
     fun findPosition(pos: Vector2f): Vector2f {
         if (nodeViewsCollisionInFieldCoords(Vector2f(pos.x + 10f, pos.y + 10f)) == null) return pos

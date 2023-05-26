@@ -2,18 +2,18 @@ package com.example.srach.interpretor.variables;
 
 import com.example.srach.interpretor.DataType;
 import com.example.srach.interpretor.logic.LogicNode;
-import com.example.srach.interpretor.VariablesAndArraysStorage;
+import com.example.srach.interpretor.Storage;
 
 public class DeclarationVariableNode extends LogicNode {
     private String name;
     private DataType type;
     private String value;
-    private final VariablesAndArraysStorage variablesAndArraysStorage;
-    public DeclarationVariableNode(VariablesAndArraysStorage variablesAndArraysStorage) {
+    private final Storage storage;
+    public DeclarationVariableNode(Storage variablesAndArraysStorage) {
         name = null;
         type = null;
         value = null;
-        this.variablesAndArraysStorage = variablesAndArraysStorage;
+        this.storage = variablesAndArraysStorage;
     }
 
     public void setName(String name) {
@@ -42,6 +42,6 @@ public class DeclarationVariableNode extends LogicNode {
 
     @Override
     public void work() {
-        variablesAndArraysStorage.setVariable(name, value, type);
+        storage.setVariable(name, value, type);
     }
 }

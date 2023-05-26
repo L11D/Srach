@@ -6,10 +6,11 @@ import java.util.Map;
 
 import kotlin.Pair;
 
-public class VariablesAndArraysStorage {
+public class Storage {
     private final Map<String, Data> variables = new HashMap<>();
     private final Map<String, Pair<ArrayList<String>, DataType>> arrays = new HashMap<>();
-    public VariablesAndArraysStorage(){}
+    private final Map<String, Pair<DataType, Integer>> functions = new HashMap<>();
+    public Storage(){}
 
     public Data getVariable(String name) {
         return this.variables.get(name);

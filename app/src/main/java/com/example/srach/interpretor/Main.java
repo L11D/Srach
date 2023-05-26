@@ -2,6 +2,12 @@ package com.example.srach.interpretor;
 
 import com.example.srach.interpretor.logic.LogicNode;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import kotlin.Pair;
+
 public class Main {
     public static void main(String[] args) {
 //        VariablesAndArraysStorage variables = new VariablesAndArraysStorage();
@@ -40,10 +46,37 @@ public class Main {
     }
 }
 
-//class DeclarationFunctionNode extends LogicNode {
+//class Function {
+//    public DataType type;
+//    public int amountArguments;
+//    public LogicNode link;
+//}
+
+//class FunctionsStorage {
+//    private final Map<String, Pair<DataType, Integer>> functions = new HashMap<>();
+//    public FunctionsStorage(){}
+//
+//    public Data getVariable(String name) {
+//        return this.variables.get(name);
+//    }
+//
+//    public void setVariable(String name, String value, DataType type) {
+//        this.variables.put(name, new Data(value, type));
+//    }
+//
+//    public Pair<ArrayList<String>, DataType> getArray(String name) {
+//        return this.arrays.get(name);
+//    }
+//
+//    public void setArray(String name, ArrayList<String> array, DataType type) {
+//        this.arrays.put(name, new Pair<>(array, type));
+//    }
+//}
+
+//class DeclarationFunctionNode {
 //    private String name;
 //    private DataType type;
-//    private final VariablesAndArraysStorage variablesAndArraysStorage;
+//    private final FunctionsStorage functionsStorage;
 //    public DeclarationVariableNode(VariablesAndArraysStorage variablesAndArraysStorage) {
 //        this.name = null;
 //        this.type = null;
