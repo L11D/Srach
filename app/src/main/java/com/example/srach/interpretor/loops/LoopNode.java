@@ -6,9 +6,11 @@ import com.example.srach.interpretor.math.MathNode;
 public abstract class LoopNode extends LogicNode {
     private LogicNode completed;
     private MathNode condition;
+    private BeginNode loopBegin;
     public LoopNode() {
         completed = null;
         condition = null;
+        loopBegin = null;
     }
 
     public void setCompleted(LogicNode completed) {
@@ -25,5 +27,13 @@ public abstract class LoopNode extends LogicNode {
 
     public MathNode getCondition() {
         return condition;
+    }
+
+    public void setLoopBegin(BeginNode loopBegin) {
+        this.loopBegin = loopBegin;
+    }
+
+    public BeginNode getLoopBegin() {
+        return loopBegin;
     }
 }

@@ -3,20 +3,13 @@ package com.example.srach.interpretor.loops;
 import com.example.srach.interpretor.DataType;
 
 public class WhileLoopNode extends LoopNode {
-    private BeginNode loopBegin;
-    public WhileLoopNode() {
-        loopBegin = null;
-    }
-
-    public void setLoopBegin(BeginNode loopBegin) {
-        this.loopBegin = loopBegin;
-    }
+    public WhileLoopNode(){}
 
     @Override
     public void work() {
         if (getCondition().evaluate().type == DataType.BOOL)
             if (Boolean.parseBoolean(getCondition().evaluate().value))
-                setNext(loopBegin);
+                setNext(getLoopBegin());
             else
                 setNext(getCompleted());
     }

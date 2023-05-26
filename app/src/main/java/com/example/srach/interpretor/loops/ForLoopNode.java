@@ -6,12 +6,10 @@ import com.example.srach.interpretor.operators.AssignmentNode;
 public class ForLoopNode extends LoopNode {
     private AssignmentNode start;
     private AssignmentNode step;
-    private BeginNode loopBegin;
     private boolean isFirstGate;
     public ForLoopNode() {
         start = null;
         step = null;
-        loopBegin = null;
         isFirstGate = true;
     }
 
@@ -23,9 +21,6 @@ public class ForLoopNode extends LoopNode {
         this.step = step;
     }
 
-    public void setLoopBegin(BeginNode loopBegin) {
-        this.loopBegin = loopBegin;
-    }
 
 
     @Override
@@ -37,7 +32,7 @@ public class ForLoopNode extends LoopNode {
             } else
                 step.work();
             if (Boolean.parseBoolean(getCondition().evaluate().value))
-                setNext(loopBegin);
+                setNext(getLoopBegin());
             else
                 setNext(getCompleted());
         }
