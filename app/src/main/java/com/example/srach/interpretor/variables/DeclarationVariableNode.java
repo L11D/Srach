@@ -22,6 +22,14 @@ public class DeclarationVariableNode extends LogicNode {
         this.type = type;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public DataType getType() {
+        return type;
+    }
+
     @Override
     public void work() {
         variablesAndArraysStorage.setVariable(name, null, type);
