@@ -5,8 +5,8 @@ import android.widget.TextView
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
 import com.example.srach.interpretor.DataType
-import com.example.srach.interpretor.LogicNode
-import com.example.srach.interpretor.PrintNode
+import com.example.srach.interpretor.input_and_output.PrintNode
+import com.example.srach.interpretor.logic.LogicNode
 import com.example.srach.nodeview.AbleToInput
 import com.example.srach.nodeview.AbleToOutput
 import com.example.srach.nodeview.InputableExecNodeView
@@ -25,7 +25,7 @@ class PrintNodeView(context: Context, field: Field, position: Vector2f) :
     }
 
     fun bindConsole(console:TextView){
-        printNode.setConsole(console)
+        //printNode.setConsole(console)
     }
 
     override fun <I : NodeView, O : NodeView> connect(

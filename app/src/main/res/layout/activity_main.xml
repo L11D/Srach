@@ -12,14 +12,6 @@
         android:id="@+id/mainContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!-- ... Основное содержимое вашей активности ... -->
-
-        <ViewStub
-            android:id="@+id/drawer1Stub"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inflatedId="@+id/drawer1Layout"
-            android:layout="@layout/drawer1_layout" />
 
         <com.example.srach.fieldview.FieldView
             android:id="@+id/fieldView"
@@ -67,21 +59,11 @@
         android:id="@+id/drawer"
         android:layout_width="300dp"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
+        android:layout_gravity="end"
         android:background="@android:color/white"
         android:orientation="vertical">
 
-        <!-- Текстовое поле -->
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Введите текст" />
 
-        <!-- Кнопка -->
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Нажать" />
     </LinearLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>
