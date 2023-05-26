@@ -9,6 +9,6 @@ import com.example.srach.nodeview.types.OperatorNodeView
 class DivideRemainderNodeView (context: Context, field: Field, position: Vector2f) :
     OperatorNodeView(context, DivideRemainderNode(), field, position) {
     init {
-        description.text = "DivideRemainder"
+        description.text = "DivideRemainderNode"
     }
 }
