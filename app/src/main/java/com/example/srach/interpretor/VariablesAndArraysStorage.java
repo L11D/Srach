@@ -18,6 +18,10 @@ public class VariablesAndArraysStorage {
     public void setVariable(String name, String value, DataType type) {
         this.variables.put(name, new Data(value, type));
     }
+    public void removeVariable(String name) {
+        if (variables.containsKey(name))
+            variables.remove(name);
+    }
 
     public Pair<ArrayList<String>, DataType> getArray(String name) {
         return this.arrays.get(name);

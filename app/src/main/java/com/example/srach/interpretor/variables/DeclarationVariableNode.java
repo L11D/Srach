@@ -44,4 +44,5 @@ public class DeclarationVariableNode extends LogicNode {
     public void work() {
         variablesAndArraysStorage.setVariable(name, value, type);
     }
+    public void remove() { variablesAndArraysStorage.removeVariable(name);}
 }

@@ -9,10 +9,12 @@ import com.example.srach.interpretor.VariablesAndArraysStorage
 import com.example.srach.interpretor.logic.LogicNode
 import com.example.srach.interpretor.loops.WhileLoopNode
 import com.example.srach.nodeview.NodeView
+import com.example.srach.nodeview.types.AssingmentNodeView
 import com.example.srach.nodeview.types.BeginNodeView
 import com.example.srach.nodeview.types.BranchNodeView
 import com.example.srach.nodeview.types.DeclarationVariableNodeView
 import com.example.srach.nodeview.types.PrintNodeView
+import com.example.srach.nodeview.types.VariableGetterNodeView
 import com.example.srach.nodeview.types.loops.EndNodeView
 import com.example.srach.nodeview.types.loops.WhileLoopNodeView
 import com.example.srach.nodeview.types.math.AddNodeView
@@ -91,7 +93,7 @@ class Field(private val context: Context) : Drawable {
             "PrintNode" -> PrintNodeView(context, this, nodePosition)
             //"SetArrayIndexNode" -> nodeViewList.add(SetArrayIndexNodeView(context, this, nodePosition))
             "SubtractNode" -> SubtractNodeView(context, this, nodePosition)
-            "VariableNode" -> DeclarationVariableNodeView(context, variables, this, nodePosition)
+            "VariableNode" -> DeclarationVariableNodeView(context, this, variables, nodePosition)
         }
     }
 
@@ -108,9 +110,12 @@ class Field(private val context: Context) : Drawable {
 
         addWhileLoopNodeView(Vector2f(900f, -500f))
 
-        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 100f))
-        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 200f))
-        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 300f))
+        AssingmentNodeView(context, this, variables, Vector2f(-200f, -100f))
+        VariableGetterNodeView(context, this, variables, Vector2f(-200f, -300f))
+
+        DeclarationVariableNodeView(context, this, variables, Vector2f(-200f, 100f))
+        DeclarationVariableNodeView(context, this, variables, Vector2f(-200f, 200f))
+        DeclarationVariableNodeView(context, this, variables,  Vector2f(-200f, 300f))
 //        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 400f))
 //        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 500f))
 //        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 600f))
@@ -126,7 +131,7 @@ class Field(private val context: Context) : Drawable {
         PrintNodeView(context, this, Vector2f(300f, -500f))
     }
 
-    fun bindConsole() {
+    private fun bindConsole() {
         for (node in nodeViewList) {
             if (node is PrintNodeView && console != null) node.bindConsole(console!!)
         }
