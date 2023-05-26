@@ -1,6 +1,8 @@
 package com.example.srach.interpretor.input_and_output;
 
+
 import com.example.srach.NewConsole;
+
 import com.example.srach.interpretor.logic.LogicNode;
 import com.example.srach.interpretor.math.MathNode;
 
@@ -16,6 +18,7 @@ public class PrintNode extends LogicNode {
     public PrintNode() {
         evaluateResult = null;
     }
+
     public void setEvaluateResult(MathNode evaluateResult) {
         this.evaluateResult = evaluateResult;
     }
