@@ -5,4 +5,18 @@
     <color name="fieldBG">#323844</color>
     <color name="grid">#717e99</color>
     <color name="gridBigger">#afc4ee</color>
+    <color name="nodeBody">#21252B</color>
+
+    <color name="activeNodeStroke">#4CAF50</color>
+
+    <color name="execColor">#ef596f</color>
+<!--    <color name="execColor">#afc4ee</color>-->
+    <color name="intColor">#61afef</color>
+    <color name="stringColor">#d0824a</color>
+    <color name="charColor">#d0c54a</color>
+    <color name="boolColor">#81bc5c</color>
+    <color name="doubleColor">#d15cdd</color>
+    <color name="unspecifiedColor">#4A4A4A</color>
+
+
 </resources>

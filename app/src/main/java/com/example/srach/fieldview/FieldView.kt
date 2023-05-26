@@ -6,26 +6,35 @@ import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
+import android.view.TextureView
 import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import com.example.srach.NewConsole
+import com.example.srach.nodeview.AbleToUserInput
 import com.example.srach.nodeview.NodeView
-import com.example.srach.nodeview.NodeViewConnector
+import com.example.srach.nodeview.nodeviewunits.NodeViewConnector
+import java.io.Console
 
 class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
 
     var field = Field(this.context)
-        get() = field
-        set(value) {field = value}
 
     private var gListener = GListener(context,this)
     private var gestureDetector = GestureDetector(this.context, gListener)
+
     private val scaleGestureListener = SGListener(this)
     private val scaleDetector = ScaleGestureDetector(this.context, scaleGestureListener)
 
+    private val doubleTapListener = DoubleTapListener(this)
+    private val doubleTapDetector = GestureDetector(this.context, doubleTapListener)
+
+    fun bindConsole(console:NewConsole){
+        field.console = console
+    }
+
     fun nodeViewsCollision(pos: Vector2f): NodeView?{
-        for(node in field.nodeViewList){
-            if (node.collision(pos)) return node
-        }
-        return null
+        return field.nodeViewsCollision(pos)
     }
 
     fun connectorsCollision(pos: Vector2f): NodeViewConnector?{
@@ -64,11 +73,31 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
         field.viewSize = Vector2i(width, height)
     }
 
+    val runLoop = RunLoop(field)
+
+    fun run(){
+        //field.run()
+        runLoop.start()
+    }
+
+    fun createNodeUserInput(layout:ViewGroup){
+        layout.removeAllViews()
+        if (field.activeNodeView is AbleToUserInput){
+            (field.activeNodeView as AbleToUserInput).createUserInput(layout)
+        }
+    }
+
+
+    fun addNode(nodeName: String){
+        field.addNode(nodeName)
+
+    }
+
     override fun onTouchEvent(event: MotionEvent): Boolean {
         scaleDetector.onTouchEvent(event)
         gestureDetector.onTouchEvent(event)
         gListener.baseActions(event)
-
+        doubleTapDetector.onTouchEvent(event)
         invalidate()
         return true
     }

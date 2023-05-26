@@ -1,3 +1,36 @@
 <resources>
     <string name="app_name">Srach</string>
+    <string-array name="dataTypesNames">
+        <item>int</item>
+        <item>char</item>
+        <item>double</item>
+        <item>bool</item>
+        <item>string</item>
+    </string-array>
+
+    <string-array name="dataTypesNodes">
+        <item>AddNode</item>
+        <item>ArrayNode</item>
+        <item>AssignmentNode</item>
+        <item>BeginNode</item>
+        <item>BranchNode</item>
+        <item>DivideNode</item>
+        <item>DivideRemainder</item>
+        <item>EqualNode</item>
+        <item>GetArrayIndexNode</item>
+        <item>GreaterEqualNode</item>
+        <item>GreaterNode</item>
+        <item>InputNode</item>
+        <item>LessEqualNode</item>
+        <item>LessNode</item>
+        <item>MultiplyNode</item>
+        <item>NotEqualNode</item>
+        <item>NumberNode</item>
+        <item>PrintNode</item>
+        <item>SetArrayIndexNode</item>
+        <item>SubtractNode</item>
+        <item>VariableNode</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
