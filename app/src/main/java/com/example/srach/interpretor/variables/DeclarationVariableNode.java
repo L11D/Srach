@@ -8,9 +8,9 @@ public class DeclarationVariableNode extends LogicNode {
     private String name;
     private DataType type;
     private final VariablesAndArraysStorage variablesAndArraysStorage;
-    public DeclarationVariableNode(String name, DataType type, VariablesAndArraysStorage variablesAndArraysStorage) {
-        this.name = name;
-        this.type = type;
+    public DeclarationVariableNode(VariablesAndArraysStorage variablesAndArraysStorage) {
+        this.name = null;
+        this.type = null;
         this.variablesAndArraysStorage = variablesAndArraysStorage;
     }
 
