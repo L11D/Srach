@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
 import com.example.srach.interpretor.DataType
+import com.example.srach.interpretor.branch.BranchNode
 import com.example.srach.interpretor.logic.LogicNode
 import com.example.srach.interpretor.math.MathNode
 import com.example.srach.nodeview.AbleToExec
@@ -17,7 +18,7 @@ import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInputExec
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputData
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputExec
 
-abstract class LoopNodeView(context: Context, field: Field, position: Vector2f, inputCount: Int, outputCount: Int) :
+class LoopNodeView(context: Context, field: Field, position: Vector2f, inputCount: Int, outputCount: Int) :
     InOutAbleNodeView(context, field, position, inputCount, outputCount, DataType.BOOL), AbleToExec {
 
     override fun initConnectors() {
@@ -42,11 +43,39 @@ abstract class LoopNodeView(context: Context, field: Field, position: Vector2f, 
         outputConnectorsList.add(con12)
     }
 
+
+    private val branchNode = BranchNode()
+
+    override fun connectExec(
+        connectorInput: NodeViewConnectorInputExec<*>,
+        connectorOutput: NodeViewConnectorOutputExec<*>
+    ) {
+        if (outputConnectorsList.indexOf(connectorOutput) == 0) {
+            branchNode.setNextTrue(connectorInput.getNode())
+        }
+        if (outputConnectorsList.indexOf(connectorOutput) == 1) {
+            branchNode.setNextFalse(connectorInput.getNode())
+        }
+    }
+
+    override fun disconnectExec(connectorOutput: NodeViewConnectorOutputExec<*>) {
+        if (outputConnectorsList.indexOf(connectorOutput) == 0) {
+            branchNode.setNextTrue(null)
+        }
+        if (outputConnectorsList.indexOf(connectorOutput) == 1) {
+            branchNode.setNextFalse(null)
+        }
+    }
+
+    override fun getExecNode(): LogicNode {
+        return branchNode
+    }
+
     override fun <I : NodeView, O : NodeView> connect(
         connectorInput: NodeViewConnectorInputData<I>,
         connectorOutput: NodeViewConnectorOutputData<O>
     ) where I : AbleToInput, O : AbleToOutput {
-        TODO("Not yet implemented")
+        branchNode.setEvaluateResult(connectorOutput.getNodeOutput())
     }
 
     override fun getNodeOutput(): MathNode {
@@ -57,25 +86,10 @@ abstract class LoopNodeView(context: Context, field: Field, position: Vector2f, 
         connectorInput: NodeViewConnectorInputData<I>,
         connectorOutput: NodeViewConnectorOutputData<O>
     ): Boolean where I : AbleToInput, O : AbleToOutput {
-        TODO("Not yet implemented")
+        return connectorOutput.dataType == DataType.BOOL
     }
 
     override fun disconnect(connectorInput: NodeViewConnectorInput) {
-        TODO("Not yet implemented")
-    }
-
-    override fun connectExec(
-        connectorInput: NodeViewConnectorInputExec<*>,
-        connectorOutput: NodeViewConnectorOutputExec<*>
-    ) {
-        TODO("Not yet implemented")
-    }
-
-    override fun disconnectExec(connectorOutput: NodeViewConnectorOutputExec<*>) {
-        TODO("Not yet implemented")
-    }
-
-    override fun getExecNode(): LogicNode {
-        TODO("Not yet implemented")
+        branchNode.setEvaluateResult(null)
     }
 }

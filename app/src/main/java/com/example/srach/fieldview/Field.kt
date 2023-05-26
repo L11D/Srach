@@ -101,8 +101,8 @@ class Field(private val context: Context) : Drawable {
         BranchNodeView(context, this, Vector2f(600f, -500f))
 
         DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 100f))
-//        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 200f))
-//        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 300f))
+        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 200f))
+        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 300f))
 //        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 400f))
 //        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 500f))
 //        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 600f))

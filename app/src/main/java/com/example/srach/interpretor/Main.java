@@ -40,3 +40,35 @@ public class Main {
     }
 }
 
+//class DeclarationFunctionNode extends LogicNode {
+//    private String name;
+//    private DataType type;
+//    private final VariablesAndArraysStorage variablesAndArraysStorage;
+//    public DeclarationVariableNode(VariablesAndArraysStorage variablesAndArraysStorage) {
+//        this.name = null;
+//        this.type = null;
+//        this.variablesAndArraysStorage = variablesAndArraysStorage;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//
+//    public void setType(DataType type) {
+//        this.type = type;
+//    }
+//
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public DataType getType() {
+//        return type;
+//    }
+//
+//    @Override
+//    public void work() {
+//        variablesAndArraysStorage.setVariable(name, null, type);
+//    }
+//}
+

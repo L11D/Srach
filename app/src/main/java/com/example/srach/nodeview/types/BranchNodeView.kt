@@ -19,7 +19,29 @@ import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputData
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputExec
 
 class BranchNodeView(context: Context, field: Field, position: Vector2f) :
-    LoopNodeView(context, field, position, 1, 0), AbleToExec {
+    InOutAbleNodeView(context, field, position, 1, 0, DataType.BOOL), AbleToExec {
+
+    override fun initConnectors() {
+
+        val con1 = NodeViewConnectorInputExec(context, this).apply {
+            position = Vector2f(-connectorRadius / 2, topPadding)
+            size = Vector2f(connectorRadius, connectorRadius)
+        }
+
+        val con2 = NodeViewConnectorOutputExec(context, this).apply {
+            position = Vector2f(this@BranchNodeView.size.x - connectorRadius / 2,topPadding)
+            size = Vector2f(connectorRadius, connectorRadius)
+        }
+        val con12 = NodeViewConnectorOutputExec(context, this).apply {
+            position = Vector2f(this@BranchNodeView.size.x - connectorRadius / 2,topPadding + connectorOffset + connectorRadius)
+            size = Vector2f(connectorRadius, connectorRadius)
+        }
+        topPadding += connectorRadius + connectorOffset;
+        super.initConnectors()
+        inputConnectorsList.add(con1)
+        outputConnectorsList.add(con2)
+        outputConnectorsList.add(con12)
+    }
 
     init {
         description.text = "Branch"

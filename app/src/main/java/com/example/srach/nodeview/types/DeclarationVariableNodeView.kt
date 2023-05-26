@@ -28,7 +28,7 @@ class DeclarationVariableNodeView(context: Context, storage: VariablesAndArraysS
         description.text = "var"
     }
 
-    private val declarationVariableNode = DeclarationVariableNode(storage).apply { type = DataType.INT }
+    private val declarationVariableNode = DeclarationVariableNode(storage).apply { type = DataType.INT; name=""; value="0" }
     private var variableNode = VariableNode(storage)
 
     fun addVariableToStorage(){
@@ -64,7 +64,7 @@ class DeclarationVariableNodeView(context: Context, storage: VariablesAndArraysS
 
             override fun afterTextChanged(s: Editable?) {
                 declarationVariableNode.name = s.toString()
-                description.text = s.toString()
+                if (s.toString() != "") description.text = s.toString()
             }
         })
         variableNameTexView.text  = SpannableStringBuilder(declarationVariableNode.name)
@@ -90,5 +90,20 @@ class DeclarationVariableNodeView(context: Context, storage: VariablesAndArraysS
                 break
             }
         }
+
+        val variableValueTexView = nodeLayout.findViewById<EditText>(R.id.variableValue)
+        variableValueTexView.addTextChangedListener(object:TextWatcher{
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                declarationVariableNode.value = s.toString()
+            }
+        })
+        variableValueTexView.text  = SpannableStringBuilder(declarationVariableNode.value)
     }
 }

@@ -17,63 +17,68 @@ import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInput
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInputData
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputData
 
-abstract class OperatorNodeView(context:Context, val operatorNode: OperatorNode, field: Field, position: Vector2f) :
+abstract class OperatorNodeView(
+    context: Context,
+    val operatorNode: OperatorNode,
+    field: Field,
+    position: Vector2f
+) :
     InOutAbleNodeView(context, field, position, 2, 1, DataType.UNSPECIFIED) {
+
+    var leftDataType: DataType? = null
+    var rightDataType: DataType? = null
 
     override fun <I, O> connect(
         connectorInput: NodeViewConnectorInputData<I>,
         connectorOutput: NodeViewConnectorOutputData<O>
     ) where O : NodeView, I : NodeView, I : AbleToInput, O : AbleToOutput {
+
         if (inputConnectorsList.indexOf(connectorInput) == 0) { // индексы могут не совападать
             operatorNode.left = connectorOutput.getNodeOutput()
+            if (connectorOutput.dataType != DataType.UNSPECIFIED)
+                leftDataType = connectorOutput.dataType
         }
         if (inputConnectorsList.indexOf(connectorInput) == 1) {
             operatorNode.right = connectorOutput.getNodeOutput()
+            if (connectorOutput.dataType != DataType.UNSPECIFIED)
+                rightDataType = connectorOutput.dataType
         }
-//        if(inputConnectorsList[0].dataType == DataType.UNSPECIFIED && inputConnectorsList[1].dataType == DataType.UNSPECIFIED){
-//
-//        }
-//        else if (inputConnectorsList[0].dataType == DataType.UNSPECIFIED){
-//            operatorNode.left = CoolNumberNode(connectorOutput.dataType)
-//            outputConnectorsList[0].dataType = operatorNode.evaluate().type
-//            operatorNode.left = null
-//        }
-//        else if (inputConnectorsList[1].dataType == DataType.UNSPECIFIED) {
-//            operatorNode.right = CoolNumberNode(connectorOutput.dataType)
-//            outputConnectorsList[0].dataType = operatorNode.evaluate().type
-//            operatorNode.right = null
-//        }
-//        else{
-//            try{
-//                outputConnectorsList[0].dataType = operatorNode.evaluate().type
-//            }catch (e:Throwable){}
-//        }
 
-        if (operatorNode.left == null && operatorNode.right == null){
+        solveOutputType()
+    }
 
-        }
-        else if (operatorNode.left == null){
-            operatorNode.left = ValueNode().apply { value = Data("1", connectorOutput.dataType) }
+    private fun solveOutputType() {
+        if (leftDataType != null || rightDataType != null) {
+            val tempLeft = operatorNode.left
+            val tempRight = operatorNode.right
+
+            operatorNode.left = ValueNode().apply {
+                value = Data("1", if (leftDataType != null) leftDataType else rightDataType)
+            }
+            operatorNode.right = ValueNode().apply {
+                value = Data("1", if (rightDataType != null) rightDataType else leftDataType)
+            }
+
             outputConnectorsList[0].dataType = operatorNode.evaluate().type
-            operatorNode.left = null
-        }
-        else if (operatorNode.right == null) {
-            operatorNode.right = CoolNumberNode(connectorOutput.dataType)
-            outputConnectorsList[0].dataType = operatorNode.evaluate().type
-            operatorNode.right = null
+
+            operatorNode.left = tempLeft
+            operatorNode.right = tempRight
         }
         else{
-            outputConnectorsList[0].dataType = operatorNode.evaluate().type
+            outputConnectorsList[0].dataType = DataType.UNSPECIFIED
         }
     }
 
     override fun disconnect(connectorInput: NodeViewConnectorInput) {
         if (inputConnectorsList.indexOf(connectorInput) == 0) { // индексы могут не совападать
             operatorNode.left = null
+            leftDataType = null
         }
         if (inputConnectorsList.indexOf(connectorInput) == 1) {
             operatorNode.right = null
+            rightDataType = null
         }
+        solveOutputType()
     }
 
     override fun getNodeOutput(): MathNode {
@@ -84,36 +89,44 @@ abstract class OperatorNodeView(context:Context, val operatorNode: OperatorNode,
         connectorInput: NodeViewConnectorInputData<I>,
         connectorOutput: NodeViewConnectorOutputData<O>
     ): Boolean where I : AbleToInput, O : AbleToOutput {
+
+        if(connectorOutput.dataType == DataType.UNSPECIFIED) return true
+
         var ans = true
 
-//        if (operatorNode.left == null && operatorNode.right == null){
-//            operatorNode.left = CoolNumberNode(connectorOutput.dataType)
-//            operatorNode.right = CoolNumberNode(connectorOutput.dataType)
-//            try {
-//                operatorNode.evaluate()
-//            }catch (e:Throwable){
-//                ans = false
-//            }
-//            operatorNode.left = null
-//            operatorNode.right = null
-//        }else if (operatorNode.left == null){
-//            operatorNode.left = CoolNumberNode(connectorOutput.dataType)
-//            try {
-//                operatorNode.evaluate()
-//            }catch (e:Throwable){
-//                ans = false
-//            }
-//            operatorNode.left = null
-//        }else if (operatorNode.right == null){
-//            operatorNode.right = CoolNumberNode(connectorOutput.dataType)
-//            try {
-//                operatorNode.evaluate()
-//            }catch (e:Throwable){
-//                ans = false
-//            }
-//            operatorNode.right = null
-//        }
+        val tempRight = operatorNode.right
+        val tempLeft = operatorNode.left
+
+        if (inputConnectorsList.indexOf(connectorInput) == 0) { // индексы могут не совападать
+            operatorNode.left = ValueNode().apply {
+                value = Data("1", connectorOutput.dataType)
+            }
+            operatorNode.right = ValueNode().apply {
+                value = Data("1", if (rightDataType != null) rightDataType else connectorOutput.dataType)
+            }
+        }
+        if (inputConnectorsList.indexOf(connectorInput) == 1) {
+            operatorNode.left = ValueNode().apply {
+                value = Data("1", if (leftDataType != null) leftDataType else connectorOutput.dataType)
+            }
+            operatorNode.right = ValueNode().apply {
+                value = Data("1", connectorOutput.dataType)
+            }
+        }
+
+
+
+
+        try {
+            operatorNode.evaluate()
+        } catch (e: Throwable) {
+            ans = false
+        }
+
+        operatorNode.right = tempRight
+        operatorNode.left = tempLeft
 
         return ans
     }
 }
+
