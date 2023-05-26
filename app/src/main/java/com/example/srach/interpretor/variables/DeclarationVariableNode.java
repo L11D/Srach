@@ -32,6 +32,6 @@ public class DeclarationVariableNode extends LogicNode {
 
     @Override
     public void work() {
-        variablesAndArraysStorage.setVariable(name, null, type);
+        variablesAndArraysStorage.setVariable(name, "0", type);
     }
 }

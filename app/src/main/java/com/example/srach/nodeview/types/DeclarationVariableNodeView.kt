@@ -24,11 +24,15 @@ import com.example.srach.nodeview.OutputableNodeView
 class DeclarationVariableNodeView(context: Context, storage: VariablesAndArraysStorage, field: Field, position: Vector2f) :
     OutputableNodeView(context, field, position, 1,  DataType.UNSPECIFIED), AbleToUserInput{
 
+    init {
+        description.text = "var"
+    }
+
     private val declarationVariableNode = DeclarationVariableNode(storage).apply { type = DataType.INT }
     private var variableNode = VariableNode(storage)
 
     fun addVariableToStorage(){
-        if(declarationVariableNode.name == "")throw IllegalStateException("неправильное имя")
+        if(declarationVariableNode.name == "")throw IllegalStateException("empty variable name")
         declarationVariableNode.work()
         variableNode.name = declarationVariableNode.name
     }
@@ -60,6 +64,7 @@ class DeclarationVariableNodeView(context: Context, storage: VariablesAndArraysS
 
             override fun afterTextChanged(s: Editable?) {
                 declarationVariableNode.name = s.toString()
+                description.text = s.toString()
             }
         })
         variableNameTexView.text  = SpannableStringBuilder(declarationVariableNode.name)

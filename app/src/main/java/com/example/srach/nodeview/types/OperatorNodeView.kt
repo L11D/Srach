@@ -4,7 +4,9 @@ import android.content.Context
 import android.util.Log
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
+import com.example.srach.interpretor.Data
 import com.example.srach.interpretor.DataType
+import com.example.srach.interpretor.ValueNode
 import com.example.srach.interpretor.math.MathNode
 import com.example.srach.interpretor.operators.OperatorNode
 import com.example.srach.nodeview.AbleToInput
@@ -47,23 +49,22 @@ abstract class OperatorNodeView(context:Context, val operatorNode: OperatorNode,
 //            }catch (e:Throwable){}
 //        }
 
+        if (operatorNode.left == null && operatorNode.right == null){
 
-//        if (operatorNode.left == null && operatorNode.right == null){
-//
-//        }
-//        else if (operatorNode.left == null){
-//            operatorNode.left = CoolNumberNode(connectorOutput.dataType)
-//            outputConnectorsList[0].dataType = operatorNode.evaluate().type
-//            operatorNode.left = null
-//        }
-//        else if (operatorNode.right == null) {
-//            operatorNode.right = CoolNumberNode(connectorOutput.dataType)
-//            outputConnectorsList[0].dataType = operatorNode.evaluate().type
-//            operatorNode.right = null
-//        }
-//        else{
-//            outputConnectorsList[0].dataType = operatorNode.evaluate().type
-//        }
+        }
+        else if (operatorNode.left == null){
+            operatorNode.left = ValueNode().apply { value = Data("1", connectorOutput.dataType) }
+            outputConnectorsList[0].dataType = operatorNode.evaluate().type
+            operatorNode.left = null
+        }
+        else if (operatorNode.right == null) {
+            operatorNode.right = CoolNumberNode(connectorOutput.dataType)
+            outputConnectorsList[0].dataType = operatorNode.evaluate().type
+            operatorNode.right = null
+        }
+        else{
+            outputConnectorsList[0].dataType = operatorNode.evaluate().type
+        }
     }
 
     override fun disconnect(connectorInput: NodeViewConnectorInput) {

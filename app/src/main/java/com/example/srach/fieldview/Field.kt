@@ -26,7 +26,7 @@ import com.example.srach.nodeview.types.math.MultiplyNodeView
 import com.example.srach.nodeview.types.math.NotEqualNodeView
 import com.example.srach.nodeview.types.math.SubtractNodeView
 
-class Field(private val context:Context) : Drawable {
+class Field(private val context: Context) : Drawable {
     var viewSize = Vector2i()
     var viewPosition = Vector2f()
     var scale = 1f
@@ -64,7 +64,14 @@ class Field(private val context:Context) : Drawable {
             "BeginNode" -> BeginNodeView(context, this, nodePosition)
             "BranchNode" -> BranchNodeView(context, this, nodePosition)
             "DivideNode" -> DivideNodeView(context, this, nodePosition)
-            "DivideRemainder"-> nodeViewList.add(DivideRemainderNodeView(context, this, nodePosition))
+            "DivideRemainder" -> nodeViewList.add(
+                DivideRemainderNodeView(
+                    context,
+                    this,
+                    nodePosition
+                )
+            )
+
             "EqualNode" -> EqualNodeView(context, this, nodePosition)
             //"GetArrayIndexNode" -> nodeViewList.add(GetArrayIndexNodeView(context, this, nodePosition))
             "GreaterEqualNode" -> GreaterEqualNodeView(context, this, nodePosition)
@@ -77,7 +84,7 @@ class Field(private val context:Context) : Drawable {
             //"NumberNode" -> nodeViewList.add(NumberNodeView(context, this, nodePosition))
             "PrintNode" -> PrintNodeView(context, this, nodePosition)
             //"SetArrayIndexNode" -> nodeViewList.add(SetArrayIndexNodeView(context, this, nodePosition))
-            "SubtractNode" ->SubtractNodeView(context, this, nodePosition)
+            "SubtractNode" -> SubtractNodeView(context, this, nodePosition)
             "VariableNode" -> DeclarationVariableNodeView(context, variables, this, nodePosition)
         }
     }
@@ -94,11 +101,11 @@ class Field(private val context:Context) : Drawable {
         BranchNodeView(context, this, Vector2f(600f, -500f))
 
         DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 100f))
-        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 200f))
-        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 300f))
-        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 400f))
-        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 500f))
-        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 600f))
+//        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 200f))
+//        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 300f))
+//        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 400f))
+//        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 500f))
+//        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 600f))
 
         LessNodeView(context, this, Vector2f(50f, 200f))
         EqualNodeView(context, this, Vector2f(250f, 200f))
@@ -134,31 +141,32 @@ class Field(private val context:Context) : Drawable {
 
     private fun createVariables() {
         for (node in nodeViewList) {
-            //if (node is DeclarationVariableNode) node
+            if (node is DeclarationVariableNodeView) node.addVariableToStorage()
         }
     }
 
     fun goLogic(node: LogicNode) {
-        try {
-            if (node.next != null) {
-                node.next.work()
-                goLogic(node.next)
-            } else println("End")
-        } catch (e: Throwable) {
-            println(e.message)
-        }
+        if (node.next != null) {
+            node.next.work()
+            goLogic(node.next)
+        } else println("End")
     }
 
     fun run() {
-        var a = false
-        for (node in nodeViewList) {
-            if (node is BeginNodeView) {
-                goLogic(node.getNodeToWork())
-                a = true
-                break
+        try {
+            var a = false
+            createVariables()
+            for (node in nodeViewList) {
+                if (node is BeginNodeView) {
+                    goLogic(node.getNodeToWork())
+                    a = true
+                    break
+                }
             }
+            if (!a) println("Begin not found")
+        } catch (e: Throwable) {
+            println(e.message)
         }
-        if (!a) println("Begin not found")
     }
 
     override fun draw(canvas: Canvas) {
