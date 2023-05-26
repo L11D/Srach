@@ -173,7 +173,8 @@ class Field(private val context: Context) : Drawable {
             }
             if (!a) println("Begin not found")
         } catch (e: Throwable) {
-            println(e.message)
+            console!!.inputText(e.message.toString())
+            //println(e.message)
         }
     }
 
