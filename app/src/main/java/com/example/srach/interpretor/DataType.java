@@ -1,5 +1,5 @@
 package com.example.srach.interpretor;
 
 public enum DataType {
-    INT, CHAR, DOUBLE, BOOL, STRING
+    INT, CHAR, DOUBLE, BOOL, STRING, EXEC, UNSPECIFIED
 }
