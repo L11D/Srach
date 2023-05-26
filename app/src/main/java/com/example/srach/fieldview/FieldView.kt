@@ -76,8 +76,8 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
     val runLoop = RunLoop(field)
 
     fun run(){
-        //field.run()
-        runLoop.start()
+        field.run()
+        //runLoop.start()
     }
 
     fun createNodeUserInput(layout:ViewGroup){
