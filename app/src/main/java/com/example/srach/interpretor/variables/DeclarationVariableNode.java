@@ -7,10 +7,12 @@ import com.example.srach.interpretor.VariablesAndArraysStorage;
 public class DeclarationVariableNode extends LogicNode {
     private String name;
     private DataType type;
+    private String value;
     private final VariablesAndArraysStorage variablesAndArraysStorage;
     public DeclarationVariableNode(VariablesAndArraysStorage variablesAndArraysStorage) {
-        this.name = null;
-        this.type = null;
+        name = null;
+        type = null;
+        value = null;
         this.variablesAndArraysStorage = variablesAndArraysStorage;
     }
 
@@ -22,6 +24,10 @@ public class DeclarationVariableNode extends LogicNode {
         this.type = type;
     }
 
+    public void setValue(String value) {
+        this.value = value;
+    }
+
     public String getName() {
         return name;
     }
@@ -30,8 +36,12 @@ public class DeclarationVariableNode extends LogicNode {
         return type;
     }
 
+    public String getValue() {
+        return value;
+    }
+
     @Override
     public void work() {
-        variablesAndArraysStorage.setVariable(name, null, type);
+        variablesAndArraysStorage.setVariable(name, value, type);
     }
 }
