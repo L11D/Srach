@@ -82,8 +82,10 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
         }
     }
 
+
     fun addNode(nodeName: String){
         field.addNode(nodeName)
+
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {

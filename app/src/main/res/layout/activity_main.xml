@@ -48,7 +48,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:onClick="onClickAddNodes"
             android:text="ADD"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -62,8 +61,7 @@
         android:layout_gravity="end"
         android:background="@android:color/white"
         android:orientation="vertical">
-
-
     </LinearLayout>
+
 
 </androidx.drawerlayout.widget.DrawerLayout>
