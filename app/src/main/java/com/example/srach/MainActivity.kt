@@ -42,15 +42,13 @@ class MainActivity : AppCompatActivity() {
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
 
         val layout = findViewById<LinearLayout>(R.id.drawer)
+        val layout2 = findViewById<LinearLayout>(R.id.drawer2)
 
         //fieldView.addNode("AddNode")
 
         val nodeParamButton = findViewById<Button>(R.id.nodeParamButton).setOnClickListener {
 
             val layoutParams = bindingClass.drawer.layoutParams as DrawerLayout.LayoutParams
-            layoutParams.gravity = GravityCompat.END
-            bindingClass.drawer.layoutParams = layoutParams
-            //ТУТ ПРОБЛЕМЫ В РЕЗКОСТИ ИЗМЕНЕНИЯ СТОРОНЫ ВЫХОДА
 
             fieldView.createNodeUserInput(layout)
             drawerLayout.openDrawer(GravityCompat.END)
@@ -58,14 +56,9 @@ class MainActivity : AppCompatActivity() {
 
         val buttonAddNodes = findViewById<Button>(R.id.buttonAddNodes).setOnClickListener{
 
-            val layoutParams = bindingClass.drawer.layoutParams as DrawerLayout.LayoutParams
-            layoutParams.gravity = GravityCompat.START
-            bindingClass.drawer.layoutParams = layoutParams
-            //ТУТ ПРОБЛЕМЫ В РЕЗКОСТИ ИЗМЕНЕНИЯ СТОРОНЫ ВЫХОДА
-
-            layout.removeAllViews()
+            layout2.removeAllViews()
             val inflater = LayoutInflater.from(this)
-            val nodeLayout = inflater.inflate(R.layout.add_new_nodes, layout)
+            val nodeLayout = inflater.inflate(R.layout.add_new_nodes, layout2)
             drawerLayout.openDrawer(GravityCompat.START)
 
             val addSelectedNode = findViewById<Button>(R.id.addSelectedNode).setOnClickListener{
