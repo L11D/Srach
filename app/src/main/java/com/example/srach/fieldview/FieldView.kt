@@ -81,8 +81,8 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
         }
     }
 
-    fun addNode(node:NodeView){
-
+    fun mediatorAddNode(name:String){
+        field.addNodes(name)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {

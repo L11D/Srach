@@ -7,4 +7,31 @@
         <item>bool</item>
         <item>string</item>
     </string-array>
+
+    <string-array name="dataTypesNodes">
+        <item>AddNode</item>
+        <item>ArrayNode</item>
+        <item>AssignmentNode</item>
+        <item>BeginNode</item>
+        <item>BranchNode</item>
+        <item>CoolNumberNode</item>
+        <item>Data</item>
+        <item>DivideNode</item>
+        <item>DivideRemainder</item>
+        <item>EqualNode</item>
+        <item>GetArrayIndexNode</item>
+        <item>GreaterEqualNode</item>
+        <item>GreaterNode</item>
+        <item>InputNode</item>
+        <item>LessEqualNode</item>
+        <item>LessNode</item>
+        <item>MultiplyNode</item>
+        <item>NotEqualNode</item>
+        <item>NumberNode</item>
+        <item>PrintNode</item>
+        <item>SetArrayIndexNode</item>
+        <item>SubtractNode</item>
+        <item>VariableNode</item>
+        <item>Variables</item>
+    </string-array>
 </resources>

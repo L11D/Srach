@@ -123,4 +123,33 @@ class Field(private val context:Context) : Drawable {
             node.draw(canvas)
         }
     }
+
+    fun addNodes(name: String){
+        when(name){
+            "AddNode" -> nodeViewList.add(AddNodeView(context, this, Vector2f(50f, 0f)))
+            //"ArrayNode" -> nodeViewList.add(ArrayNodeView(context, this, Vector2f(50f, 0f)))
+            //"AssignmentNode" -> nodeViewList.add(AssignmentNodeView(context, this, Vector2f(50f, 0f)))
+            "BeginNode" -> nodeViewList.add(BeginNodeView(context, this, Vector2f(50f, 0f)))
+            "BranchNode" -> nodeViewList.add(BranchNodeView(context, this, Vector2f(50f, 0f)))
+            //"CoolNumberNode" -> nodeViewList.add(CoolNumberNodeView(context, this, Vector2f(50f, 0f)))
+            //"Data" -> nodeViewList.add(DataView(context, this, Vector2f(50f, 0f)))
+            "DivideNode" -> nodeViewList.add(DivideNodeView(context, this, Vector2f(50f, 0f)))
+            //"DivideRemainder"-> nodeViewList.add(DivideRemainderView(context, this, Vector2f(50f, 0f)))
+            "EqualNode" -> nodeViewList.add(EqualNodeView(context, this, Vector2f(50f, 0f)))
+            //"GetArrayIndexNode" -> nodeViewList.add(GetArrayIndexNodeView(context, this, Vector2f(50f, 0f)))
+            "GreaterEqualNode" -> nodeViewList.add(GreaterEqualNodeView(context, this, Vector2f(50f, 0f)))
+            "GreaterNode" -> nodeViewList.add(GreaterNodeView(context, this, Vector2f(50f, 0f)))
+            //"InputNode" -> nodeViewList.add(InputNodeView(context, this, Vector2f(50f, 0f)))
+            "LessEqualNode" -> nodeViewList.add(LessEqualNodeView(context, this, Vector2f(50f, 0f)))
+            "LessNode" -> nodeViewList.add(LessNodeView(context, this, Vector2f(50f, 0f)))
+            "MultiplyNode" -> nodeViewList.add(MultiplyNodeView(context, this, Vector2f(50f, 0f)))
+            "NotEqualNode" -> nodeViewList.add(NotEqualNodeView(context, this, Vector2f(50f, 0f)))
+            //"NumberNode" -> nodeViewList.add(NumberNodeView(context, this, Vector2f(50f, 0f)))
+            "PrintNode" -> nodeViewList.add(PrintNodeView(context, this, Vector2f(50f, 0f)))
+            //"SetArrayIndexNode" -> nodeViewList.add(SetArrayIndexNodeView(context, this, Vector2f(50f, 0f)))
+            "SubtractNode" -> nodeViewList.add(SubtractNodeView(context, this, Vector2f(50f, 0f)))
+            "VariableNode" -> nodeViewList.add(VariableNodeView(context,variables,this, Vector2f(50f, 0f)))
+            //"Variables" -> nodeViewList.add(VariablesView(context, this, Vector2f(50f, 0f)))
+        }
+    }
 }
