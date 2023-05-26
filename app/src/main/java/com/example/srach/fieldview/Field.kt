@@ -58,43 +58,29 @@ class Field(private val context:Context) : Drawable {
     fun addNode(name: String) {
         var nodePosition = findPosition(viewPosition * (1f / scale))
         when (name) {
-            "AddNode" -> nodeViewList.add(AddNodeView(context, this, nodePosition))
+            "AddNode" -> AddNodeView(context, this, nodePosition)
             //"ArrayNode" -> nodeViewList.add(ArrayNodeView(context, this, nodePosition))
             //"AssignmentNode" -> nodeViewList.add(AssignmentNodeView(context, this, nodePosition))
-            "BeginNode" -> nodeViewList.add(BeginNodeView(context, this, nodePosition))
-            "BranchNode" -> nodeViewList.add(BranchNodeView(context, this, nodePosition))
+            "BeginNode" -> BeginNodeView(context, this, nodePosition)
+            "BranchNode" -> BranchNodeView(context, this, nodePosition)
             //"CoolNumberNode" -> nodeViewList.add(CoolNumberNodeView(context, this, nodePosition))
             //"Data" -> nodeViewList.add(DataView(context, this, nodePosition))
-            "DivideNode" -> nodeViewList.add(DivideNodeView(context, this, nodePosition))
+            "DivideNode" -> DivideNodeView(context, this, nodePosition)
             //"DivideRemainder"-> nodeViewList.add(DivideRemainderView(context, this, nodePosition))
-            "EqualNode" -> nodeViewList.add(EqualNodeView(context, this, nodePosition))
+            "EqualNode" -> EqualNodeView(context, this, nodePosition)
             //"GetArrayIndexNode" -> nodeViewList.add(GetArrayIndexNodeView(context, this, nodePosition))
-            "GreaterEqualNode" -> nodeViewList.add(
-                GreaterEqualNodeView(
-                    context,
-                    this,
-                    nodePosition
-                )
-            )
-
-            "GreaterNode" -> nodeViewList.add(GreaterNodeView(context, this, nodePosition))
+            "GreaterEqualNode" -> GreaterEqualNodeView(context, this, nodePosition)
+            "GreaterNode" -> GreaterNodeView(context, this, nodePosition)
             //"InputNode" -> nodeViewList.add(InputNodeView(context, this, nodePosition))
-            "LessEqualNode" -> nodeViewList.add(LessEqualNodeView(context, this, nodePosition))
-            "LessNode" -> nodeViewList.add(LessNodeView(context, this, nodePosition))
-            "MultiplyNode" -> nodeViewList.add(MultiplyNodeView(context, this, nodePosition))
-            "NotEqualNode" -> nodeViewList.add(NotEqualNodeView(context, this, nodePosition))
+            "LessEqualNode" -> LessEqualNodeView(context, this, nodePosition)
+            "LessNode" -> LessNodeView(context, this, nodePosition)
+            "MultiplyNode" -> MultiplyNodeView(context, this, nodePosition)
+            "NotEqualNode" -> NotEqualNodeView(context, this, nodePosition)
             //"NumberNode" -> nodeViewList.add(NumberNodeView(context, this, nodePosition))
-            "PrintNode" -> nodeViewList.add(PrintNodeView(context, this, nodePosition))
+            "PrintNode" -> PrintNodeView(context, this, nodePosition)
             //"SetArrayIndexNode" -> nodeViewList.add(SetArrayIndexNodeView(context, this, nodePosition))
-            "SubtractNode" -> nodeViewList.add(SubtractNodeView(context, this, nodePosition))
-            "VariableNode" -> nodeViewList.add(
-                DeclarationVariableNodeView(
-                    context,
-                    variables,
-                    this,
-                    nodePosition
-                )
-            )
+            "SubtractNode" ->SubtractNodeView(context, this, nodePosition)
+            "VariableNode" -> DeclarationVariableNodeView(context, variables, this, nodePosition)
             //"Variables" -> nodeViewList.add(VariablesView(context, this, nodePosition))
         }
     }
