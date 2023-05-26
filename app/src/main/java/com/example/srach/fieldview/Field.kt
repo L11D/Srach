@@ -63,10 +63,8 @@ class Field(private val context:Context) : Drawable {
             //"AssignmentNode" -> nodeViewList.add(AssignmentNodeView(context, this, nodePosition))
             "BeginNode" -> BeginNodeView(context, this, nodePosition)
             "BranchNode" -> BranchNodeView(context, this, nodePosition)
-            //"CoolNumberNode" -> nodeViewList.add(CoolNumberNodeView(context, this, nodePosition))
-            //"Data" -> nodeViewList.add(DataView(context, this, nodePosition))
             "DivideNode" -> DivideNodeView(context, this, nodePosition)
-            //"DivideRemainder"-> nodeViewList.add(DivideRemainderView(context, this, nodePosition))
+            "DivideRemainder"-> nodeViewList.add(DivideRemainderNodeView(context, this, nodePosition))
             "EqualNode" -> EqualNodeView(context, this, nodePosition)
             //"GetArrayIndexNode" -> nodeViewList.add(GetArrayIndexNodeView(context, this, nodePosition))
             "GreaterEqualNode" -> GreaterEqualNodeView(context, this, nodePosition)
@@ -81,7 +79,6 @@ class Field(private val context:Context) : Drawable {
             //"SetArrayIndexNode" -> nodeViewList.add(SetArrayIndexNodeView(context, this, nodePosition))
             "SubtractNode" ->SubtractNodeView(context, this, nodePosition)
             "VariableNode" -> DeclarationVariableNodeView(context, variables, this, nodePosition)
-            //"Variables" -> nodeViewList.add(VariablesView(context, this, nodePosition))
         }
     }
 

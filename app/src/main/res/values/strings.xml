@@ -14,8 +14,6 @@
         <item>AssignmentNode</item>
         <item>BeginNode</item>
         <item>BranchNode</item>
-        <item>CoolNumberNode</item>
-        <item>Data</item>
         <item>DivideNode</item>
         <item>DivideRemainder</item>
         <item>EqualNode</item>
@@ -32,6 +30,5 @@
         <item>SetArrayIndexNode</item>
         <item>SubtractNode</item>
         <item>VariableNode</item>
-        <item>Variables</item>
     </string-array>
 </resources>
