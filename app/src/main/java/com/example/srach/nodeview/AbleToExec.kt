@@ -1,6 +1,6 @@
 package com.example.srach.nodeview
 
-import com.example.srach.interpretor.LogicNode
+import com.example.srach.interpretor.logic.LogicNode
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInputExec
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputExec
 

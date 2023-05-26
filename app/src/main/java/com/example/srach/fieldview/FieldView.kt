@@ -21,18 +21,19 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
 
     private var gListener = GListener(context,this)
     private var gestureDetector = GestureDetector(this.context, gListener)
+
     private val scaleGestureListener = SGListener(this)
     private val scaleDetector = ScaleGestureDetector(this.context, scaleGestureListener)
+
+    private val doubleTapListener = DoubleTapListener(this)
+    private val doubleTapDetector = GestureDetector(this.context, doubleTapListener)
 
     fun bindConsole(console:TextView){
         field.bindConsole(console)
     }
 
     fun nodeViewsCollision(pos: Vector2f): NodeView?{
-        for(i in field.nodeViewList.size - 1 downTo 0){
-            if (field.nodeViewList[i].collision(pos)) return field.nodeViewList[i]
-        }
-        return null
+        return field.nodeViewsCollision(pos)
     }
 
     fun connectorsCollision(pos: Vector2f): NodeViewConnector?{
@@ -81,34 +82,17 @@ class FieldView(context: Context, attrs: AttributeSet?) : View(context, attrs){
         }
     }
 
-    fun mediatorAddNode(name:String){
-        field.addNodes(name)
+
+    fun addNode(nodeName: String){
+        field.addNode(nodeName)
+
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         scaleDetector.onTouchEvent(event)
         gestureDetector.onTouchEvent(event)
         gListener.baseActions(event)
-
-        object:GestureDetector.OnDoubleTapListener{
-            override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
-                return true
-            }
-
-            override fun onDoubleTap(e: MotionEvent): Boolean {
-                var node =  nodeViewsCollision(Vector2f(e.x, e.y))
-                println("dobletap")
-                node?.delete()
-                return true
-            }
-
-            override fun onDoubleTapEvent(e: MotionEvent): Boolean {
-                println("dobletap")
-
-                return true
-            }
-        }
-
+        doubleTapDetector.onTouchEvent(event)
         invalidate()
         return true
     }

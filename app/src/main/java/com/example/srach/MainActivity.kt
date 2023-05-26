@@ -16,6 +16,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.srach.databinding.ActivityMainBinding
 import com.example.srach.fieldview.FieldView
+import com.example.srach.nodeview.types.math.AddNodeView
 import com.example.srach.nodeview.types.math.DivideNodeView
 
 
@@ -39,7 +40,11 @@ class MainActivity : AppCompatActivity() {
 
 
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
+
         val layout = findViewById<LinearLayout>(R.id.drawer)
+
+        //fieldView.addNode("AddNode")
+
         val nodeParamButton = findViewById<Button>(R.id.nodeParamButton).setOnClickListener {
 
             val layoutParams = bindingClass.drawer.layoutParams as DrawerLayout.LayoutParams
@@ -68,9 +73,7 @@ class MainActivity : AppCompatActivity() {
                 fieldView.mediatorAddNode(spinner2.getSelectedItem().toString())
             }
         }
-
-
-
+        
         drawerLayout.addDrawerListener(object:DrawerLayout.DrawerListener{
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                 fieldView.invalidate()

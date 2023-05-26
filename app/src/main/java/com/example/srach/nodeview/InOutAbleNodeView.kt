@@ -5,7 +5,7 @@ import android.graphics.Color
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
 import com.example.srach.interpretor.DataType
-import com.example.srach.interpretor.MathNode
+import com.example.srach.interpretor.math.MathNode
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInputData
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputData
 

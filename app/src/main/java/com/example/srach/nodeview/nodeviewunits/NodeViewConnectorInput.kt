@@ -5,7 +5,7 @@ import android.graphics.Canvas
 import com.example.srach.R
 import com.example.srach.fieldview.Connection
 import com.example.srach.interpretor.DataType
-import com.example.srach.interpretor.LogicNode
+import com.example.srach.interpretor.logic.LogicNode
 import com.example.srach.nodeview.AbleToExec
 import com.example.srach.nodeview.AbleToInput
 import com.example.srach.nodeview.NodeView

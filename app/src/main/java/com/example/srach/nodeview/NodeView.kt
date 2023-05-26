@@ -15,6 +15,10 @@ import com.example.srach.nodeview.nodeviewunits.NodeViewText
 
 abstract class NodeView(val context: Context, val field: Field, var position: Vector2f) : Drawable {
 
+    init {
+        field.nodeViewList.add(this)
+    }
+
     var inputConnectorsList = mutableListOf<NodeViewConnectorInput>()
     var outputConnectorsList = mutableListOf<NodeViewConnectorOutput>()
     var isActive = false
@@ -51,7 +55,14 @@ abstract class NodeView(val context: Context, val field: Field, var position: Ve
                 pos.y in displayPosition.y..(displayPosition.y + displaySize.y)
     }
 
+    open fun collisionInFieldCoords(pos: Vector2f): Boolean {
+        return pos.x in position.x..(position.x + size.x) &&
+                pos.y in position.y..(position.y + size.y)
+    }
+
     fun delete(){
+        for (con in inputConnectorsList) con.connection?.delete()
+        for (con in outputConnectorsList) con.connection?.delete()
         field.nodeViewList.remove(this)
     }
 

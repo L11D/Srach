@@ -12,14 +12,6 @@
         android:id="@+id/mainContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!-- ... Основное содержимое вашей активности ... -->
-
-        <ViewStub
-            android:id="@+id/drawer1Stub"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inflatedId="@+id/drawer1Layout"
-            android:layout="@layout/drawer1_layout" />
 
         <com.example.srach.fieldview.FieldView
             android:id="@+id/fieldView"
