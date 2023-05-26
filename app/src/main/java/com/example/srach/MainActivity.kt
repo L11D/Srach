@@ -22,20 +22,33 @@ import com.example.srach.nodeview.types.math.DivideNodeView
 
 class MainActivity : AppCompatActivity() {
     lateinit var bindingClass: ActivityMainBinding
-    var text = ""
+    var text = "Hello World!"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindingClass = ActivityMainBinding.inflate(layoutInflater)
         setContentView(bindingClass.root)
-        //setContentView(R.layout.activity_main)
+
+        supportFragmentManager.beginTransaction().replace(R.id.contConsole, NewConsole.newInstance()).commit()
+
 
         val fieldView = findViewById<FieldView>(R.id.fieldView)
-        val runButton = findViewById<Button>(R.id.button).setOnClickListener {
-            fieldView.run()
 
-            val intentCreate = Intent(this, Console::class.java)
-            intentCreate.putExtra("action", text)
-            startActivity(intentCreate)
+        val runButton = findViewById<Button>(R.id.button).setOnClickListener {
+            val fragment = supportFragmentManager.findFragmentById(R.id.contConsole) as? NewConsole
+            fragment?.deleteText();
+
+            if (bindingClass.contConsole.visibility == View.GONE){
+                bindingClass.contConsole.visibility = View.VISIBLE
+                bindingClass.button.text = "CLOSE"
+            }
+            else{
+                bindingClass.contConsole.visibility = View.GONE
+                bindingClass.button.text = "RUN"
+            }
+
+            fieldView.run()
+            fragment?.inputText(text)
+            //должны передавать из рана в фрагмент
         }
 
 
