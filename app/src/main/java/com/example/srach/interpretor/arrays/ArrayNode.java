@@ -17,7 +17,7 @@ public class ArrayNode extends Node {
     public ArrayNode(Storage storage) {
         name = null;
         this.storage = storage;
-
+    }
     public String getName() {
         return name;
 
