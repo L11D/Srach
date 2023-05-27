@@ -38,4 +38,16 @@ public class Storage {
     public void setFunction(String name, DataType type, int amountArguments, LogicNode link) {
         functions.put(name, new Function(type, amountArguments, link));
     }
+
+    public Map<String, Data> getVariables() {
+        return variables;
+    }
+
+    public Map<String, Pair<ArrayList<String>, DataType>> getArrays() {
+        return arrays;
+    }
+
+    public Map<String, Function> getFunctions() {
+        return functions;
+    }
 }

@@ -12,10 +12,10 @@ import kotlin.Pair;
 
 public class ArrayNode extends Node {
     private String name;
-    private final Map<String, Pair<ArrayList<String>, DataType>> storage;
+    private final Map<String, Pair<ArrayList<String>, DataType>> arrays;
     public ArrayNode(Map<String, Pair<ArrayList<String>, DataType>> arrays) {
         name = null;
-        this.storage = arrays;
+        this.arrays = arrays;
     }
 
     public void setName(String name) {
@@ -23,14 +23,14 @@ public class ArrayNode extends Node {
     }
 
     public DataType getType() {
-        return storage.get(name).component2();
+        return arrays.get(name).component2();
     }
 
     public Data getArrayIndexValue(int index) {
-        return new Data(storage.get(name).component1().get(index), storage.get(name).component2());
+        return new Data(arrays.get(name).component1().get(index), arrays.get(name).component2());
     }
 
     public void setArrayIndexValue(int index, String value) {
-        storage.get(name).component1().set(index, value);
+        arrays.get(name).component1().set(index, value);
     }
 }
