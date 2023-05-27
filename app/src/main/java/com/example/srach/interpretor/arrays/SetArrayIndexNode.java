@@ -31,6 +31,6 @@ public class SetArrayIndexNode extends LogicNode {
         if (array.getType() == value.evaluate().type)
             array.setArrayIndexValue(Integer.parseInt(index.evaluate().value), value.evaluate().value);
         else
-            throw new IllegalStateException();
+            throw new IllegalStateException("Нельзя добавить данные типа " + value.evaluate().type + " в массив типа " + array.getType());
     }
 }

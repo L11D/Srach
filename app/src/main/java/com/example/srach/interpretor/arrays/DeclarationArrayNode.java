@@ -7,25 +7,23 @@ import com.example.srach.interpretor.Storage;
 import java.util.ArrayList;
 
 public class DeclarationArrayNode extends LogicNode {
+    private String name;
+    private DataType type;
+    private int size;
+    private final Storage storage;
+    public DeclarationArrayNode(Storage storage) {
+        this.size = 0;
+        this.type = null;
+        this.name = null;
+        this.storage = storage;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    private String name;
-    private DataType type;
-    private int size;
-    private final Storage storage;
-
-
-    public DeclarationArrayNode(Storage storage) {
-        this.size = 0;
-        this.type = null;
-        this.name = null;
-        this.storage = storage;
     }
 
     public DataType getType() {
@@ -49,5 +47,5 @@ public class DeclarationArrayNode extends LogicNode {
         storage.setArray(name, new ArrayList<>(size), type);
     }
 
-    public void remove(){storage.removeArray(name);}
+    public void remove() {storage.removeArray(name);}
 }
