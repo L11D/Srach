@@ -44,7 +44,7 @@ public class VariableNode extends MathNode implements MathNodeEvaluate {
             case STRING -> {
                 return new Data(storage.getVariable(name).value, DataType.STRING);
             }
-            default -> throw new IllegalStateException();
+            default -> throw new IllegalStateException("Тип данных " + storage.getVariable(name).type + " не может быть использован в вычислениях");
         }
     }
 }

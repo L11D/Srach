@@ -19,7 +19,7 @@ public class LessNode extends OperatorNode {
                 case DOUBLE -> {
                     return new Data(String.valueOf(Double.parseDouble(getLeft().evaluate().value) < Double.parseDouble(getRight().evaluate().value)), DataType.BOOL);
                 }
-                default -> throw new IllegalStateException();
+                default -> throw new IllegalStateException("Данные типов " + getLeft().evaluate().type + " нельзя сравнивать");
             }
         }
         return new Data("false", DataType.BOOL);

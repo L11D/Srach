@@ -23,7 +23,7 @@ public class AssignmentNode extends LogicNode {
     @Override
     public void work() {
         if (evaluateResult.evaluate().type != variable.evaluate().type) {
-            throw new IllegalStateException();
+            throw new IllegalStateException("Нельзя присвоить переменной типа " + variable.evaluate().type + " тип " + evaluateResult.evaluate().type);
         }
         else
             variable.getVariables().setVariable(variable.getName(), evaluateResult.evaluate().value, evaluateResult.evaluate().type);

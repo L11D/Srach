@@ -42,7 +42,7 @@ public class CastNode extends MathNode {
                     case DOUBLE -> {
                         return new Data(String.valueOf((int) Double.parseDouble(castingNode.evaluate().value)), DataType.INT);
                     }
-                    default -> throw new IllegalStateException();
+                    default -> throw new IllegalStateException("Нельяз привести тип " + castingNode.evaluate().type + " к типу " + parseTo);
                 }
             }
             case DOUBLE -> {
@@ -56,7 +56,7 @@ public class CastNode extends MathNode {
                     case CHAR -> {
                         return new Data(String.valueOf((double) castingNode.evaluate().value.charAt(0)), DataType.DOUBLE);
                     }
-                    default -> throw new IllegalStateException();
+                    default -> throw new IllegalStateException("Нельяз привести тип " + castingNode.evaluate().type + " к типу " + parseTo);
                 }
             }
             case BOOL -> {
@@ -64,7 +64,7 @@ public class CastNode extends MathNode {
                     case BOOL, STRING -> {
                         return new Data(castingNode.evaluate().value, DataType.BOOL);
                     }
-                    default -> throw new IllegalStateException();
+                    default -> throw new IllegalStateException("Нельяз привести тип " + castingNode.evaluate().type + " к типу " + parseTo);
                 }
             }
             case CHAR -> {
@@ -78,7 +78,7 @@ public class CastNode extends MathNode {
                     case INT -> {
                         return new Data(String.valueOf((char) Integer.parseInt(castingNode.evaluate().value)), DataType.CHAR);
                     }
-                    default -> throw new IllegalStateException();
+                    default -> throw new IllegalStateException("Нельяз привести тип " + castingNode.evaluate().type + " к типу " + parseTo);
                 }
             }
             case STRING -> {
@@ -86,10 +86,10 @@ public class CastNode extends MathNode {
                     case CHAR, INT, BOOL, DOUBLE, STRING -> {
                         return new Data(castingNode.evaluate().value, DataType.STRING);
                     }
-                    default -> throw new IllegalStateException();
+                    default -> throw new IllegalStateException("Нельяз привести тип " + castingNode.evaluate().type + " к типу " + parseTo);
                 }
             }
-            default -> throw new IllegalStateException();
+            default -> throw new IllegalStateException("Нельзя приводить к типу " + parseTo);
         }
     }
 }
