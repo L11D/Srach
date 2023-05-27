@@ -1,5 +1,6 @@
 package com.example.srach.interpretor;
 
+import com.example.srach.interpretor.functions.Function;
 import com.example.srach.interpretor.logic.LogicNode;
 
 import java.util.ArrayList;

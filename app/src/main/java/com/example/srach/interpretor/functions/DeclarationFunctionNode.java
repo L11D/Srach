@@ -1,5 +1,7 @@
-package com.example.srach.interpretor;
+package com.example.srach.interpretor.functions;
 
+import com.example.srach.interpretor.DataType;
+import com.example.srach.interpretor.Storage;
 import com.example.srach.interpretor.logic.LogicNode;
 
 import java.util.ArrayList;
