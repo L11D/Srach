@@ -7,6 +7,7 @@ import com.example.srach.NewConsole
 import com.example.srach.R
 import com.example.srach.interpretor.Storage
 import com.example.srach.interpretor.arrays.DeclarationArrayNode
+import com.example.srach.interpretor.arrays.GetArrayIndexNode
 
 import com.example.srach.interpretor.logic.LogicNode
 import com.example.srach.interpretor.loops.WhileLoopNode
@@ -18,6 +19,7 @@ import com.example.srach.nodeview.types.DeclarationVariableNodeView
 import com.example.srach.nodeview.types.PrintNodeView
 import com.example.srach.nodeview.types.VariableGetterNodeView
 import com.example.srach.nodeview.types.arrays.DeclarationArrayNodeView
+import com.example.srach.nodeview.types.arrays.GetArrayIndexValueNodeView
 import com.example.srach.nodeview.types.loops.EndNodeView
 import com.example.srach.nodeview.types.loops.WhileLoopNodeView
 import com.example.srach.nodeview.types.math.AddNodeView
@@ -114,6 +116,7 @@ class Field(private val context: Context) : Drawable {
         addWhileLoopNodeView(Vector2f(900f, -500f))
 
         DeclarationArrayNodeView(context, this, variables, Vector2f(-400f, - 300f))
+        GetArrayIndexValueNodeView(context, this, variables, Vector2f(-400f, - 300f))
 
         AssingmentNodeView(context, this, variables, Vector2f(-200f, -100f))
         VariableGetterNodeView(context, this, variables, Vector2f(-200f, -300f))
@@ -146,6 +149,7 @@ class Field(private val context: Context) : Drawable {
     private fun applyStartValues(){
         for (node in nodeViewList){
             if(node is DeclarationVariableNodeView) node.applyStartValue()
+            if(node is DeclarationArrayNodeView) node.applyStartValue()
         }
     }
 

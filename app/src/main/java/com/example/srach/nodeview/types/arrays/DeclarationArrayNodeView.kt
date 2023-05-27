@@ -27,8 +27,16 @@ class DeclarationArrayNodeView(context: Context, field: Field, storage: Storage,
     private val declarationArrayNode = DeclarationArrayNode(storage).apply { name = "" }
     private val arrayNode = ArrayNode(storage)
 
+    private var startValue = listOf<String>("0")
+
     init {
         description.text = "array"
+    }
+
+    fun applyStartValue(){
+        for (i in 0..startValue.size-1){
+            arrayNode.setArrayIndexValue(i, startValue[i])
+        }
     }
 
     override fun createUserInput(layout: ViewGroup) {
@@ -112,13 +120,15 @@ class DeclarationArrayNodeView(context: Context, field: Field, storage: Storage,
             override fun afterTextChanged(s: Editable?) {
                 if(s.toString() != "") {
                     val input = s.toString().split(",")
-//                    for (i in 0 until input.size) {
-//                        arrayNode.setArrayIndexValue(i, input[i])
-//                    }
+                    startValue = input
                 }
             }
         })
-        //variableValueTexView.text  = SpannableStringBuilder(declarationVariableNode.value)
+        var a = startValue[0]
+        for (i in 1..startValue.size-1){
+            a += "," + startValue[i]
+        }
+        variableValueTexView.text  = SpannableStringBuilder(a)
     }
 
 }

@@ -28,6 +28,9 @@ class VariableGetterNodeView(
 
     val variableNode = VariableNode(storage).apply { name = "" }
 
+    init {
+        description.text = "get"
+    }
     override fun getNodeOutput(): MathNode {
         return variableNode
     }

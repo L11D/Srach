@@ -1,4 +1,4 @@
-package com.example.srach.nodeview.types
+package com.example.srach.nodeview.types.arrays
 
 import android.content.Context
 import android.graphics.Color
@@ -12,70 +12,50 @@ import com.example.srach.R
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
 import com.example.srach.interpretor.DataType
-import com.example.srach.interpretor.ValueNode
 import com.example.srach.interpretor.Storage
-import com.example.srach.interpretor.logic.LogicNode
+import com.example.srach.interpretor.arrays.ArrayNode
+import com.example.srach.interpretor.arrays.GetArrayIndexNode
 import com.example.srach.interpretor.math.MathNode
-import com.example.srach.interpretor.operators.AssignmentNode
-import com.example.srach.interpretor.variables.VariableNode
 import com.example.srach.nodeview.AbleToInput
 import com.example.srach.nodeview.AbleToOutput
 import com.example.srach.nodeview.AbleToUserInput
-import com.example.srach.nodeview.InOutAbleExecNodeView
+import com.example.srach.nodeview.InOutAbleNodeView
 import com.example.srach.nodeview.NodeView
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInput
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInputData
-import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorInputExec
 import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputData
-import com.example.srach.nodeview.nodeviewunits.NodeViewConnectorOutputExec
 
-class AssingmentNodeView(context: Context, field: Field, storage: Storage, position: Vector2f) :
-    InOutAbleExecNodeView(context, field, position, 1, 1, DataType.UNSPECIFIED), AbleToUserInput {
+class GetArrayIndexValueNodeView(context: Context, field: Field, storage: Storage, position: Vector2f) :
+    InOutAbleNodeView(context, field, position, 1, 1, DataType.UNSPECIFIED), AbleToUserInput {
 
-    private val assingmentNode = AssignmentNode()
-    private val variableNode = VariableNode(storage).apply { name = "" }
+    val arrayNode = ArrayNode(storage).apply { name = "" }
+    val getArrayIndexNode = GetArrayIndexNode()
 
     init {
-        assingmentNode.setVariable(variableNode)
-        description.text = "set"
+        getArrayIndexNode.setArray(arrayNode)
     }
-
 
     override fun <I : NodeView, O : NodeView> connect(
         connectorInput: NodeViewConnectorInputData<I>,
         connectorOutput: NodeViewConnectorOutputData<O>
     ) where I : AbleToInput, O : AbleToOutput {
-        assingmentNode.setEvaluateResult(connectorOutput.getNodeOutput())
+
+        getArrayIndexNode.setIndex(connectorOutput.getNodeOutput())
     }
 
     override fun getNodeOutput(): MathNode {
-        return variableNode
+        return getArrayIndexNode
     }
 
     override fun <I : NodeView, O : NodeView> tryToConnect(
         connectorInput: NodeViewConnectorInputData<I>,
         connectorOutput: NodeViewConnectorOutputData<O>
     ): Boolean where I : AbleToInput, O : AbleToOutput {
-        return inputConnectorsList[0].dataType == connectorOutput.dataType
+        return connectorOutput.dataType == DataType.INT
     }
 
     override fun disconnect(connectorInput: NodeViewConnectorInput) {
-        assingmentNode.setEvaluateResult(null)
-    }
-
-    override fun connectExec(
-        connectorInput: NodeViewConnectorInputExec<*>,
-        connectorOutput: NodeViewConnectorOutputExec<*>
-    ) {
-        assingmentNode.next = connectorInput.getNode()
-    }
-
-    override fun disconnectExec(connectorOutput: NodeViewConnectorOutputExec<*>) {
-        assingmentNode.next = null
-    }
-
-    override fun getExecNode(): LogicNode {
-        return assingmentNode
+        getArrayIndexNode.setIndex(null)
     }
 
     override fun createUserInput(layout: ViewGroup) {
@@ -93,20 +73,19 @@ class AssingmentNodeView(context: Context, field: Field, storage: Storage, posit
 
             override fun afterTextChanged(s: Editable?) {
 
-                variableNode.name = s.toString()
+                arrayNode.name = s.toString()
                 description.text = s.toString()
+                getArrayIndexNode.setArray(arrayNode)
 
                 try{
-                    outputConnectorsList[0].dataType = variableNode.evaluate().type
-                    inputConnectorsList[0].dataType = variableNode.evaluate().type
+                    outputConnectorsList[0].dataType = getArrayIndexNode.evaluate().type
                     variableNameTexView.setTextColor(Color.GREEN)
                 } catch (e:Throwable){
                     variableNameTexView.setTextColor(Color.RED)
                 }
-
             }
         })
 
-        variableNameTexView.text = SpannableStringBuilder(variableNode.name)
+        variableNameTexView.text = SpannableStringBuilder(arrayNode.name)
     }
 }
