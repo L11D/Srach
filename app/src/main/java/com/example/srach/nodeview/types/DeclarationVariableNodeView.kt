@@ -14,28 +14,27 @@ import com.example.srach.R
 import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
 import com.example.srach.interpretor.DataType
-import com.example.srach.interpretor.VariablesAndArraysStorage
+import com.example.srach.interpretor.Storage
 import com.example.srach.interpretor.variables.DeclarationVariableNode
 import com.example.srach.nodeview.AbleToUserInput
 import com.example.srach.nodeview.NodeView
 
-class DeclarationVariableNodeView(context: Context,  field: Field, storage: VariablesAndArraysStorage, position: Vector2f) :
+class DeclarationVariableNodeView(context: Context,  field: Field, storage: Storage, position: Vector2f) :
     NodeView(context, field, position), AbleToUserInput{
 
     init {
         description.text = "var"
     }
 
-    private val declarationVariableNode = DeclarationVariableNode(storage).apply { type = DataType.INT; name=""; value="0" }
+    private var startValue = "0"
 
-    fun addVariableToStorage(){
-        if(declarationVariableNode.name == "")throw IllegalStateException("empty variable name")
+    fun applyStartValue(){
+        declarationVariableNode.remove()
+        declarationVariableNode.value = startValue
         declarationVariableNode.work()
     }
-    fun removeVariableFromStorage(){
-        declarationVariableNode.remove()
-    }
 
+    private val declarationVariableNode = DeclarationVariableNode(storage).apply { type = DataType.INT; name=""; value=startValue }
 
     override fun createUserInput(layout: ViewGroup) {
 
@@ -97,6 +96,7 @@ class DeclarationVariableNodeView(context: Context,  field: Field, storage: Vari
 
             override fun afterTextChanged(s: Editable?) {
                 declarationVariableNode.remove()
+                startValue = s.toString()
                 declarationVariableNode.value = s.toString()
                 declarationVariableNode.work()
             }

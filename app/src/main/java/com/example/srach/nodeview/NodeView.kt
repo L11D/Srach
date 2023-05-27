@@ -74,6 +74,8 @@ abstract class NodeView(val context: Context, val field: Field, var position: Ve
         displayPosition.x = position.x * scale - viewPos.x + viewSize.x / 2
         displayPosition.y = position.y * scale - viewPos.y + viewSize.y / 2
         displaySize = size * scale
+
+        body.size = size
     }
 
     fun drawConnectors(canvas: Canvas){

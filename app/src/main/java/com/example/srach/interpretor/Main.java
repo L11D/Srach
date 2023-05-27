@@ -1,10 +1,18 @@
 package com.example.srach.interpretor;
 
 import com.example.srach.interpretor.logic.LogicNode;
+import com.example.srach.interpretor.math.MathNode;
+import com.example.srach.interpretor.math.MathNodeEvaluate;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import kotlin.Pair;
 
 public class Main {
     public static void main(String[] args) {
-//        VariablesAndArraysStorage variables = new VariablesAndArraysStorage();
+//        Storage variables = new Storage();
 //        ArrayList listOfVars = new ArrayList<>();
 //
 //        WhileLoopNode loop = new WhileLoopNode();
@@ -40,35 +48,24 @@ public class Main {
     }
 }
 
-//class DeclarationFunctionNode extends LogicNode {
-//    private String name;
-//    private DataType type;
-//    private final VariablesAndArraysStorage variablesAndArraysStorage;
-//    public DeclarationVariableNode(VariablesAndArraysStorage variablesAndArraysStorage) {
-//        this.name = null;
-//        this.type = null;
-//        this.variablesAndArraysStorage = variablesAndArraysStorage;
+//class FunctionsStorage {
+//    private final Map<String, Pair<DataType, Integer>> functions = new HashMap<>();
+//    public FunctionsStorage(){}
+//
+//    public Data getVariable(String name) {
+//        return this.variables.get(name);
 //    }
 //
-//    public void setName(String name) {
-//        this.name = name;
+//    public void setVariable(String name, String value, DataType type) {
+//        this.variables.put(name, new Data(value, type));
 //    }
 //
-//    public void setType(DataType type) {
-//        this.type = type;
+//    public Pair<ArrayList<String>, DataType> getArray(String name) {
+//        return this.arrays.get(name);
 //    }
 //
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public DataType getType() {
-//        return type;
-//    }
-//
-//    @Override
-//    public void work() {
-//        variablesAndArraysStorage.setVariable(name, null, type);
+//    public void setArray(String name, ArrayList<String> array, DataType type) {
+//        this.arrays.put(name, new Pair<>(array, type));
 //    }
 //}
 

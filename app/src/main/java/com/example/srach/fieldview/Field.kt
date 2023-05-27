@@ -5,7 +5,8 @@ import android.graphics.Canvas
 import android.widget.TextView
 import com.example.srach.NewConsole
 import com.example.srach.R
-import com.example.srach.interpretor.VariablesAndArraysStorage
+import com.example.srach.interpretor.Storage
+import com.example.srach.interpretor.arrays.DeclarationArrayNode
 import com.example.srach.interpretor.logic.LogicNode
 import com.example.srach.interpretor.loops.WhileLoopNode
 import com.example.srach.nodeview.NodeView
@@ -15,6 +16,7 @@ import com.example.srach.nodeview.types.BranchNodeView
 import com.example.srach.nodeview.types.DeclarationVariableNodeView
 import com.example.srach.nodeview.types.PrintNodeView
 import com.example.srach.nodeview.types.VariableGetterNodeView
+import com.example.srach.nodeview.types.arrays.DeclarationArrayNodeView
 import com.example.srach.nodeview.types.loops.EndNodeView
 import com.example.srach.nodeview.types.loops.WhileLoopNodeView
 import com.example.srach.nodeview.types.math.AddNodeView
@@ -51,7 +53,7 @@ class Field(private val context: Context) : Drawable {
             } else field = value
         }
 
-    private var variables = VariablesAndArraysStorage()
+    private var variables = Storage()
 
     fun findPosition(pos: Vector2f): Vector2f {
         if (nodeViewsCollisionInFieldCoords(Vector2f(pos.x + 10f, pos.y + 10f)) == null) return pos
@@ -110,8 +112,11 @@ class Field(private val context: Context) : Drawable {
 
         addWhileLoopNodeView(Vector2f(900f, -500f))
 
+        DeclarationArrayNodeView(context, this, variables, Vector2f(-400f, - 300f))
+
         AssingmentNodeView(context, this, variables, Vector2f(-200f, -100f))
         VariableGetterNodeView(context, this, variables, Vector2f(-200f, -300f))
+        VariableGetterNodeView(context, this, variables, Vector2f(-200f, -200f))
 
         DeclarationVariableNodeView(context, this, variables, Vector2f(-200f, 100f))
         DeclarationVariableNodeView(context, this, variables, Vector2f(-200f, 200f))
@@ -137,6 +142,12 @@ class Field(private val context: Context) : Drawable {
         }
     }
 
+    private fun applyStartValues(){
+        for (node in nodeViewList){
+            if(node is DeclarationVariableNodeView) node.applyStartValue()
+        }
+    }
+
     fun nodeViewsCollision(pos: Vector2f): NodeView? {
         for (i in nodeViewList.size - 1 downTo 0) {
             if (nodeViewList[i].collision(pos)) return nodeViewList[i]
@@ -151,12 +162,6 @@ class Field(private val context: Context) : Drawable {
         return null
     }
 
-    private fun createVariables() {
-        for (node in nodeViewList) {
-            if (node is DeclarationVariableNodeView) node.addVariableToStorage()
-        }
-    }
-
     fun goLogic(node: LogicNode) {
         if (node.next != null) {
             node.next.work()
@@ -167,8 +172,8 @@ class Field(private val context: Context) : Drawable {
     fun run() {
         try {
             var a = false
+            applyStartValues()
             bindConsole()
-            createVariables()
             for (node in nodeViewList) {
                 if (node is BeginNodeView) {
                     goLogic(node.getNodeToWork())
@@ -176,8 +181,12 @@ class Field(private val context: Context) : Drawable {
                     break
                 }
             }
-            if (!a) println("Begin not found")
+            if (!a) {
+                console!!.inputText("Begin not found")
+                println("Begin not found")
+            }
         } catch (e: Throwable) {
+            console!!.inputText(e.message.toString())
             println(e.message)
         }
     }

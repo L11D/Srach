@@ -4,14 +4,14 @@ import com.example.srach.interpretor.Data;
 import com.example.srach.interpretor.DataType;
 import com.example.srach.interpretor.math.MathNode;
 import com.example.srach.interpretor.math.MathNodeEvaluate;
-import com.example.srach.interpretor.VariablesAndArraysStorage;
+import com.example.srach.interpretor.Storage;
 
 public class VariableNode extends MathNode implements MathNodeEvaluate {
     private String name;
-    private final VariablesAndArraysStorage variablesAndArraysStorage;
-    public VariableNode(VariablesAndArraysStorage variablesAndArraysStorage) {
+    private final Storage storage;
+    public VariableNode(Storage storage) {
         name = null;
-        this.variablesAndArraysStorage = variablesAndArraysStorage;
+        this.storage = storage;
     }
 
     public void setName(String name) {
@@ -22,27 +22,27 @@ public class VariableNode extends MathNode implements MathNodeEvaluate {
         return name;
     }
 
-    public VariablesAndArraysStorage getVariables() {
-        return variablesAndArraysStorage;
+    public Storage getVariables() {
+        return storage;
     }
 
     @Override
     public Data evaluate() {
-        switch (variablesAndArraysStorage.getVariable(name).type) {
+        switch (storage.getVariable(name).type) {
             case INT -> {
-                return new Data(variablesAndArraysStorage.getVariable(name).value, DataType.INT);
+                return new Data(storage.getVariable(name).value, DataType.INT);
             }
             case BOOL -> {
-                return new Data(variablesAndArraysStorage.getVariable(name).value, DataType.BOOL);
+                return new Data(storage.getVariable(name).value, DataType.BOOL);
             }
             case CHAR -> {
-                return new Data(variablesAndArraysStorage.getVariable(name).value, DataType.CHAR);
+                return new Data(storage.getVariable(name).value, DataType.CHAR);
             }
             case DOUBLE -> {
-                return new Data(variablesAndArraysStorage.getVariable(name).value, DataType.DOUBLE);
+                return new Data(storage.getVariable(name).value, DataType.DOUBLE);
             }
             case STRING -> {
-                return new Data(variablesAndArraysStorage.getVariable(name).value, DataType.STRING);
+                return new Data(storage.getVariable(name).value, DataType.STRING);
             }
             default -> throw new IllegalStateException();
         }

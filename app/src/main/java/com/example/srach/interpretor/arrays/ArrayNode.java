@@ -3,6 +3,7 @@ package com.example.srach.interpretor.arrays;
 import com.example.srach.interpretor.Data;
 import com.example.srach.interpretor.DataType;
 import com.example.srach.interpretor.Node;
+import com.example.srach.interpretor.Storage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,10 +13,14 @@ import kotlin.Pair;
 
 public class ArrayNode extends Node {
     private String name;
-    private final Map<String, Pair<ArrayList<String>, DataType>> arrays;
-    public ArrayNode(Map<String, Pair<ArrayList<String>, DataType>> arrays) {
+    private final Storage storage;
+    public ArrayNode(Storage storage) {
         name = null;
-        this.arrays = arrays;
+        this.storage = storage;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
@@ -23,14 +28,14 @@ public class ArrayNode extends Node {
     }
 
     public DataType getType() {
-        return arrays.get(name).component2();
+        return storage.getArray(name).component2();
     }
 
     public Data getArrayIndexValue(int index) {
-        return new Data(arrays.get(name).component1().get(index), arrays.get(name).component2());
+        return new Data(storage.getArray(name).component1().get(index), storage.getArray(name).component2());
     }
 
     public void setArrayIndexValue(int index, String value) {
-        arrays.get(name).component1().set(index, value);
+        storage.getArray(name).component1().set(index, value);
     }
 }
