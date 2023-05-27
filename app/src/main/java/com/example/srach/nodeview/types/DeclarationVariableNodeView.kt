@@ -15,43 +15,34 @@ import com.example.srach.fieldview.Field
 import com.example.srach.fieldview.Vector2f
 import com.example.srach.interpretor.DataType
 import com.example.srach.interpretor.Storage
-import com.example.srach.interpretor.math.MathNode
-import com.example.srach.interpretor.variables.DeclarationVariableNode
-import com.example.srach.interpretor.variables.VariableNode
-import com.example.srach.nodeview.AbleToUserInput
-import com.example.srach.nodeview.OutputableNodeView
 
-class DeclarationVariableNodeView(context: Context, storage: Storage, field: Field, position: Vector2f) :
-    OutputableNodeView(context, field, position, 1,  DataType.UNSPECIFIED), AbleToUserInput{
+import com.example.srach.interpretor.math.MathNode
+
+import com.example.srach.interpretor.variables.DeclarationVariableNode
+import com.example.srach.nodeview.AbleToUserInput
+import com.example.srach.nodeview.NodeView
+
+class DeclarationVariableNodeView(context: Context,  field: Field, storage: Storage, position: Vector2f) :
+    NodeView(context, field, position), AbleToUserInput{
 
     init {
         description.text = "var"
     }
 
-    private val declarationVariableNode = DeclarationVariableNode(storage).apply { type = DataType.INT; name=""; value="0" }
-    private var variableNode = VariableNode(storage)
+    private var startValue = "0"
 
-    fun addVariableToStorage(){
-        if(declarationVariableNode.name == "")throw IllegalStateException("empty variable name")
+    fun applyStartValue(){
+        declarationVariableNode.remove()
+        declarationVariableNode.value = startValue
         declarationVariableNode.work()
-        variableNode.name = declarationVariableNode.name
     }
 
-    override fun getNodeOutput(): MathNode {
-        return variableNode
-    }
-
-    override fun solveDisplayPosition() {
-       super.solveDisplayPosition()
-        for (output in outputConnectorsList){
-            output.dataType = declarationVariableNode.type
-        }
-    }
+    private val declarationVariableNode = DeclarationVariableNode(storage).apply { type = DataType.INT; name=""; value=startValue }
 
     override fun createUserInput(layout: ViewGroup) {
 
         val inflater = LayoutInflater.from(context)
-        val nodeLayout = inflater.inflate(R.layout.variable_node_layout, layout)
+        val nodeLayout = inflater.inflate(R.layout.declaration_variable_node_layout, layout)
 
         val variableNameTexView = nodeLayout.findViewById<EditText>(R.id.variableName)
         variableNameTexView.addTextChangedListener(object:TextWatcher{
@@ -63,8 +54,12 @@ class DeclarationVariableNodeView(context: Context, storage: Storage, field: Fie
             }
 
             override fun afterTextChanged(s: Editable?) {
-                declarationVariableNode.name = s.toString()
-                if (s.toString() != "") description.text = s.toString()
+                declarationVariableNode.remove()
+                if (s.toString() != ""){
+                    declarationVariableNode.name = s.toString()
+                    declarationVariableNode.work()
+                    description.text = s.toString()
+                }
             }
         })
         variableNameTexView.text  = SpannableStringBuilder(declarationVariableNode.name)
@@ -77,7 +72,9 @@ class DeclarationVariableNodeView(context: Context, storage: Storage, field: Fie
                 position: Int,
                 id: Long
             ) {
+                declarationVariableNode.remove()
                 declarationVariableNode.type = DataType.values()[position]
+                declarationVariableNode.work()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -101,7 +98,10 @@ class DeclarationVariableNodeView(context: Context, storage: Storage, field: Fie
             }
 
             override fun afterTextChanged(s: Editable?) {
+                declarationVariableNode.remove()
+                startValue = s.toString()
                 declarationVariableNode.value = s.toString()
+                declarationVariableNode.work()
             }
         })
         variableValueTexView.text  = SpannableStringBuilder(declarationVariableNode.value)

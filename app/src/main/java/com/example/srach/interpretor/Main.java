@@ -12,7 +12,7 @@ import kotlin.Pair;
 
 public class Main {
     public static void main(String[] args) {
-//        VariablesAndArraysStorage variables = new VariablesAndArraysStorage();
+//        Storage variables = new Storage();
 //        ArrayList listOfVars = new ArrayList<>();
 //
 //        WhileLoopNode loop = new WhileLoopNode();

@@ -23,12 +23,25 @@ public class Storage {
         variables.put(name, new Data(value, type));
     }
 
+    public Boolean isContein( String name){
+        return variables.containsKey(name);
+    }
+    public void removeVariable(String name) {
+        if (variables.containsKey(name))
+            variables.remove(name);
+    }
+
     public Pair<ArrayList<String>, DataType> getArray(String name) {
         return this.arrays.get(name);
     }
 
     public void setArray(String name, ArrayList<String> array, DataType type) {
         arrays.put(name, new Pair<>(array, type));
+    }
+
+    public void removeArray(String name){
+        if(arrays.containsKey(name))
+            arrays.remove(name);
     }
 
     public Function getFunction(String name) {

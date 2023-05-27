@@ -9,11 +9,11 @@ public class DeclarationVariableNode extends LogicNode {
     private DataType type;
     private String value;
     private final Storage storage;
-    public DeclarationVariableNode(Storage variablesAndArraysStorage) {
+    public DeclarationVariableNode(Storage Storage) {
         name = null;
         type = null;
         value = null;
-        this.storage = variablesAndArraysStorage;
+        this.storage = Storage;
     }
 
     public void setName(String name) {
@@ -44,4 +44,5 @@ public class DeclarationVariableNode extends LogicNode {
     public void work() {
         storage.setVariable(name, value, type);
     }
+    public void remove() { storage.removeVariable(name); }
 }

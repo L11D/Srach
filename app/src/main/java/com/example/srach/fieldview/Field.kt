@@ -6,13 +6,18 @@ import android.widget.TextView
 import com.example.srach.NewConsole
 import com.example.srach.R
 import com.example.srach.interpretor.Storage
+import com.example.srach.interpretor.arrays.DeclarationArrayNode
+
 import com.example.srach.interpretor.logic.LogicNode
 import com.example.srach.interpretor.loops.WhileLoopNode
 import com.example.srach.nodeview.NodeView
+import com.example.srach.nodeview.types.AssingmentNodeView
 import com.example.srach.nodeview.types.BeginNodeView
 import com.example.srach.nodeview.types.BranchNodeView
 import com.example.srach.nodeview.types.DeclarationVariableNodeView
 import com.example.srach.nodeview.types.PrintNodeView
+import com.example.srach.nodeview.types.VariableGetterNodeView
+import com.example.srach.nodeview.types.arrays.DeclarationArrayNodeView
 import com.example.srach.nodeview.types.loops.EndNodeView
 import com.example.srach.nodeview.types.loops.WhileLoopNodeView
 import com.example.srach.nodeview.types.math.AddNodeView
@@ -91,7 +96,7 @@ class Field(private val context: Context) : Drawable {
             "PrintNode" -> PrintNodeView(context, this, nodePosition)
             //"SetArrayIndexNode" -> nodeViewList.add(SetArrayIndexNodeView(context, this, nodePosition))
             "SubtractNode" -> SubtractNodeView(context, this, nodePosition)
-            "VariableNode" -> DeclarationVariableNodeView(context, variables, this, nodePosition)
+            "VariableNode" -> DeclarationVariableNodeView(context, this, variables, nodePosition)
         }
     }
 
@@ -108,9 +113,15 @@ class Field(private val context: Context) : Drawable {
 
         addWhileLoopNodeView(Vector2f(900f, -500f))
 
-        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 100f))
-        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 200f))
-        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 300f))
+        DeclarationArrayNodeView(context, this, variables, Vector2f(-400f, - 300f))
+
+        AssingmentNodeView(context, this, variables, Vector2f(-200f, -100f))
+        VariableGetterNodeView(context, this, variables, Vector2f(-200f, -300f))
+        VariableGetterNodeView(context, this, variables, Vector2f(-200f, -200f))
+
+        DeclarationVariableNodeView(context, this, variables, Vector2f(-200f, 100f))
+        DeclarationVariableNodeView(context, this, variables, Vector2f(-200f, 200f))
+        DeclarationVariableNodeView(context, this, variables,  Vector2f(-200f, 300f))
 //        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 400f))
 //        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 500f))
 //        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 600f))
@@ -126,9 +137,15 @@ class Field(private val context: Context) : Drawable {
         PrintNodeView(context, this, Vector2f(300f, -500f))
     }
 
-    fun bindConsole() {
+    private fun bindConsole() {
         for (node in nodeViewList) {
             if (node is PrintNodeView && console != null) node.bindConsole(console!!)
+        }
+    }
+
+    private fun applyStartValues(){
+        for (node in nodeViewList){
+            if(node is DeclarationVariableNodeView) node.applyStartValue()
         }
     }
 
@@ -146,12 +163,6 @@ class Field(private val context: Context) : Drawable {
         return null
     }
 
-    private fun createVariables() {
-        for (node in nodeViewList) {
-            if (node is DeclarationVariableNodeView) node.addVariableToStorage()
-        }
-    }
-
     fun goLogic(node: LogicNode) {
         if (node.next != null) {
             node.next.work()
@@ -162,8 +173,8 @@ class Field(private val context: Context) : Drawable {
     fun run() {
         try {
             var a = false
+            applyStartValues()
             bindConsole()
-            createVariables()
             for (node in nodeViewList) {
                 if (node is BeginNodeView) {
                     goLogic(node.getNodeToWork())
@@ -171,10 +182,14 @@ class Field(private val context: Context) : Drawable {
                     break
                 }
             }
-            if (!a) println("Begin not found")
+            if (!a) {
+                console!!.inputText("Begin not found")
+                println("Begin not found")
+            }
         } catch (e: Throwable) {
             console!!.inputText(e.message.toString())
-            //println(e.message)
+            println(e.message)
+
         }
     }
 
