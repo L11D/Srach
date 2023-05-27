@@ -26,7 +26,7 @@ public class NotEqualNode extends OperatorNode {
                 case STRING -> {
                     return new Data((String.valueOf(!Objects.equals(getLeft().evaluate().value, getRight().evaluate().value))), DataType.BOOL);
                 }
-                default -> throw new IllegalStateException();
+                default -> throw new IllegalStateException("Данные типов " + getLeft().evaluate().type + " нельзя сравнивать");
             }
         }
         return new Data("false", DataType.BOOL);

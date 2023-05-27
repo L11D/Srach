@@ -42,7 +42,10 @@ public class DeclarationVariableNode extends LogicNode {
 
     @Override
     public void work() {
-        storage.setVariable(name, value, type);
+        if (storage.getVariables().containsKey(name) || storage.getArrays().containsKey(name))
+            throw new IllegalStateException("Name " + name + " already exist");
+        else
+            storage.setVariable(name, value, type);
     }
     public void remove() { storage.removeVariable(name); }
 }
