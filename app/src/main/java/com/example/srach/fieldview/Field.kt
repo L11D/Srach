@@ -7,6 +7,7 @@ import com.example.srach.NewConsole
 import com.example.srach.R
 import com.example.srach.interpretor.Storage
 import com.example.srach.interpretor.arrays.DeclarationArrayNode
+
 import com.example.srach.interpretor.logic.LogicNode
 import com.example.srach.interpretor.loops.WhileLoopNode
 import com.example.srach.nodeview.NodeView
@@ -188,6 +189,7 @@ class Field(private val context: Context) : Drawable {
         } catch (e: Throwable) {
             console!!.inputText(e.message.toString())
             println(e.message)
+
         }
     }
 

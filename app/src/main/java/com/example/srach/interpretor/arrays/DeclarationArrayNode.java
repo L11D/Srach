@@ -10,12 +10,20 @@ public class DeclarationArrayNode extends LogicNode {
     private String name;
     private DataType type;
 
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+
+    private int size;
+    private final Storage storage;
+    public DeclarationArrayNode(Storage storage) {
+        this.size = 0;
+        this.type = null;
+        this.name = null;
+        this.storage = storage;
     }
 
     public DataType getType() {
@@ -32,16 +40,6 @@ public class DeclarationArrayNode extends LogicNode {
 
     public void setSize(int size) {
         this.size = size;
-    }
-
-    private int size;
-    private final Storage storage;
-    public DeclarationArrayNode( Storage storage) {
-        this.name = null;
-        this.type = null;
-        this.size = 0;
-        this.storage = storage;
-    }
 
     @Override
     public void work() {
