@@ -105,39 +105,36 @@ class Field(private val context: Context) : Drawable {
     init {
         BeginNodeView(context, this, Vector2f(-300f, -500f))
 
-        AddNodeView(context, this, Vector2f(50f, 0f))
-        SubtractNodeView(context, this, Vector2f(250f, 0f))
-        DivideNodeView(context, this, Vector2f(450f, 0f))
-        MultiplyNodeView(context, this, Vector2f(650f, 0f))
-        DivideRemainderNodeView(context, this, Vector2f(850f, 0f))
-
-        BranchNodeView(context, this, Vector2f(600f, -500f))
-
-        addWhileLoopNodeView(Vector2f(900f, -500f))
-
-        DeclarationArrayNodeView(context, this, variables, Vector2f(-400f, - 300f))
-        GetArrayIndexValueNodeView(context, this, variables, Vector2f(-400f, - 300f))
-
-        AssingmentNodeView(context, this, variables, Vector2f(-200f, -100f))
-        VariableGetterNodeView(context, this, variables, Vector2f(-200f, -300f))
-        VariableGetterNodeView(context, this, variables, Vector2f(-200f, -200f))
-
-        DeclarationVariableNodeView(context, this, variables, Vector2f(-200f, 100f))
-        DeclarationVariableNodeView(context, this, variables, Vector2f(-200f, 200f))
-        DeclarationVariableNodeView(context, this, variables,  Vector2f(-200f, 300f))
-//        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 400f))
-//        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 500f))
-//        DeclarationVariableNodeView(context, variables, this, Vector2f(-200f, 600f))
-
-        LessNodeView(context, this, Vector2f(50f, 200f))
-        EqualNodeView(context, this, Vector2f(250f, 200f))
-        NotEqualNodeView(context, this, Vector2f(450f, 200f))
-        GreaterNodeView(context, this, Vector2f(650f, 200f))
-        GreaterEqualNodeView(context, this, Vector2f(850f, 200f))
-        LessEqualNodeView(context, this, Vector2f(1050f, 200f))
-
-        PrintNodeView(context, this, Vector2f(0f, -500f))
-        PrintNodeView(context, this, Vector2f(300f, -500f))
+//        AddNodeView(context, this, Vector2f(50f, 0f))
+//        SubtractNodeView(context, this, Vector2f(250f, 0f))
+//        DivideNodeView(context, this, Vector2f(450f, 0f))
+//        MultiplyNodeView(context, this, Vector2f(650f, 0f))
+//        DivideRemainderNodeView(context, this, Vector2f(850f, 0f))
+//
+//        BranchNodeView(context, this, Vector2f(600f, -500f))
+//
+//        addWhileLoopNodeView(Vector2f(900f, -500f))
+//
+//        DeclarationArrayNodeView(context, this, variables, Vector2f(-400f, - 300f))
+//        GetArrayIndexValueNodeView(context, this, variables, Vector2f(-400f, - 300f))
+//
+//        AssingmentNodeView(context, this, variables, Vector2f(-200f, -100f))
+//        VariableGetterNodeView(context, this, variables, Vector2f(-200f, -300f))
+//        VariableGetterNodeView(context, this, variables, Vector2f(-200f, -200f))
+//
+//        DeclarationVariableNodeView(context, this, variables, Vector2f(-200f, 100f))
+//        DeclarationVariableNodeView(context, this, variables, Vector2f(-200f, 200f))
+//        DeclarationVariableNodeView(context, this, variables,  Vector2f(-200f, 300f))
+//
+//        LessNodeView(context, this, Vector2f(50f, 200f))
+//        EqualNodeView(context, this, Vector2f(250f, 200f))
+//        NotEqualNodeView(context, this, Vector2f(450f, 200f))
+//        GreaterNodeView(context, this, Vector2f(650f, 200f))
+//        GreaterEqualNodeView(context, this, Vector2f(850f, 200f))
+//        LessEqualNodeView(context, this, Vector2f(1050f, 200f))
+//
+//        PrintNodeView(context, this, Vector2f(0f, -500f))
+//        PrintNodeView(context, this, Vector2f(300f, -500f))
     }
 
     private fun bindConsole() {
