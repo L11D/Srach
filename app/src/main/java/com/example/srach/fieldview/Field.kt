@@ -20,6 +20,7 @@ import com.example.srach.nodeview.types.PrintNodeView
 import com.example.srach.nodeview.types.VariableGetterNodeView
 import com.example.srach.nodeview.types.arrays.DeclarationArrayNodeView
 import com.example.srach.nodeview.types.arrays.GetArrayIndexValueNodeView
+import com.example.srach.nodeview.types.arrays.SetArrayIndexNodeView
 import com.example.srach.nodeview.types.loops.EndNodeView
 import com.example.srach.nodeview.types.loops.WhileLoopNodeView
 import com.example.srach.nodeview.types.math.AddNodeView
@@ -72,8 +73,7 @@ class Field(private val context: Context) : Drawable {
         var nodePosition = findPosition(viewPosition * (1f / scale))
         when (name) {
             "AddNode" -> AddNodeView(context, this, nodePosition)
-            //"ArrayNode" -> nodeViewList.add(ArrayNodeView(context, this, nodePosition))
-            //"AssignmentNode" -> nodeViewList.add(AssignmentNodeView(context, this, nodePosition))
+            "AssignmentNode" -> AssingmentNodeView(context, this,variables, nodePosition)
             "BeginNode" -> BeginNodeView(context, this, nodePosition)
             "BranchNode" -> BranchNodeView(context, this, nodePosition)
             "DivideNode" -> DivideNodeView(context, this, nodePosition)
@@ -84,19 +84,20 @@ class Field(private val context: Context) : Drawable {
                     nodePosition
                 )
             )
-
+            "VariableGetterNode" -> VariableGetterNodeView(context, this,variables, nodePosition)
+            "DeclarationVariableNode" -> DeclarationVariableNodeView(context, this,variables, nodePosition)
+            "WhileLoopNode" -> addWhileLoopNodeView(nodePosition)
+            "DeclarationArrayNode" -> DeclarationArrayNodeView(context,this, variables ,nodePosition)
             "EqualNode" -> EqualNodeView(context, this, nodePosition)
-            //"GetArrayIndexNode" -> nodeViewList.add(GetArrayIndexNodeView(context, this, nodePosition))
+            "GetArrayIndexValueNode" -> nodeViewList.add(GetArrayIndexValueNodeView(context, this,variables ,nodePosition))
             "GreaterEqualNode" -> GreaterEqualNodeView(context, this, nodePosition)
             "GreaterNode" -> GreaterNodeView(context, this, nodePosition)
-            //"InputNode" -> nodeViewList.add(InputNodeView(context, this, nodePosition))
             "LessEqualNode" -> LessEqualNodeView(context, this, nodePosition)
             "LessNode" -> LessNodeView(context, this, nodePosition)
             "MultiplyNode" -> MultiplyNodeView(context, this, nodePosition)
             "NotEqualNode" -> NotEqualNodeView(context, this, nodePosition)
-            //"NumberNode" -> nodeViewList.add(NumberNodeView(context, this, nodePosition))
             "PrintNode" -> PrintNodeView(context, this, nodePosition)
-            //"SetArrayIndexNode" -> nodeViewList.add(SetArrayIndexNodeView(context, this, nodePosition))
+            "SetArrayIndexNode" -> SetArrayIndexNodeView(context, this, nodePosition)
             "SubtractNode" -> SubtractNodeView(context, this, nodePosition)
             "VariableNode" -> DeclarationVariableNodeView(context, this, variables, nodePosition)
         }

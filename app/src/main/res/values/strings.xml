@@ -10,26 +10,28 @@
 
     <string-array name="dataTypesNodes">
         <item>AddNode</item>
-        <item>ArrayNode</item>
         <item>AssignmentNode</item>
         <item>BeginNode</item>
         <item>BranchNode</item>
         <item>DivideNode</item>
         <item>DivideRemainder</item>
         <item>EqualNode</item>
-        <item>GetArrayIndexNode</item>
+        <item>GetArrayIndexValueNode</item>
         <item>GreaterEqualNode</item>
         <item>GreaterNode</item>
-        <item>InputNode</item>
         <item>LessEqualNode</item>
         <item>LessNode</item>
         <item>MultiplyNode</item>
         <item>NotEqualNode</item>
-        <item>NumberNode</item>
         <item>PrintNode</item>
         <item>SetArrayIndexNode</item>
         <item>SubtractNode</item>
         <item>VariableNode</item>
+        <item>WhileLoopNode</item>
+        <item>DeclarationArrayNode</item>
+        <item>SetArrayIndexNode</item>
+        <item>DeclarationVariableNode</item>
+        <item>VariableGetterNode</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
