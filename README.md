@@ -8,3 +8,14 @@
 **Пример цикла, который печатает цисла от 0 до 9 в консоль:**
 
 ![srach](https://github.com/L11D/Srach/assets/51267703/b4f6fee2-0e64-4608-b660-63c2878b745e)
+
+---
+
+# Srach for Android
+
+## Overview
+
+This project is developed using Java and Kotlin in the Android Studio environment. It serves as a visual programming environment for Android, where users connect and arrange blocks to create algorithms. The color of connections indicates the type of data being transmitted. After writing the program, users can run it, and the interpreter will execute the code. The application includes a console that opens when the code is executed.
+
+**Example of a loop that prints numbers from 0 to 9 in the console:**
+
